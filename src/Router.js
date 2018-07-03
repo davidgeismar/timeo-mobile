@@ -15,6 +15,7 @@ import KanbanList from './components/KanbanList'
 import DeleteConfirmation from './components/DeleteConfirmation'
 import { connect } from 'react-redux';
 import TaskList from './components/TaskList'
+import LoginForm from './components/LoginForm'
 const TabIcon = ({selected, title}) => {
   return (
     <Text style={{color: selected ? 'red' : 'black'}}> {title}</Text>
@@ -34,10 +35,16 @@ class RouterComponent  extends Component {
       <Router>
         <Scene key='main'>
           <Scene
+            key='login'
+            component={LoginForm}
+            title='TIMEO'
+            />
+          <Scene
             leftTitle="Logout"
             key='starter'
             component={Starter}
             title='START'
+            initial
             />
             <Scene
               key='actionList'
@@ -47,13 +54,13 @@ class RouterComponent  extends Component {
               key='taskList'
               component={TaskList}
               />
-            <Scene key='root' tabs={true} tabBarPosition='top'>
-               <Scene key='chrono' hideNavBar component={Starter}/>
-               <Scene key='time' hideNavBar title='TIME' component={TimeCardList} icon={ChronoIcon}/>
-               <Scene key='client' hideNavBar title='CLIENT' component={ClientList} icon={TabIcon}/>
-               <Scene key='project' hideNavBar title='PROJECT' component={ProjectList} icon={TabIcon}/>
-               <Scene key='info' hideNavBar title='INFO' component={Info} icon={TabIcon}/>
-            </Scene>
+
+             <Scene key='chrono' hideNavBar component={Starter}/>
+             <Scene key='time' hideNavBar title='TIME' component={TimeCardList} icon={ChronoIcon}/>
+             <Scene key='client' hideNavBar title='CLIENT' component={ClientList} icon={TabIcon}/>
+             <Scene key='project' hideNavBar title='PROJECT' component={ProjectList} icon={TabIcon}/>
+             <Scene key='info' hideNavBar title='INFO' component={Info} icon={TabIcon}/>
+
             <Scene
               key='kanbanList'
               component={KanbanList}

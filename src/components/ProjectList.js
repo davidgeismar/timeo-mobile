@@ -6,6 +6,7 @@ import * as actions from '../actions';
 import Button from './common/Button';
 import LinkCard from './LinkCard';
 import Event from './Event';
+import TabBar from './TabBar';
 
 class ProjectList extends Component {
   renderProjects(){
@@ -18,9 +19,12 @@ class ProjectList extends Component {
   render() {
     const {containerStyle, projectsWrapperStyle, footerStyle} = styles
     return (
-      <View style={containerStyle}>
-        <View style={projectsWrapperStyle}>
-          {this.renderProjects()}
+      <View>
+        <TabBar/>
+        <View style={containerStyle}>
+          <View style={projectsWrapperStyle}>
+            {this.renderProjects()}
+          </View>
         </View>
       </View>
     )

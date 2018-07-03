@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, ScrollView} from 'react-native'
+import { View} from 'react-native'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import {Actions} from 'react-native-router-flux'

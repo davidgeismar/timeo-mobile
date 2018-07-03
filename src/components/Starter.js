@@ -38,7 +38,7 @@ class Starter extends Component {
       console.log('in basic')
       return(
         <View style={styles.buttonWrapperStyle}>
-          <Button customStyle={styles.basicButtonStyle} onPress={() => Actions.time()}>Add</Button>
+          <Button customStyle={styles.basicButtonStyle} onPress={() => this.props.activateTab('time')}>Add</Button>
         </View>
 
       )
@@ -91,7 +91,7 @@ class Starter extends Component {
     else {
       return (
         <TouchableOpacity onPress={()=>this.startChrono()}>
-          <Chrono style={styles.svgStyle} fill="#8CCDF8"/>
+          <Chrono style={styles.svgStyle} fill="#00AFFA"/>
         </TouchableOpacity>
       )
     }

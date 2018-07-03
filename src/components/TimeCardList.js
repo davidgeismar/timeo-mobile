@@ -7,6 +7,7 @@ import {Actions} from 'react-native-router-flux';
 import TimeCard from './TimeCard';
 import Button from './common/Button';
 import Footer from './common/Footer';
+import TabBar from './TabBar';
 import TimeFormatter from 'minutes-seconds-milliseconds';
 
 
@@ -67,30 +68,35 @@ class TimeCardList extends Component {
       if (!this.props.eventId){
         console.log('in createEvent')
         this.props.createEvent('selection', this.props.timeSelection)
+        this.props.activateTab("client")
       }
       else {
         console.log('in updateEvent')
         this.props.updateEventDuration("selection", this.props.timeSelection, this.props.eventId)
+        this.props.activateTab("events")
       }
     }
   render() {
     return (
-      <View style={{flexDirection: 'column', flex: 1}}>
-        <View style={{flexDirection: 'row', flex: 1}}>
-            <ScrollView style={styles.containerStyle}>
-              {this.renderHours()}
-            </ScrollView>
-            <ScrollView style={styles.containerStyle}>
-              {this.renderMinutes()}
-            </ScrollView>
-        </View>
-        <Footer>
-          <View style={styles.buttonWrapperStyle}>
-            <Button customStyle={{width: '50%'}} onPress={()=>this.saveEvent()}>
-              Save
-            </Button>
+      <View style={{flex: 1}}>
+        <TabBar/>
+        <View style={{flexDirection: 'column', flex: 1}}>
+          <View style={{flexDirection: 'row', flex: 1}}>
+              <ScrollView style={styles.containerStyle}>
+                {this.renderHours()}
+              </ScrollView>
+              <ScrollView style={styles.containerStyle}>
+                {this.renderMinutes()}
+              </ScrollView>
           </View>
-        </Footer>
+          <Footer>
+            <View style={styles.buttonWrapperStyle}>
+              <Button customStyle={{width: '50%'}} onPress={()=>this.saveEvent()}>
+                Save
+              </Button>
+            </View>
+          </Footer>
+        </View>
       </View>
     )
 

@@ -7,6 +7,7 @@ import { ChronoReducer } from './ChronoReducer';
 import { ProjectReducer } from './ProjectReducer';
 import { KanbanReducer } from './KanbanReducer';
 import { TaskReducer } from './TaskReducer';
+import { TabReducer } from './TabReducer';
 export default combineReducers({
   selectedDuration: DurationReducer,
   selectedAction: ActionReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
   chrono: ChronoReducer,
   projects: ProjectReducer,
   kanbans: KanbanReducer,
-  tasks: TaskReducer
+  tasks: TaskReducer,
+  tabs: TabReducer
 });

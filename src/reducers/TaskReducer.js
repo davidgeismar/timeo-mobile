@@ -21,7 +21,7 @@ export const TaskReducer = (state = INITIAL_STATE, action) => {
     case SEARCH_TASK_INIT:
         console.log('SEARCH_TASK_INIT')
         console.log(action.payload)
-        return {...state, searchInit: true}
+        return {...state, searchInit: action.payload}
     case DELETE_SELECTED_TASK:
         console.log('DELETE_SELECTED_KANBAN')
         return {...state, selectedTask: null}

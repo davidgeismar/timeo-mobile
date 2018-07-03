@@ -11,7 +11,11 @@ import TaskBlock from './TaskBlock';
 import Header from './Header';
 import Avatar from './Avatar';
 import SearchBar from './SearchBar';
-import Search from './assets/Search.js'
+
+
+// here I would like tasklist to be able to know if searchbar is in expanded state in order to hide some stuff
+// in this parent component
+// how is it possible to transmit from child to parent without redux that seems
 
 class TaskList extends Component {
 
@@ -39,33 +43,30 @@ class TaskList extends Component {
         taskblocks
 
     )
-
+  }
+  renderExtras(){
+    if (!this.props.searchInit){
+      return (
+        <View style={{height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+          <Text style={{color: '#8CCDF8', borderBottomColor: 'red', borderBottomWidth: 1, padding: 5}}>
+            Link to a Kameo Task
+          </Text>
+          <Text  style={{}}>
+            my tasks
+          </Text>
+        </View>
+      )
+    }
   }
 
   renderHeader(){
     const {taskHeaderStyle} = styles
-    if (this.props.searchInit){
-      return (
-        <View style={taskHeaderStyle}>
-          <SearchBar closeAction={() => this.props.updateSearchTaskStatus(false)} />
-        </View>
-      )
-    }
-    else {
-      return (
-        <View style={taskHeaderStyle}>
-          <Text style={{color: '#8CCDF8', alignSelf: 'center', borderBottomColor: 'red', borderBottomWidth: 1, padding: 5}}>
-            Link to a Kameo Task
-          </Text>
-          <Text  style={{ alignSelf: 'center'}}>
-          my tasks
-          </Text>
-          <TouchableOpacity style={{ alignSelf: 'center'}} onPress= {() => this.props.updateSearchTaskStatus(true)}>
-            <Search style={{height: 24, width: 24}}/>
-          </TouchableOpacity>
-        </View>
-      )
-    }
+    return (
+      <View style={taskHeaderStyle}>
+        {this.renderExtras()}
+        <SearchBar customStyle={{alignSelf: 'flex-end'}}/>
+      </View>
+    )
   }
 
   saveTask(){
@@ -91,7 +92,7 @@ class TaskList extends Component {
           {this.renderSelectedKanban()}
           {this.renderTasks()}
         </View>
-        <Footer customStyle={{backgroundColor: 'red'}}>
+        <Footer customStyle={{backgroundColor: '#E62B5A'}}>
           <View style={styles.footerButtonsWrapper}>
             <Button customStyle={styles.footerButtonStyle} onPress={()=> this.props.removeSelectedTask()}>CANCEL</Button>
             <Button disabled={this.props.disabled} customStyle={styles.footerButtonStyle} onPress={()=> this.saveTask()}>SAVE</Button>
@@ -121,7 +122,9 @@ const styles = {
     width: '100%',
     height: 50,
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    paddingLeft: 10,
+    paddingRight: 10
   },
   footerButtonStyle: {
     width: 180

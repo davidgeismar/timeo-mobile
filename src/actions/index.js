@@ -1,5 +1,6 @@
 import { Actions } from 'react-native-router-flux';
-import {RESET_INFO, DELETE_SELECTED_TASK, DELETE_SELECTED_KANBAN, SAVE_TASK, SEARCH_TASK_INIT, LOAD_KANBAN_TASKS, SET_CURRENT_TASK, SAVE_KANBAN, LOAD_PROJECT_KANBANS, SET_CURRENT_KANBAN, UPDATE_EVENT_COMMENT, UPDATE_EVENT_PROJECT, LOAD_CLIENT_PROJECTS, SET_CHRONO_RUNNING, UPDATE_INTERVAL, UPDATE_EVENT_CLIENT, START_CHRONO,STOP_CHRONO, EDIT_EVENT_HOUR, EDIT_EVENT_MINUTE, SELECT_HOUR, SELECT_MINUTE, SELECT_ACTION, CREATE_EVENT, SET_CURRENT_EVENT, UPDATE_EVENT_DURATION, UPDATE_EVENT_ACTION, UPDATE_EVENT_HOUR, UPDATE_EVENT_MINUTE, DELETE_EVENT} from './types'
+import {startChrono, setChronoRunning, updateInterval, stopChrono} from './chronoActions.js';
+import {ACTIVATE_TAB, RESET_INFO, DELETE_SELECTED_TASK, DELETE_SELECTED_KANBAN, SAVE_TASK, SEARCH_TASK_INIT, LOAD_KANBAN_TASKS, SET_CURRENT_TASK, SAVE_KANBAN, LOAD_PROJECT_KANBANS, SET_CURRENT_KANBAN, UPDATE_EVENT_COMMENT, UPDATE_EVENT_PROJECT, LOAD_CLIENT_PROJECTS, UPDATE_EVENT_CLIENT, EDIT_EVENT_HOUR, EDIT_EVENT_MINUTE, SELECT_HOUR, SELECT_MINUTE, SELECT_ACTION, CREATE_EVENT, SET_CURRENT_EVENT, UPDATE_EVENT_DURATION, UPDATE_EVENT_ACTION, UPDATE_EVENT_HOUR, UPDATE_EVENT_MINUTE, DELETE_EVENT} from './types'
 
 
 
@@ -35,34 +36,6 @@ const generateEventId = () => {
 }
 
 
-
-export const startChrono = () => {
-  return {
-    type: START_CHRONO,
-    payload: true
-  }
-}
-
-export const setChronoRunning = () =>{
-  return {
-    type: SET_CHRONO_RUNNING,
-    payload: true
-  }
-}
-
-export const updateInterval = (eventId) => {
-  return {
-    type: UPDATE_INTERVAL,
-    payload: eventId
-  }
-}
-export const stopChrono = (timerValue) => {
-  return {
-    type: STOP_CHRONO,
-    payload: timerValue
-  }
-}
-
 const removeSelectedKanbanSuccess = (dispatch) => {
   dispatch({
     type: DELETE_SELECTED_KANBAN,
@@ -71,6 +44,36 @@ const removeSelectedKanbanSuccess = (dispatch) => {
   Actions.info()
 }
 
+const activateTabSuccess = (dispatch,  tabLabel) => {
+  console.log('in activateTabSuccess')
+  console.log(tabLabel)
+  dispatch({
+    type: ACTIVATE_TAB,
+    payload: tabLabel
+  });
+
+  switch(tabLabel) {
+    case 'chrono':
+      return Actions.chrono()
+    case 'time':
+      console.log('in time')
+      return Actions.time()
+    case 'project':
+      return Actions.project()
+    case 'client':
+      return Actions.client()
+    case 'events':
+      return Actions.events()
+    }
+}
+
+export const activateTab = (tabLabel) => {
+  console.log('in activateTab')
+  console.log(tabLabel)
+  return(dispatch) => {
+    activateTabSuccess(dispatch, tabLabel)
+  }
+}
 const removeSelectedTaskSuccess = (dispatch) => {
   dispatch({
     type: DELETE_SELECTED_TASK,
@@ -191,6 +194,10 @@ const updateEventProjectSuccess = (dispatch, project, eventId) => {
       type: UPDATE_EVENT_PROJECT,
       payload: {eventId: eventId, project: project}
     });
+    dispatch({
+      type: ACTIVATE_TAB,
+      payload: 'info'
+    });
     Actions.info()
 }
 
@@ -218,9 +225,17 @@ const updateEventClientSuccess = (dispatch, getState, client, eventId) => {
     console.log('in updateEventClientSuccess')
     console.log(projects)
     if (projects.length > 0) {
+      dispatch({
+        type: ACTIVATE_TAB,
+        payload: 'project'
+      })
       Actions.project()
     }
     else{
+      dispatch({
+        type: ACTIVATE_TAB,
+        payload: 'info'
+      })
       Actions.info()
     }
 }
@@ -239,7 +254,7 @@ const setCurrentEventSuccess = (dispatch, eventId) => {
     type: SET_CURRENT_EVENT,
     payload: eventId
   });
-  Actions.time()
+  activateTab('time')
 }
 
 export const setCurrentEvent = (eventId) => {

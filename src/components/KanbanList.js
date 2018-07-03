@@ -45,7 +45,7 @@ class KanbanList extends Component {
         <View style={kanbansWrapperStyle}>
           {this.renderKanbans()}
         </View>
-        <Footer customStyle={{backgroundColor: 'red'}}>
+        <Footer customStyle={{backgroundColor: '#E62B5A'}}>
           <View style={styles.footerButtonsWrapper}>
             <Button customStyle={styles.footerButtonStyle} onPress={() => this.props.removeSelectedKanban()}>CANCEL</Button>
             <Button disabled={this.props.disabled} customStyle={styles.footerButtonStyle} onPress={()=> this.saveKanban()}>SAVE</Button>
@@ -65,7 +65,7 @@ const styles = {
   },
   kanbanHeaderStyle: {
     alignSelf: 'flex-start',
-    borderBottomColor: 'red',
+    borderBottomColor: '#E62B5A',
     borderBottomWidth: 1,
     padding: 5,
     marginLeft: 30,

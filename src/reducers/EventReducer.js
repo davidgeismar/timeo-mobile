@@ -1,7 +1,9 @@
-import { RESET_INFO, SAVE_TASK, SAVE_KANBAN, UPDATE_EVENT_COMMENT, UPDATE_EVENT_PROJECT, UPDATE_INTERVAL, CREATE_EVENT, SET_CURRENT_EVENT, UPDATE_EVENT_DURATION, UPDATE_EVENT_ACTION, EDIT_EVENT_HOUR, EDIT_EVENT_MINUTE, DELETE_EVENT, UPDATE_EVENT_CLIENT, STOP_CHRONO} from '../actions/types';
+import {RESET_INFO, SAVE_TASK, SAVE_KANBAN, UPDATE_EVENT_COMMENT, UPDATE_EVENT_PROJECT, UPDATE_INTERVAL, CREATE_EVENT, SET_CURRENT_EVENT, UPDATE_EVENT_DURATION, UPDATE_EVENT_ACTION, EDIT_EVENT_HOUR, EDIT_EVENT_MINUTE, DELETE_EVENT, UPDATE_EVENT_CLIENT, STOP_CHRONO} from '../actions/types';
 
 const INITIAL_STATE = { events: [], currentEventId: null}
 
+
+// chaque event devra probablement avoir un tabState pour savoir quelle tabs doivent etre activée
 export const EventReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
@@ -94,6 +96,17 @@ export const EventReducer = (state = INITIAL_STATE, action) => {
       events[index] = event
       console.log(event)
       return {...state, events: events}
+    // case UPDATE_EVENT_TABBAR_STATE:
+    //   console.log('in UPDATE_EVENT_TABBAR_STATE')
+    //   console.log(action.payload)
+    //   events = [...state.events];
+    //   index = events.findIndex(event => event.id === action.payload.currentEventId)
+    //   event = {...events[index]}
+    //   console.log(event)
+    //   event.tabs = action.payload.tabs
+    //   events[index] = event
+    //   console.log(event)
+    return {...state, events: events}
     case RESET_INFO:
       return  {...state, currentEventId: null}
     default:

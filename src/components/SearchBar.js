@@ -5,18 +5,26 @@ import * as actions from '../actions';
 import Button from './common/Button';
 import {Actions} from 'react-native-router-flux'
 import Close from './assets/Close.js'
-
-
-// import * as actions from '../actions';
+import Search from './assets/Search.js'
 
 class SearchBar extends Component {
-  render() {
-    console.log('in SearchBar')
-    console.log(this.props)
-    const {containerStyle} = styles
-    return (
+  componentWillMount(){
+    this.setState({
+      expanded: false
+    })
+  }
+
+  updateExpansionStatus(expanded){
+    this.setState({expanded: expanded})
+    this.props.updateSearchTaskStatus(expanded)
+  }
+
+ renderSearchBar(){
+   const {containerStyle} = styles
+    if (this.state.expanded){
+      return(
         <View style={containerStyle}>
-          <TouchableOpacity onPress={this.props.closeAction} >
+          <TouchableOpacity onPress={() => this.updateExpansionStatus(false)} >
             <Close style={{height: 15, width: 15}}/>
           </ TouchableOpacity>
           <TextInput
@@ -24,6 +32,23 @@ class SearchBar extends Component {
             placeholder="Search"
           />
         </View>
+      )
+    }
+    else {
+      return(
+        <TouchableOpacity style={this.props.customStyle} onPress= {() => this.updateExpansionStatus(true)}>
+          <Search style={{height: 24, width: 24}}/>
+        </TouchableOpacity>
+      )
+    }
+  }
+  render() {
+    console.log('in SearchBar')
+    console.log(this.props)
+    return (
+      <View style={{flex: 1, alignSelf: 'center'}}>
+        { this.renderSearchBar() }
+      </View>
     )
   }
 }
@@ -40,4 +65,4 @@ const styles = {
 
 
 
-export default SearchBar;
+export default connect(null, actions)(SearchBar);

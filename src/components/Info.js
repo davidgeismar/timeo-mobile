@@ -11,6 +11,8 @@ import * as utilities from '../lib/Utilities';
 import TimeFormatter from 'minutes-seconds-milliseconds';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
 import Footer from './common/Footer'
+import StylishInput from './common/StylishInput'
+import TabBar from './TabBar';
 
 
 // import * as actions from '../actions';
@@ -58,37 +60,40 @@ class Info extends Component {
     const {comment, hour, minute, action, clientName, project, timerKind, timerValue, eventId, kanban, task} = this.props
     const {containerStyle, formWrapperStyle, footerStyle, svgStyle} = styles
     return (
-      <View style={containerStyle}>
-        <View style={formWrapperStyle}>
-          {this.renderProject(project)}
-          <LinkCard customStyle={{margin: 5, padding:3}}  onPress={() => Actions.client()}>{clientName}</LinkCard>
-          <LinkCard customStyle={{margin: 5, padding:3}}  onPress={() => Actions.time()}>{timerKind == "chrono" ? TimeFormatter(timerValue) : utilities.formatDuration(hour, minute)}</LinkCard>
-          <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => Actions.actionList()}>{action}</LinkCard>
-          <View style={{flexDirection: 'row', width: '100%'}}>
-            {this.renderKanbanInfo(kanban)}
-            {this.renderTaskInfo(task)}
+
+        <View style={containerStyle}>
+          <TabBar/>
+          <View style={formWrapperStyle}>
+            {this.renderProject(project)}
+            <LinkCard customStyle={{margin: 5, padding:3}}  onPress={() => Actions.client()}>{clientName }</LinkCard>
+            <LinkCard customStyle={{margin: 5, padding:3}}  onPress={() => Actions.time()}>{timerKind == "chrono" ? TimeFormatter(timerValue) : utilities.formatDuration(hour, minute)}</LinkCard>
+            <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => Actions.actionList()}>{action}</LinkCard>
+            <View style={{flexDirection: 'row', width: '100%'}}>
+              {this.renderKanbanInfo(kanban)}
+              {this.renderTaskInfo(task)}
+            </View>
+
+            <StylishInput
+              style={{height: 40, width: '100%', borderBottomColor: 'grey', borderBottomWidth: 1 }}
+              placeholder="Comments"
+              onChangeText={(comment) => this.props.updateEventComment(comment, eventId)}
+              value={comment}
+            />
+
           </View>
-          <TextInput
-            style={{height: 40, width: '100%', borderBottomColor: 'grey', borderBottomWidth: 1 }}
-            placeholder="Comments"
-            onChangeText={(comment) => this.props.updateEventComment(comment, eventId)}
-            value={comment}
-          />
+          <Footer>
+            <View style={styles.footerButtonsWrapper}>
+              <TouchableOpacity onPress={()=>{this.showDocumentPicker()}}>
+                <Attachment style={svgStyle} fill="#8CCDF8"/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={()=>{this.props.loadProjectKanbans(project.id)}}>
+                <Kameo style={svgStyle} fill='red'/>
+              </TouchableOpacity>
+              <Button customStyle={styles.footerButtonStyle}onPress={()=> Actions.events()} >SAVE</Button>
+            </View>
+          </Footer>
         </View>
 
-
-        <Footer>
-          <View style={styles.footerButtonsWrapper}>
-            <TouchableOpacity onPress={()=>{this.showDocumentPicker()}}>
-              <Attachment style={svgStyle} fill="#8CCDF8"/>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=>{this.props.loadProjectKanbans(project.id)}}>
-              <Kameo style={svgStyle} fill='red'/>
-            </TouchableOpacity>
-            <Button customStyle={styles.footerButtonStyle}onPress={()=> Actions.events()} >SAVE</Button>
-          </View>
-        </Footer>
-      </View>
     )
 
   }
@@ -97,8 +102,6 @@ class Info extends Component {
 const styles = {
   containerStyle: {
     flex: 1,
-    width: '100%',
-    height: '100%',
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'white',
@@ -133,7 +136,7 @@ const mapStateToProps = (state) => {
              minute: event.duration.selectedMinute,
              timerValue: event.duration.timerValue,
              timerKind: event.duration.kind,
-             clientName: event.client ? event.client.name : '',
+             clientName: event.client ? event.client.name : 'client',
              project: event.project,
              action: event.action != "" ? event.action : "Actions",
              comment: event.comment,

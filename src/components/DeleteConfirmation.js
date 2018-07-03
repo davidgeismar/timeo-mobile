@@ -20,7 +20,7 @@ class DeleteConfirmation extends Component {
         <Text style= {{color: 'white'}}>
           1h5min
         </Text>
-        <Footer customStyle={{backgroundColor: 'red'}} >
+        <Footer customStyle={{backgroundColor: '#E62B5A'}} >
           <View style={styles.footerButtonsWrapper}>
             <Button customStyle={styles.footerButtonStyle} onPress={()=>Actions.events()}>NO</Button>
             <Button customStyle={styles.footerButtonStyle} onPress={()=> this.props.deleteEvent(this.props.eventId)}>YES</Button>
@@ -36,7 +36,7 @@ const styles = {
   containerStyle: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'red',
+    backgroundColor: '#E62B5A',
     alignContent: 'baseline',
     alignItems: 'center'
   },

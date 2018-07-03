@@ -39,7 +39,7 @@ class TimeCard extends Component {
 const styles = {
   smallContainerStyle: {
     flex: 1,
-    borderColor: '#8CCDF8',
+    borderColor: '#00AFFA',
     borderWidth: 2,
     margin: 5
   },
@@ -47,7 +47,7 @@ const styles = {
     width: '90%',
     height: 150,
     margin: 10,
-    borderColor: '#8CCDF8',
+    borderColor: '#00AFFA',
     borderWidth: 2,
     justifyContent: 'center',
     alignItems: 'center'
