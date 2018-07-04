@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity} from 'react-native'
-import {connect} from 'react-redux';
-import Avatar from './Avatar';
+import { View, Text} from 'react-native'
+import { connect } from 'react-redux';
 import Footer from './common/Footer';
 import Button from './common/Button';
-import {Actions} from 'react-native-router-flux'
-import Chrono from './assets/Chrono';
-import * as actions from '../actions';
+import { Actions } from 'react-native-router-flux'
+import { deleteEvent } from '../actions';
 
 // import * as actions from '../actions';
 
@@ -58,7 +56,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(DeleteConfirmation)
+export default connect(mapStateToProps, {deleteEvent})(DeleteConfirmation)
 
 // const mapStateToProps = state => {
 //   console.log('in mapstatetoprops authorlist')

@@ -2,8 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback} from 'react-native'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
-import {Actions} from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux'
 
 // import * as actions from '../actions';
 
@@ -27,10 +26,6 @@ const styles = {
   containerStyle: {
     borderColor: '#8CCDF8',
     borderWidth: 2,
-  },
-  textStyle: {
-    fontSize: 15,
-    alignSelf:'center',
   }
 };
 
@@ -52,4 +47,4 @@ const mapStateToProps = (state, ownProps) => {
   // return { authorsData: state.authorsData };
 };
 
-export default connect(mapStateToProps, actions)(Task);
+export default connect(mapStateToProps, null)(Task);

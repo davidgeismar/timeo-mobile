@@ -1,20 +1,42 @@
 
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Text} from 'react-native'
+import { View, TouchableOpacity, Text } from 'react-native'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
-import {Actions} from 'react-native-router-flux';
-import TimeFormatter from 'minutes-seconds-milliseconds'
+import { createEvent, activateTab, stopChrono, setChronoRunning } from '../actions';
+import { Actions } from 'react-native-router-flux';
 import Button from './common/Button'
 import Footer from './common/Footer'
 import Chrono from './assets/Chrono'
 import Avatar from './Avatar'
+import TabBar from './TabBar'
 import ResumeChronoButton from './ResumeChronoButton'
 import SelectChronoButton from './SelectChronoButton'
+import * as utilities from '../lib/Utilities';
 // import * as actions from '../actions';
 
 class Starter extends Component {
 
+  renderTabBar(){
+    if (this.props.hasRun){
+      console.log('rendering tabbar')
+      return (
+        <TabBar />
+      )
+    }
+  }
+  renderAvatar(){
+    if (!this.props.isRunning && !this.props.hasRun){
+      return(
+        <Avatar
+          size="small"
+          rounded
+          source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"}}
+          onPress={() => Actions.events()}
+          activeOpacity={0.7}
+          />
+      )
+    }
+  }
   renderButtons(){
     if (this.props.isRunning && !this.props.isSaved && !this.props.onHold){
       console.log('in isRunning')
@@ -83,8 +105,26 @@ class Starter extends Component {
         timerValue = 0
       }
       return(
-        <View>
-          <Text>{TimeFormatter(timerValue) } </Text>
+        <View style={styles.chronoContainer}>
+          <Text style={[styles.hoursStyle, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
+            {utilities.spitHours(timerValue)}
+          </Text>
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={[styles.minutesStyle, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
+              {utilities.spitMinutes(timerValue)}
+            </Text>
+            <Text style={[{fontSize: 40}, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
+              MN
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent:'center', alignItems: 'center'}}>
+            <Text style={[styles.secondsStyle, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
+              {utilities.spitSeconds(timerValue)}
+            </Text>
+            <Text style={[{fontSize: 20}, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
+              SEC
+            </Text>
+          </View>
         </View>
       )
     }
@@ -100,14 +140,9 @@ class Starter extends Component {
   render() {
     return (
       <View style={styles.containerStyle}>
+        {this.renderTabBar()}
         <View style={styles.avatarWrapperStyle}>
-          <Avatar
-            size="small"
-            rounded
-            source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"}}
-            onPress={() => Actions.events()}
-            activeOpacity={0.7}
-            />
+          {this.renderAvatar()}
         </View>
         <View style={styles.chronoWrapperStyle}>
           {this.renderChrono()}
@@ -121,6 +156,25 @@ class Starter extends Component {
 }
 
 const styles = {
+  chronoContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    flex: 1
+  },
+  hoursStyle: {
+    alignSelf: 'flex-start',
+    fontSize: 40,
+    color: 'orange'
+  },
+  minutesStyle: {
+    fontSize: 130,
+    color: 'orange'
+  },
+  secondsStyle: {
+    fontSize: 40,
+    color: 'orange',
+    alignSelf: 'flex-end'
+  },
   basicButtonStyle: {
     width: 200
   },
@@ -135,11 +189,8 @@ const styles = {
   },
   containerStyle: {
     flex: 1,
-    width: '100%',
-    height: '100%',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-around'
   },
   avatarWrapperStyle: {
     alignSelf: 'flex-end',
@@ -148,7 +199,7 @@ const styles = {
   },
   chronoWrapperStyle: {
     flex: 1,
-    marginTop: '30%'
+    marginTop: 60 // height of tabbar
   },
   svgStyle: {
     height: 180,
@@ -172,6 +223,7 @@ const mapStateToProps = (state) => {
         isChrono: true,
         isSaved: true,
         isRunning: event.duration.isRunning,
+        hasRun: event.duration.hasRun,
         chronoStart: event.duration.chronoStart,
         timerValue: event.duration.timerValue,
         eventId: event.id
@@ -185,9 +237,10 @@ const mapStateToProps = (state) => {
     }
   }
   else {
-    console.log('no currrent event')
-    console.log(state )
+    console.log('no currrent event yo')
+    console.log(state)
     return {
+      hasRun: state.chrono.hasRun,
       isRunning: state.chrono.isRunning,
       isSaved: state.chrono.isSaved,
       chronoValue: state.chrono.chronoValue,
@@ -197,4 +250,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(Starter);
+
+export default connect(mapStateToProps, { createEvent, activateTab, stopChrono, setChronoRunning })(Starter);

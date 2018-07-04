@@ -1,4 +1,6 @@
-import { RESET_INFO, LOAD_CLIENT_PROJECTS, SELECT_ACTION } from '../actions/types';
+import { RESET_INFO,
+         LOAD_CLIENT_PROJECTS,
+         SELECT_ACTION } from '../actions/types';
 
 const INITIAL_STATE = []
 const PROJECTS = [{id: 1, name: 'Edulib', clientId: 1}, {id: 2, name: 'Edulib 2018', clientId: 1}, {id: 3, name: 'Gestion Utilisateur', clientId: 2}]

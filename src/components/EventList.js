@@ -1,9 +1,9 @@
 
 import React, { Component } from 'react';
-import { View} from 'react-native'
+import { View } from 'react-native'
 import { connect } from 'react-redux';
-import {Actions} from 'react-native-router-flux'
-import * as actions from '../actions';
+import { Actions } from 'react-native-router-flux'
+import { setCurrentEvent, resetAppInfo } from '../actions';
 import Button from './common/Button'
 import Footer from './common/Footer'
 import Event from './Event'
@@ -54,20 +54,10 @@ const styles = {
   footerButtonStyle: {
     width: 180
   },
-  avatarWrapperStyle: {
-    alignSelf: 'flex-end',
-    marginTop: 30,
-    marginRight: 20
-  },
   eventsWrapperStyle: {
     marginTop: 50,
     padding: 30,
     width: '100%'
-  },
-  buttonWrapperStyle: {
-    marginBottom: 100,
-    width: '100%'
-
   }
 };
 
@@ -78,4 +68,4 @@ const mapStateToProps = (state) => {
   console.log(state.eventsData.currentEventId)
   return { events: state.eventsData.events, currentEventId: state.eventsData.currentEventId}
 }
-export default connect(mapStateToProps, actions)(EventList);
+export default connect(mapStateToProps, { setCurrentEvent, resetAppInfo })(EventList);

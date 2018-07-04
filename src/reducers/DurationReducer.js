@@ -1,4 +1,7 @@
-import { RESET_INFO, SELECT_HOUR, SELECT_MINUTE, START_CHRONO } from '../actions/types';
+import { RESET_INFO,
+         SELECT_HOUR,
+         SELECT_MINUTE,
+         START_CHRONO } from '../actions/types';
 
 const INITIAL_STATE = {
   selectedHour: null,

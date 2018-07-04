@@ -1,9 +1,9 @@
 
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Switch} from 'react-native';
 import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
-import * as actions from '../actions';
+import { removeSelectedTask, saveTask } from '../actions';
 import Button from './common/Button';
 import Footer from './common/Footer';
 import LinkCard from './LinkCard';
@@ -41,19 +41,21 @@ class TaskList extends Component {
     }
     return (
         taskblocks
-
     )
   }
   renderExtras(){
     if (!this.props.searchInit){
       return (
         <View style={{height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-          <Text style={{color: '#8CCDF8', borderBottomColor: 'red', borderBottomWidth: 1, padding: 5}}>
+          <Text style={{color: '#00AFFA', borderBottomColor: 'red', borderBottomWidth: 1, padding: 5}}>
             Link to a Kameo Task
           </Text>
-          <Text  style={{}}>
+
+          <Text  style={{color: '#00AFFA'}}>
             my tasks
           </Text>
+          <Switch 
+            style={{ transform: [{ scaleX: .8 }, { scaleY: .8 }] }}/>
         </View>
       )
     }
@@ -84,17 +86,17 @@ class TaskList extends Component {
     }
   }
   render() {
-    const { containerStyle, tasksWrapperStyle, footerStyle} = styles
+    const { containerStyle, footerButtonsWrapper, footerButtonStyle} = styles
     return (
       <View style={{height: '100%'}}>
         <View style={containerStyle}>
           {this.renderHeader()}
-          {this.renderSelectedKanban()}
+          {this.renderSelectedKanban(this.props.selectedKanban)}
           {this.renderTasks()}
         </View>
         <Footer customStyle={{backgroundColor: '#E62B5A'}}>
-          <View style={styles.footerButtonsWrapper}>
-            <Button customStyle={styles.footerButtonStyle} onPress={()=> this.props.removeSelectedTask()}>CANCEL</Button>
+          <View style={ footerButtonsWrapper }>
+            <Button customStyle={ footerButtonStyle } onPress={()=> this.props.removeSelectedTask()}>CANCEL</Button>
             <Button disabled={this.props.disabled} customStyle={styles.footerButtonStyle} onPress={()=> this.saveTask()}>SAVE</Button>
           </View>
         </Footer>
@@ -144,4 +146,4 @@ const mapStateToProps = (state) => {
            disabled: disabled
          }
 }
-export default connect(mapStateToProps, actions)(TaskList);
+export default connect(mapStateToProps, { removeSelectedTask, saveTask })(TaskList);

@@ -43,7 +43,6 @@ class RouterComponent  extends Component {
             leftTitle="Logout"
             key='starter'
             component={Starter}
-            title='START'
             initial
             />
             <Scene
@@ -53,6 +52,8 @@ class RouterComponent  extends Component {
             <Scene
               key='taskList'
               component={TaskList}
+              hideNavBar
+              initial
               />
 
              <Scene key='chrono' hideNavBar component={Starter}/>

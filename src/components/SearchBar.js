@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity} from 'react-native'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import { updateSearchTaskStatus } from '../actions';
 import Button from './common/Button';
-import {Actions} from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux'
 import Close from './assets/Close.js'
 import Search from './assets/Search.js'
 
@@ -20,10 +20,10 @@ class SearchBar extends Component {
   }
 
  renderSearchBar(){
-   const {containerStyle} = styles
+   const { containerStyle } = styles
     if (this.state.expanded){
       return(
-        <View style={containerStyle}>
+        <View style={ containerStyle }>
           <TouchableOpacity onPress={() => this.updateExpansionStatus(false)} >
             <Close style={{height: 15, width: 15}}/>
           </ TouchableOpacity>
@@ -65,4 +65,4 @@ const styles = {
 
 
 
-export default connect(null, actions)(SearchBar);
+export default connect(null, { updateSearchTaskStatus })(SearchBar);

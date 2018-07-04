@@ -1,9 +1,9 @@
 
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback} from 'react-native'
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity, Dimensions} from 'react-native'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
-import {Actions} from 'react-native-router-flux'
+import { setCurrentTask } from '../actions';
+import { Actions } from 'react-native-router-flux'
 import Avatar from './Avatar';
 
 import Task from './Task';
@@ -12,17 +12,34 @@ import Task from './Task';
 
 class TaskBlock extends Component {
 
+  componentWillMount(){
+    this.setState({
+      visible: true
+    })
+  }
+  hideTaskBlock(){
+    this.setState({
+      visible: false
+    })
+  }
+  showTaskBlock(){
+    this.setState({
+      visible: true
+    })
+  }
+
   renderTasks(tasks){
     console.log('in render tasks')
     console.log(tasks)
+
     return tasks.map(
               task => <Task
-                        customStyle={{width: '100%', height: 80, margin: 5, justifyContent: 'flex-start', alignItems: ''}}
+                        customStyle={{width: 300, height: 80, margin: 5,}}
                         onPress={()=> this.props.setCurrentTask(task)}
                         canBeActivated={true}
                         activationKey={task.id}
-                              >
-                        <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', width: '100%', height: '100%', padding: 4}}>
+                        >
+                        <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', padding: 4}}>
                           <Text style={{ fontSize: 10, color: '#8CCDF8'}}>
                             {task.clientName} {task.projectName} > {task.status} > {task.taskNumber}
                           </Text>
@@ -49,21 +66,36 @@ class TaskBlock extends Component {
   render() {
     console.log('in render taskblock')
     console.log(this.props.tasks)
-    return (
-      <View style={{borderLeftColor: '#8CCDF8', borderLeftWidth: 2, width: '82%', marginBottom: 10}}>
-        {this.renderTasks(this.props.tasks)}
-      </View>
-    )
+    if (this.state.visible) {
+      return (
+        <View style={{width: '100%', flexDirection: 'row', justifyContent: 'center'}} >
+          <TouchableOpacity style={{position: 'absolute', left: 0, top: 13}} onPress={()=> this.hideTaskBlock()}>
+            <Text style={{transform: [{ rotate: '-90deg'}], fontSize: 14, color: '#BFBFBF'}}>
+              {this.props.tasks[0]['status']}
+            </Text>
+          </TouchableOpacity>
+          <View style={{borderLeftColor: '#8CCDF8', borderLeftWidth: 2, marginBottom: 10}}>
+            {this.renderTasks(this.props.tasks)}
+          </View>
+        </View>
+      )
+    }
+    else {
+      const marginLeft = ((Dimensions.get("window").width - 300)/2)- 10
+      return (
+        <View style={{alignSelf: 'flex-start', marginLeft: marginLeft, marginBottom: 10 }}>
+          <TouchableOpacity onPress={()=> this.showTaskBlock()}>
+            <Text style={{fontSize: 14, color: '#BFBFBF'}}>
+              {this.props.tasks[0]['status']}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )
+    }
   }
 }
 
-const styles = {
-};
 
-const mapStateToProps = (state, ownProps) => {
-  console.log('in mapStateToProps Taskblock')
-  return {
-  }
-};
 
-export default connect(mapStateToProps, actions)(TaskBlock);
+
+export default connect(null, { setCurrentTask })(TaskBlock);

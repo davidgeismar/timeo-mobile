@@ -1,4 +1,7 @@
-import {RESET_INFO, SET_CURRENT_KANBAN, LOAD_PROJECT_KANBANS, DELETE_SELECTED_KANBAN } from '../actions/types';
+import { RESET_INFO,
+         SET_CURRENT_KANBAN,
+         LOAD_PROJECT_KANBANS,
+         DELETE_SELECTED_KANBAN } from '../actions/types';
 
 const INITIAL_STATE = {list: [], selectedKanban: null}
 const KANBANS = [{id: 1, name: 'Edulib Lot 3', projectId: 1}, {id: 2, name: 'test & recette', projectId: 1}, {id: 3, name: 'Ascenceur', projectId: 2}]

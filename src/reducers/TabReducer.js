@@ -1,4 +1,6 @@
-import { SET_CURRENT_EVENT_TABBAR_STATE, ACTIVATE_TAB, RESET_INFO } from '../actions/types';
+import { SET_CURRENT_EVENT_TABBAR_STATE,
+         ACTIVATE_TAB,
+         RESET_INFO } from '../actions/types';
 
 const INITIAL_STATE = {
   activeTab: null,

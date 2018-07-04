@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity} from 'react-native'
-import {connect} from 'react-redux';
+import { View, TouchableOpacity} from 'react-native'
+import { connect } from 'react-redux';
 import Avatar from './Avatar';
-import {Actions} from 'react-native-router-flux'
-import * as actions from '../actions';
+import { Actions } from 'react-native-router-flux'
 import Chrono from './assets/Chrono';
 
 // import * as actions from '../actions';
@@ -24,9 +23,6 @@ class Tab extends Component {
   }
 }
 
-const styles = {
-
-};
 
 const mapStateToProps = (state, ownProps) => {
   let active;
@@ -46,7 +42,7 @@ const mapStateToProps = (state, ownProps) => {
   return { active, disabled}
 }
 
-export default connect(mapStateToProps, actions)(Tab)
+export default connect(mapStateToProps, null)(Tab)
 
 // const mapStateToProps = state => {
 //   console.log('in mapstatetoprops authorlist')

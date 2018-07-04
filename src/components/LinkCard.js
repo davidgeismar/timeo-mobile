@@ -2,8 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback} from 'react-native'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
-import {Actions} from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux'
 
 // import * as actions from '../actions';
 
@@ -55,7 +54,6 @@ const mapStateToProps = (state, ownProps) => {
      active = false
    }
    return { active }
-  // return { authorsData: state.authorsData };
 };
 
-export default connect(mapStateToProps, actions)(LinkCard);
+export default connect(mapStateToProps, null)(LinkCard);

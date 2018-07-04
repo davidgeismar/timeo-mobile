@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import UpdateTime from './assets/UpdateTime';
 
 class SelectChronoButton extends Component {

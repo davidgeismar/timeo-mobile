@@ -24,7 +24,7 @@ class Event extends Component {
   render() {
     // destructuring
     const { creationDate, creationTime, client, action, duration, task, project } = this.props.event;
-    const {textWrapperStyle, svgStyle, containerStyle, textStyle } = styles
+    const { textWrapperStyle, svgStyle, containerStyle, textStyle } = styles
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <TouchableWithoutFeedback onPress={this.props.onPress}>
@@ -47,13 +47,12 @@ class Event extends Component {
             </View>
             <View style={textWrapperStyle}>
               <Text style={textStyle}>
-              {duration.kind == "chrono" ? TimeFormatter(duration.timerValue) : utilities.formatDuration(duration.selectedHour, duration.selectedMinute)}
+                { duration.kind == "chrono" ? TimeFormatter(duration.timerValue) : utilities.formatDuration(duration.selectedHour, duration.selectedMinute) }
               </Text>
             </View>
             <View style={textWrapperStyle}>
               <Text>
-              {this.renderIcon()}
-
+                {this.renderIcon()}
               </Text>
             </View>
           </View>

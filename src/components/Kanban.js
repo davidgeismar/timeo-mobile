@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback} from 'react-native'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
-import {Actions} from 'react-native-router-flux'
+import { setCurrentKanban } from '../actions';
+import { Actions } from 'react-native-router-flux'
 
 // import * as actions from '../actions';
 
@@ -35,10 +35,6 @@ const styles = {
   textStyle: {
     fontSize: 50,
     alignSelf:'center',
-  },
-  smallTextStyle: {
-    fontSize: 15,
-    alignSelf:'center',
   }
 };
 
@@ -56,4 +52,4 @@ const mapStateToProps = (state, ownProps) => {
    return { active, currentEventId: state.eventsData.currentEventId }
 };
 
-export default connect(mapStateToProps, actions)(Kanban);
+export default connect(mapStateToProps, { setCurrentKanban } )(Kanban);

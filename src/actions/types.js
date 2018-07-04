@@ -1,6 +1,6 @@
 export const SELECT_HOUR = 'select_hour';
 export const SELECT_MINUTE = 'select_minute';
-export const SELECT_ACTION = 'select_action';
+export const SELECT_ACTION = 'select_action'; // dont think I need this
 export const CREATE_EVENT = 'create_event';
 export const SET_CURRENT_EVENT = 'set_current_event';
 export const UPDATE_EVENT_DURATION = 'update_event_duration';

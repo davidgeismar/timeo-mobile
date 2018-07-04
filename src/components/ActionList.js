@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View} from 'react-native'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import {updateEventAction} from '../actions';
 import {Actions} from 'react-native-router-flux'
 import LinkCard from './LinkCard'
 
@@ -45,4 +45,4 @@ const mapStateToProps = state => {
   return { selectedAction: state.selectedAction, currentEventId: state.eventsData.currentEventId };
 };
 
-export default connect(mapStateToProps, actions)(ActionList);
+export default connect(mapStateToProps, {updateEventAction})(ActionList);

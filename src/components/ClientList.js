@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { View} from 'react-native'
 import { connect } from 'react-redux';
-import {Actions} from 'react-native-router-flux'
-import * as actions from '../actions';
-import Button from './common/Button';
+import {updateEventClient} from '../actions';
 import LinkCard from './LinkCard';
 import TabBar from './TabBar';
 
@@ -20,7 +18,7 @@ class ClientList extends Component {
     )
   }
   render() {
-    const {containerStyle, eventsWrapperStyle, footerStyle} = styles
+    const {containerStyle, eventsWrapperStyle} = styles
     return (
       <View>
         <TabBar/>
@@ -41,21 +39,11 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatarWrapperStyle: {
-    alignSelf: 'flex-end',
-    marginTop: 30,
-    marginRight: 20
-  },
   eventsWrapperStyle: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: 10,
     width: '100%'
-  },
-  buttonWrapperStyle: {
-    marginBottom: 100,
-    width: '100%'
-
   }
 };
 
@@ -67,4 +55,4 @@ const mapStateToProps = (state) => {
            clients: state.clients
          }
 }
-export default connect(mapStateToProps, actions)(ClientList);
+export default connect(mapStateToProps, {updateEventClient} )(ClientList);

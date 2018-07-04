@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-flux'
-import * as actions from '../actions';
+import { activateTab } from '../actions';
 import Chrono from './assets/Chrono';
 import Absent from './assets/Absent';
 import Tab from './Tab';
@@ -32,9 +32,9 @@ class TabBar extends Component {
   }
 
   render() {
-    const {textStyle} = styles
+    const {textStyle, containerStyle, svgStyle } = styles
     return (
-      <View style={styles.containerStyle}>
+      <View style={containerStyle}>
           <Tab onPress={() => this.props.activateTab('chrono')} activationKey='chrono'>
             {this.renderIcon()}
           </Tab>
@@ -98,7 +98,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(TabBar)
+export default connect(mapStateToProps, { activateTab })(TabBar)
 
 // const mapStateToProps = state => {
 //   console.log('in mapstatetoprops authorlist')

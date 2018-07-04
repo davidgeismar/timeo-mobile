@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { View, ScrollView} from 'react-native'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
-import {Actions} from 'react-native-router-flux';
+import { activateTab, updateEventDuration, createEvent } from '../actions';
+import { Actions } from 'react-native-router-flux';
 import TimeCard from './TimeCard';
 import Button from './common/Button';
 import Footer from './common/Footer';
@@ -12,10 +12,7 @@ import TimeFormatter from 'minutes-seconds-milliseconds';
 
 
 
-// import * as actions from '../actions';
-
 class TimeCardList extends Component {
-
   renderHours(){
     var hours = [];
     for (var index = 0; index < 25; index++) {
@@ -77,20 +74,21 @@ class TimeCardList extends Component {
       }
     }
   render() {
+    const { containerStyle, buttonWrapperStyle } = styles
     return (
       <View style={{flex: 1}}>
         <TabBar/>
         <View style={{flexDirection: 'column', flex: 1}}>
           <View style={{flexDirection: 'row', flex: 1}}>
-              <ScrollView style={styles.containerStyle}>
+              <ScrollView style={containerStyle}>
                 {this.renderHours()}
               </ScrollView>
-              <ScrollView style={styles.containerStyle}>
+              <ScrollView style={containerStyle}>
                 {this.renderMinutes()}
               </ScrollView>
           </View>
           <Footer>
-            <View style={styles.buttonWrapperStyle}>
+            <View style={buttonWrapperStyle}>
               <Button customStyle={{width: '50%'}} onPress={()=>this.saveEvent()}>
                 Save
               </Button>
@@ -117,7 +115,6 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-
   }
 }
 
@@ -133,4 +130,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(TimeCardList);
+export default connect(mapStateToProps, { activateTab, updateEventDuration, createEvent })(TimeCardList);

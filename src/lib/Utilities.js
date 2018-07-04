@@ -16,3 +16,37 @@ export const formatDuration = (hour, min) => {
   }
   return hour+'h'+min+'min'
 }
+
+
+export const spitHours = (millis) => {
+  var moment = require('moment');
+  var duration = moment.duration(millis)
+
+  return format(duration.hours())
+
+}
+
+export const spitMinutes = (millis) => {
+  var moment = require('moment');
+  var duration = moment.duration(millis)
+
+  return format(duration.minutes())
+}
+
+export const spitSeconds = (millis) => {
+  var moment = require('moment');
+  var duration = moment.duration(millis)
+  return format(duration.seconds())
+}
+
+function format(duration){
+  if(!duration){
+    return '00';
+  } else if(('' + duration).length == 1){
+    return '0' + duration;
+  } else if(('' + duration).length == 3){
+    return ('' + duration).slice(0, 2);
+  } else {
+    return duration;
+  }
+}

@@ -35,11 +35,6 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  textStyle: {
-    fontSize: 15,
-    color: 'black',
-    alignSelf:'center',
   }
 };
 

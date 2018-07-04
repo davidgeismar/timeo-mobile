@@ -1,4 +1,8 @@
-import {RESET_INFO, SEARCH_TASK_INIT, SET_CURRENT_TASK, LOAD_KANBAN_TASKS, DELETE_SELECTED_TASK} from '../actions/types';
+import { RESET_INFO,
+         SEARCH_TASK_INIT,
+         SET_CURRENT_TASK,
+         LOAD_KANBAN_TASKS,
+         DELETE_SELECTED_TASK } from '../actions/types';
 
 
 const TASKS = [{id: 1, description: 'Tester Fonction 31/07', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Do', taskNumber: 'Edul-2691', kanbanId: 1},

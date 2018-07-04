@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity} from 'react-native'
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import { updateEventComment, loadProjectKanbans } from '../actions';
 import Button from './common/Button';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import Attachment from './assets/Attachment';
 import Kameo from './assets/Kameo';
 import LinkCard from './LinkCard';
@@ -156,4 +156,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, actions)(Info);
+export default connect(mapStateToProps, { updateEventComment, loadProjectKanbans })(Info);

@@ -1,4 +1,6 @@
 
+
+//  TO DELETE PROBABLY
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, TouchableOpacity} from 'react-native'
 import { connect } from 'react-redux';
@@ -33,23 +35,9 @@ const styles = {
     margin: 10,
     borderColor: '#8CCDF8',
     borderWidth: 2
-  },
-  textWrapperStyle: {
-    height: '100%',
-    borderLeftColor: 'grey',
-    borderLeftWidth: 1,
-    padding: 5
-  },
-  textStyle: {
-    fontSize: 9,
-    alignSelf:'center',
-  },
-  svgStyle: {
-    width: 30,
-    height: 30
   }
 };
 
 
 
-export default connect(null, actions)(Event);
+export default connect(null, actions)(Client);

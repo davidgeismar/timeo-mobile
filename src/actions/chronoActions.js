@@ -1,16 +1,22 @@
-import {START_CHRONO, SET_CHRONO_RUNNING, UPDATE_INTERVAL, STOP_CHRONO} from './types'
+import { SET_CHRONO_RUNNING,
+         UPDATE_INTERVAL,
+         STOP_CHRONO,
+        ACTIVATE_TAB } from './types'
 
-export const startChrono = () => {
-  return {
-    type: START_CHRONO,
-    payload: true
-  }
-}
 
-export const setChronoRunning = () =>{
-  return {
+const setChronoRunningSuccess = (dispatch) => {
+  dispatch({
     type: SET_CHRONO_RUNNING,
     payload: true
+  });
+  dispatch({
+    type: ACTIVATE_TAB,
+    payload: 'chrono'
+  });
+}
+export const setChronoRunning = (dispatch) =>{
+  return(dispatch) => {
+    setChronoRunningSuccess(dispatch)
   }
 }
 

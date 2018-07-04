@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { View, Text} from 'react-native';
 import { connect } from 'react-redux';
-import {Actions} from 'react-native-router-flux';
-import * as actions from '../actions';
+import { Actions } from 'react-native-router-flux';
+import { setCurrentKanban, saveKanban, removeSelectedKanban } from '../actions';
 import Button from './common/Button';
 import Footer from './common/Footer';
 import LinkCard from './LinkCard';
@@ -62,6 +62,7 @@ const styles = {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: 'white'
   },
   kanbanHeaderStyle: {
     alignSelf: 'flex-start',
@@ -99,4 +100,4 @@ const mapStateToProps = (state) => {
            disabled: disabled
          }
 }
-export default connect(mapStateToProps, actions)(KanbanList);
+export default connect(mapStateToProps, { setCurrentKanban, saveKanban, removeSelectedKanban } )(KanbanList);

@@ -1,4 +1,5 @@
-import {RESET_INFO, SELECT_ACTION} from '../actions/types';
+import { RESET_INFO,
+         SELECT_ACTION } from '../actions/types';
 
 const INITIAL_STATE = ''
 
