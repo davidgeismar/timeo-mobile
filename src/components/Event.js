@@ -51,9 +51,7 @@ class Event extends Component {
               </Text>
             </View>
             <View style={textWrapperStyle}>
-              <Text>
-                {this.renderIcon()}
-              </Text>
+              { this.renderIcon() }
             </View>
           </View>
         </TouchableWithoutFeedback>

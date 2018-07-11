@@ -14,7 +14,7 @@ class Task extends Component {
         onPress={this.props.onPress}
         canBeActivated={this.props.canBeActivated}
         activationKey={this.props.activationKey}>
-        <View style={[styles.containerStyle, this.props.customStyle]}  backgroundColor={this.props.active ? '#8CCDF8' : 'white'}>
+        <View style={[styles.containerStyle, this.props.customStyle]}  backgroundColor={this.props.kindColor} opacity={this.props.active ? 1 : 0.6}>
           {this.props.children}
         </View>
       </TouchableWithoutFeedback>
@@ -24,8 +24,6 @@ class Task extends Component {
 
 const styles = {
   containerStyle: {
-    borderColor: '#8CCDF8',
-    borderWidth: 2,
   }
 };
 

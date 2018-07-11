@@ -18,7 +18,7 @@ const styles = {
     width: '100%',
     bottom: 0,
     height: 130,
-    backgroundColor: 'white'
+    backgroundColor: '#FCFCFC'
 
   }
 };

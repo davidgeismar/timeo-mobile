@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Switch} from 'react-native';
 import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
-import { removeSelectedTask, saveTask } from '../actions';
+import { removeSelectedTask, saveTask, changeTaskListScope, searchTasks } from '../actions';
 import Button from './common/Button';
 import Footer from './common/Footer';
+import Header from './common/Header';
 import LinkCard from './LinkCard';
 import TaskBlock from './TaskBlock';
-import Header from './Header';
 import Avatar from './Avatar';
 import SearchBar from './SearchBar';
 
@@ -18,7 +18,6 @@ import SearchBar from './SearchBar';
 // how is it possible to transmit from child to parent without redux that seems
 
 class TaskList extends Component {
-
   renderTasks(){
     console.log('in renderTasks')
     console.log(this.props.tasks)
@@ -32,42 +31,72 @@ class TaskList extends Component {
         else{
           taskBuckets[status] = [tasks[i]]
         }
-        console.log(taskBuckets)
     }
-    console.log(taskBuckets)
+
     let taskblocks = []
     for (key in taskBuckets){
+      console.log(key)
+      console.log(taskBuckets[key])
       taskblocks.push(<TaskBlock tasks={taskBuckets[key]} status={key}/>)
     }
     return (
         taskblocks
     )
   }
-  renderExtras(){
+  renderSwitch(){
     if (!this.props.searchInit){
+      console.log('in renderExtras')
+      console.log(this.props.scope)
+      const switchValue = this.props.scope == 'current_user' ? false : true
+      console.log(switchValue)
       return (
-        <View style={{height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-          <Text style={{color: '#00AFFA', borderBottomColor: 'red', borderBottomWidth: 1, padding: 5}}>
+          <Switch
+            onValueChange={ (switchValue) => this.props.changeTaskListScope(switchValue) }
+            value={switchValue}
+            style={{ transform: [{ scaleX: .6 }, { scaleY: .6 }],   alignSelf: 'center' }}/>
+      )
+    }
+  }
+
+  renderTitle(){
+    if (!this.props.searchInit){
+      return(
+        <View style={{height: '100%', flexDirection: 'row', borderBottomWidth: 2, borderBottomColor: 'red'}}>
+          <Text style={{color: '#00AFFA',  alignSelf: 'center', borderBottomColor: 'red', borderBottomWidth: 1, fontSize: 12}}>
             Link to a Kameo Task
           </Text>
-
-          <Text  style={{color: '#00AFFA'}}>
-            my tasks
-          </Text>
-          <Switch 
-            style={{ transform: [{ scaleX: .8 }, { scaleY: .8 }] }}/>
         </View>
       )
     }
   }
 
+  renderToggle(){
+    if (!this.props.searchInit){
+      return (
+        <View style={{height: '100%', flexDirection: 'row'}}>
+          <Text  style={{color: '#00AFFA', fontSize: 12, alignSelf: 'center'}}>
+            my tasks
+          </Text>
+          {this.renderSwitch()}
+          <Text  style={{color: '#BFBFBF', fontSize: 12,   alignSelf: 'center'}}>
+            all
+          </Text>
+        </View>
+      )
+    }
+
+  }
+
   renderHeader(){
     const {taskHeaderStyle} = styles
     return (
-      <View style={taskHeaderStyle}>
-        {this.renderExtras()}
-        <SearchBar customStyle={{alignSelf: 'flex-end'}}/>
-      </View>
+      <Header>
+        {this.renderTitle()}
+        {this.renderToggle()}
+        <View style={{height: '100%', width: this.props.searchInit ? '90%' : null, flexDirection: 'row',   alignSelf: 'center', paddingRight: 15}}>
+          <SearchBar onChangeText={(value)=> this.props.searchTasks(value)}/>
+        </View>
+      </Header>
     )
   }
 
@@ -81,19 +110,19 @@ class TaskList extends Component {
     console.log('in renderSelectedKanban')
     if (selectedKanban){
       return (
-        <LinkCard customStyle={{width: '80%', height: 80, marginBottom: 10}} onPress={() => Actions.kanbanList()}>{selectedKanban.name}</LinkCard>
+        <LinkCard customStyle={{ alignSelf: 'center', width: 300, marginTop: 30, height: 80, marginBottom: 10}} onPress={() => Actions.kanbanList()}>{selectedKanban.name}</LinkCard>
       )
     }
   }
   render() {
     const { containerStyle, footerButtonsWrapper, footerButtonStyle} = styles
     return (
-      <View style={{height: '100%'}}>
-        <View style={containerStyle}>
-          {this.renderHeader()}
-          {this.renderSelectedKanban(this.props.selectedKanban)}
+      <View style={containerStyle}>
+        {this.renderHeader()}
+        {this.renderSelectedKanban(this.props.selectedKanban)}
+        <ScrollView>
           {this.renderTasks()}
-        </View>
+        </ScrollView>
         <Footer customStyle={{backgroundColor: '#E62B5A'}}>
           <View style={ footerButtonsWrapper }>
             <Button customStyle={ footerButtonStyle } onPress={()=> this.props.removeSelectedTask()}>CANCEL</Button>
@@ -108,8 +137,9 @@ class TaskList extends Component {
 
 const styles = {
   containerStyle: {
+    flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
+    justifyContent: 'center'
   },
   footerButtonsWrapper: {
     flex: 1,
@@ -143,7 +173,8 @@ const mapStateToProps = (state) => {
            searchInit: state.tasks.searchInit,
            selectedTask: state.tasks.selectedTask,
            eventId: state.eventsData.currentEventId,
+           scope: state.tasks.scope,
            disabled: disabled
          }
 }
-export default connect(mapStateToProps, { removeSelectedTask, saveTask })(TaskList);
+export default connect(mapStateToProps, { removeSelectedTask, saveTask, changeTaskListScope, searchTasks })(TaskList);

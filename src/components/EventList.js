@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native'
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux'
-import { setCurrentEvent, resetAppInfo } from '../actions';
+import { setCurrentEvent, resetAppInfo, logoutUser } from '../actions';
 import Button from './common/Button'
 import Footer from './common/Footer'
 import Event from './Event'
@@ -30,7 +30,7 @@ class EventList extends Component {
         <Footer>
           <View style={styles.footerButtonsWrapper}>
             <Button customStyle={styles.footerButtonStyle} onPress = {() => this.props.resetAppInfo()}>NEW</Button>
-            <Button customStyle={styles.footerButtonStyle}>SIGN OUT</Button>
+            <Button customStyle={styles.footerButtonStyle} onPress={() => this.props.logoutUser()}>SIGN OUT</Button>
           </View>
         </Footer>
       </View>
@@ -68,4 +68,4 @@ const mapStateToProps = (state) => {
   console.log(state.eventsData.currentEventId)
   return { events: state.eventsData.events, currentEventId: state.eventsData.currentEventId}
 }
-export default connect(mapStateToProps, { setCurrentEvent, resetAppInfo })(EventList);
+export default connect(mapStateToProps, { setCurrentEvent, resetAppInfo, logoutUser })(EventList);

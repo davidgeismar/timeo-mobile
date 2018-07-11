@@ -8,6 +8,7 @@ import { ProjectReducer } from './ProjectReducer';
 import { KanbanReducer } from './KanbanReducer';
 import { TaskReducer } from './TaskReducer';
 import { TabReducer } from './TabReducer';
+import { UserReducer } from './UserReducer';
 export default combineReducers({
   selectedDuration: DurationReducer,
   selectedAction: ActionReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
   projects: ProjectReducer,
   kanbans: KanbanReducer,
   tasks: TaskReducer,
+  user: UserReducer,
   tabs: TabReducer
 });

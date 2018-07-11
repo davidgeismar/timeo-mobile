@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity} from 'react-native'
 import { connect } from 'react-redux';
 import { updateSearchTaskStatus } from '../actions';
-import Button from './common/Button';
 import { Actions } from 'react-native-router-flux'
 import Close from './assets/Close.js'
 import Search from './assets/Search.js'
@@ -30,6 +29,7 @@ class SearchBar extends Component {
           <TextInput
             style={{height: 40, width: '100%', borderBottomColor: 'grey', borderBottomWidth: 1 }}
             placeholder="Search"
+            onChangeText={this.props.onChangeText}
           />
         </View>
       )

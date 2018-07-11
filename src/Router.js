@@ -36,14 +36,15 @@ class RouterComponent  extends Component {
         <Scene key='main'>
           <Scene
             key='login'
+            renderBackButton={()=>(null)}
             component={LoginForm}
             title='TIMEO'
+            initial
             />
           <Scene
             leftTitle="Logout"
             key='starter'
             component={Starter}
-            initial
             />
             <Scene
               key='actionList'
@@ -53,7 +54,6 @@ class RouterComponent  extends Component {
               key='taskList'
               component={TaskList}
               hideNavBar
-              initial
               />
 
              <Scene key='chrono' hideNavBar component={Starter}/>

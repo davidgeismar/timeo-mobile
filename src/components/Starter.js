@@ -60,7 +60,7 @@ class Starter extends Component {
       console.log('in basic')
       return(
         <View style={styles.buttonWrapperStyle}>
-          <Button customStyle={styles.basicButtonStyle} onPress={() => this.props.activateTab('time')}>Add</Button>
+          <Button customStyle={styles.basicButtonStyle} onPress={() => this.props.activateTab('time')}>ADD</Button>
         </View>
 
       )
@@ -191,6 +191,7 @@ const styles = {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor: 'white'
   },
   avatarWrapperStyle: {
     alignSelf: 'flex-end',
@@ -199,7 +200,7 @@ const styles = {
   },
   chronoWrapperStyle: {
     flex: 1,
-    marginTop: 60 // height of tabbar
+    marginTop: 120 // height of tabbar
   },
   svgStyle: {
     height: 180,

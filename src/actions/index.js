@@ -8,3 +8,4 @@ export * from './KanbanActions';
 export * from './ProjectActions'
 export * from './ResetActions'
 export * from './TaskActions'
+export * from './UserActions'

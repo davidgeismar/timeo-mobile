@@ -3,7 +3,10 @@ import { DELETE_SELECTED_TASK,
          SET_CURRENT_TASK,
          SAVE_TASK,
          SEARCH_TASK_INIT,
-         LOAD_KANBAN_TASKS} from './types'
+         LOAD_KANBAN_TASKS,
+         CHANGE_TASKLIST_SCOPE,
+         SEARCH_TASK
+       } from './types'
 
 
  const loadKanbanTasksSuccess = (dispatch, projectId) => {
@@ -22,6 +25,15 @@ import { DELETE_SELECTED_TASK,
    }
  }
 
+export const searchTasks= (query)=> {
+  console.log('in searchTasks');
+  return {
+    type: SEARCH_TASK,
+    payload: query
+  }
+
+}
+
 const removeSelectedTaskSuccess = (dispatch) => {
   dispatch({
     type: DELETE_SELECTED_TASK,
@@ -30,6 +42,25 @@ const removeSelectedTaskSuccess = (dispatch) => {
   Actions.info()
 }
 
+export const changeTaskListScopeSuccess = (dispatch, getState, scope) => {
+  console.log('in changeTaskListScopeSuccess')
+  const currentUserId = getState().user.id
+  console.log(scope)
+  console.log(currentUserId)
+  dispatch({
+    type: CHANGE_TASKLIST_SCOPE,
+    payload: { scope: scope,
+               currentUserId: currentUserId }
+  })
+}
+export const changeTaskListScope = (switchValue) => {
+  console.log('in changeTaskListScope')
+  const scope = switchValue ? 'all' : 'current_user'
+  console.log(scope)
+  return(dispatch, getState) => {
+    changeTaskListScopeSuccess(dispatch, getState, scope)
+  }
+}
 
 export const removeSelectedTask = () => {
   return(dispatch) => {

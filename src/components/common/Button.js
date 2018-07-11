@@ -6,7 +6,7 @@ class Button extends Component {
     const { buttonStyle, textStyle, disabledButtonStyle } = styles;
     return (
       <TouchableOpacity onPress={this.props.onPress}  style={[this.props.disabled ? disabledButtonStyle : buttonStyle, this.props.customStyle]} disabled={this.props.disabled}>
-        <Text style={[textStyle, this.props.disabled ? {color: '#BFBFBF', opacity: 0.4, borderColor: '#FCFCFC' } : {color: '#8CCDF8'}]}>
+        <Text style={[textStyle, this.props.disabled ? {color: "#00AFFA", opacity: 0.4, borderColor: '#FCFCFC' } : {color: '#8CCDF8'}]}>
           {this.props.children}
         </Text>
       </TouchableOpacity>

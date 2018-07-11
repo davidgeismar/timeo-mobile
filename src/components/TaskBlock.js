@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, TouchableOpacity, Dimensions} from 'react-native'
 import { connect } from 'react-redux';
-import { setCurrentTask } from '../actions';
+import { setCurrentTask, changeTaskListScope } from '../actions';
 import { Actions } from 'react-native-router-flux'
 import Avatar from './Avatar';
 
@@ -38,9 +38,10 @@ class TaskBlock extends Component {
                         onPress={()=> this.props.setCurrentTask(task)}
                         canBeActivated={true}
                         activationKey={task.id}
+                        kindColor={task.kindColor}
                         >
                         <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', padding: 4}}>
-                          <Text style={{ fontSize: 10, color: '#8CCDF8'}}>
+                          <Text style={{ fontSize: 10, color: 'white'}}>
                             {task.clientName} {task.projectName} > {task.status} > {task.taskNumber}
                           </Text>
                           <Text style={{fontSize: 10}}>
@@ -56,7 +57,7 @@ class TaskBlock extends Component {
                               />
                           </View>
                         </View>
-                        <Text style={{fontSize: 12, position: 'absolute', top: 3, right: 3, color: '#8CCDF8'}}>
+                        <Text style={{fontSize: 12, position: 'absolute', top: 3, right: 3, color: 'white'}}>
                           {task.creationDate}
                         </Text>
                       </Task>
@@ -98,4 +99,4 @@ class TaskBlock extends Component {
 
 
 
-export default connect(null, { setCurrentTask })(TaskBlock);
+export default connect(null, { setCurrentTask, changeTaskListScope })(TaskBlock);
