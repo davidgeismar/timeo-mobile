@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text} from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { setCurrentKanban, saveKanban, removeSelectedKanban } from '../actions';
+import { setCurrentKanban, updateEvent, removeSelectedKanban } from '../actions';
 import Button from './common/Button';
 import Footer from './common/Footer';
 import LinkCard from './LinkCard';
@@ -30,7 +30,7 @@ class KanbanList extends Component {
     console.log('in savekanban')
     console.log(this.props.eventId)
     console.log(this.props.selectedKanban)
-    this.props.saveKanban(this.props.eventId, this.props.selectedKanban)
+    this.props.updateEvent('kanban_id', this.props.selectedKanban.id, this.props.duration, this.props.measureKind, this.props.eventId)
   }
   render() {
     const { kanbanHeaderStyle, containerStyle, kanbansWrapperStyle, footerStyle} = styles
@@ -93,11 +93,15 @@ const styles = {
 const mapStateToProps = (state) => {
     console.log('in mapStateToProps kanbans')
   console.log(state)
+  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  console.log(event)
   const disabled = state.kanbans.selectedKanban ? false : true
   return { kanbans: state.kanbans.list,
            selectedKanban: state.kanbans.selectedKanban,
            eventId: state.eventsData.currentEventId,
-           disabled: disabled
+           disabled: disabled,
+           duration: event.duration,
+           measureKind: event.measure_kind,
          }
 }
-export default connect(mapStateToProps, { setCurrentKanban, saveKanban, removeSelectedKanban } )(KanbanList);
+export default connect(mapStateToProps, { setCurrentKanban, updateEvent, removeSelectedKanban } )(KanbanList);

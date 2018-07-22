@@ -1,7 +1,8 @@
 import { RESET_INFO,
          SAVE_TASK,
          SAVE_KANBAN,
-         UPDATE_EVENT_COMMENT,
+         UPDATE_EVENT,
+         UPDATE_CURRENT_EVENT_COMMENT,
          UPDATE_EVENT_PROJECT,
          UPDATE_INTERVAL,
          CREATE_EVENT,
@@ -12,30 +13,42 @@ import { RESET_INFO,
          EDIT_EVENT_MINUTE,
          DELETE_EVENT,
          UPDATE_EVENT_CLIENT,
-         STOP_CHRONO } from '../actions/types';
+         LOAD_EVENTS,
+         STOP_CHRONO,
+         SET_CURRENT_EVENT_TASK,
+         SET_EVENT_TO_DELETE
+       } from '../actions/types';
 
-const INITIAL_STATE = { events: [], currentEventId: null}
+const INITIAL_STATE = { events: [],
+                        currentEventId: null,
+                        currentEventComment: null,
+                        currentEventTask: null,
+                        eventToDelete: null
+                      }
 
 
 // chaque event devra probablement avoir un tabState pour savoir quelle tabs doivent etre activée
 export const EventReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
+    case SET_CURRENT_EVENT_TASK:
+      console.log('in reducer SET_CURRENT_EVENT_TASK')
+      console.log(action.payload)
+      return {...state, currentEventTask: action.payload}
+    case LOAD_EVENTS:
+      console.log('in reducer LOAD_EVENTS')
+      console.log(action.payload)
+      return {...state, events: action.payload}
     case CREATE_EVENT:
       console.log('in reducer CREATE_EVENT')
+      console.log(action.payload)
+      console.log([...state.events, action.payload])
       // pushé le payload dans le tableau d'event
       return {...state, events: [...state.events, action.payload]};
     case SET_CURRENT_EVENT:
         console.log('in reducer SET_CURRENT_EVENT');
-        return {...state, currentEventId: action.payload}
-    case UPDATE_EVENT_DURATION:
-      console.log('in reducer UPDATE_EVENT_DURATION')
-      let events = [...state.events];
-      const index = events.findIndex(event => event.id === action.payload.eventId)
-      let event = {...events[index]}
-      event.duration = action.payload.duration
-      events[index] = event
-      return {...state, events: events}
+        console.log(action.payload)
+        return { ...state, currentEventId: action.payload, currentEventComment: null}
     case UPDATE_EVENT_ACTION:
       console.log('in reducer UPDATE_EVENT_ACTION')
       events = [...state.events];
@@ -64,36 +77,18 @@ export const EventReducer = (state = INITIAL_STATE, action) => {
         console.log('in reducer DELETE_EVENT')
         console.log(action.payload)
         events = [...state.events];
-        index = events.findIndex(event => event.id === action.payload.eventId)
+        index = events.findIndex(event => event.id === action.payload)
         events.splice(index, 1);
         console.log(events)
         return {...state, events: events}
-    case UPDATE_EVENT_CLIENT:
-      console.log('in reducer UPDATE_EVENT_ACTION')
-      events = [...state.events];
-      index = events.findIndex(event => event.id === action.payload.eventId)
-      event = {...events[index]}
-      event.client = action.payload.client
-      events[index] = event
-      return {...state, events: events}
-    case UPDATE_EVENT_PROJECT:
-      console.log('in UPDATE_EVENT_PROJECT')
-      events = [...state.events];
-      index = events.findIndex(event => event.id === action.payload.eventId)
-      event = {...events[index]}
-      event.project = action.payload.project
-      events[index] = event
-      console.log(event)
-      return {...state, events: events}
-    case UPDATE_EVENT_COMMENT:
+    case SET_EVENT_TO_DELETE:
+      console.log('in reducer SET_EVENT_TO_DELETE')
+      console.log(action.payload)
+      return {...state, eventToDelete: action.payload}
+    case UPDATE_CURRENT_EVENT_COMMENT:
       console.log('in UPDATE_EVENT_COMMENT')
-      events = [...state.events];
-      index = events.findIndex(event => event.id === action.payload.eventId)
-      event = {...events[index]}
-      event.comment = action.payload.comment
-      events[index] = event
-      console.log(event)
-      return {...state, events: events}
+      console.log(action.payload)
+      return {...state, currentEventComment: action.payload}
     case SAVE_KANBAN:
       events = [...state.events];
       index = events.findIndex(event => event.id === action.payload.eventId)
@@ -110,16 +105,13 @@ export const EventReducer = (state = INITIAL_STATE, action) => {
       events[index] = event
       console.log(event)
       return {...state, events: events}
-    // case UPDATE_EVENT_TABBAR_STATE:
-    //   console.log('in UPDATE_EVENT_TABBAR_STATE')
-    //   console.log(action.payload)
-    //   events = [...state.events];
-    //   index = events.findIndex(event => event.id === action.payload.currentEventId)
-    //   event = {...events[index]}
-    //   console.log(event)
-    //   event.tabs = action.payload.tabs
-    //   events[index] = event
-    //   console.log(event)
+    case UPDATE_EVENT:
+      console.log('in reducer UPDATE_EVENT_NEW')
+      events = [...state.events];
+      index = events.findIndex(event => event.id === action.payload.id)
+      events[index] = action.payload
+      console.log(events)
+      return {...state, events: events}
     return {...state, events: events}
     case RESET_INFO:
       return  {...state, currentEventId: null}

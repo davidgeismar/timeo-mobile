@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { View, TextInput, TouchableOpacity} from 'react-native'
+import { View, TextInput, TouchableOpacity, ScrollView, Text} from 'react-native'
 import { connect } from 'react-redux';
-import { updateEventComment, loadProjectKanbans } from '../actions';
+import { updateEvent, updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients, loadClientProjects } from '../actions';
 import Button from './common/Button';
+import Spinner from './common/Spinner';
 import { Actions } from 'react-native-router-flux';
 import Attachment from './assets/Attachment';
 import Kameo from './assets/Kameo';
 import LinkCard from './LinkCard';
+import SmallTaskCard from './SmallTaskCard'
 import * as utilities from '../lib/Utilities';
 import TimeFormatter from 'minutes-seconds-milliseconds';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
@@ -18,27 +20,39 @@ import TabBar from './TabBar';
 // import * as actions from '../actions';
 
 class Info extends Component {
-  renderKanbanInfo(kanban){
+  renderKanbanInfo(kanbanName){
     console.log('renderKanbanInfo')
-    if (kanban) {
-      return <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => Actions.kanbanList()}>{kanban.name}</LinkCard>
+    if (kanbanName) {
+      return <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => Actions.kanbanList()}>{kanbanName}</LinkCard>
     }
   }
   renderTaskInfo(task){
     console.log('renderTaskInfo')
     if (task) {
-        return (<LinkCard customStyle={{margin: 5, padding:3, fontSize: 8, alignSelf: 'stretch'}} onPress={() => Actions.taskList()}>
-                {task.clientName} {task.projectName} > {task.status} > {task.taskNumber}
-                </LinkCard>
-            )
+        return (<SmallTaskCard
+                  customStyle={{margin: 5, padding:3,
+                                fontSize: 8, alignSelf: 'stretch',
+                                backgroundColor: '#8CCDF8'}}
+                  onPress={() => this.props.loadKanbanTasks(this.props.kanbanId)}
+                />)
+
     }
   }
 
-  renderProject(project){
+  renderProject(projectName){
     console.log('in renderProject')
-    if (project){
+    if (projectName){
       return (
-        <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => Actions.project()}>{project.name}</LinkCard>
+        <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.loadClientProjects(this.props.clientId)}>{projectName}</LinkCard>
+      )
+    }
+  }
+
+  renderClient(client){
+    console.log('in renderClient')
+    if (client){
+      return (
+        <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.fetchClients()}>{client}</LinkCard>
       )
     }
   }
@@ -56,27 +70,56 @@ class Info extends Component {
         );
       });
   }
+
+
+  formatDuration(ms){
+    let time = new Date(ms);
+    let hours = time.getUTCHours() < 10 ? `0${time.getUTCHours()}` : time.getUTCHours();
+    let minutes = time.getUTCMinutes() < 10 ? `0${time.getUTCMinutes()}` : time.getUTCMinutes();
+    let seconds = time.getUTCSeconds() < 10 ? `0${time.getUTCSeconds()}` : time.getUTCSeconds();
+    return hours + ":" + minutes + ":" + seconds
+  }
+
+  renderKameoButton(){
+    const {svgStyle} = styles
+    if (this.props.kanbans){
+      if (this.props.kanbans.length > 0){
+        return (
+          <TouchableOpacity onPress={()=> Actions.kanbanList()}>
+            <Kameo style={svgStyle} fill='red'/>
+          </TouchableOpacity>
+        )
+      }
+    }
+  }
+
   render() {
-    const {comment, hour, minute, action, clientName, project, timerKind, timerValue, eventId, kanban, task} = this.props
+    const {comment, hour, minute, kindName, clientName, projectName, projectId, timerKind, duration, eventId, kanbanName, task} = this.props
     const {containerStyle, formWrapperStyle, footerStyle, svgStyle} = styles
-    return (
+    console.log('blopppp')
+    console.log(comment)
+    if (this.props.loading) {
+      return <Spinner size="large" />;
+    }
+    else {
+      return (
 
         <View style={containerStyle}>
           <TabBar/>
           <View style={formWrapperStyle}>
-            {this.renderProject(project)}
-            <LinkCard customStyle={{margin: 5, padding:3}}  onPress={() => Actions.client()}>{clientName }</LinkCard>
-            <LinkCard customStyle={{margin: 5, padding:3}}  onPress={() => Actions.time()}>{timerKind == "chrono" ? TimeFormatter(timerValue) : utilities.formatDuration(hour, minute)}</LinkCard>
-            <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => Actions.actionList()}>{action}</LinkCard>
+            {this.renderProject(projectName)}
+            {this.renderClient(clientName)}
+            <LinkCard customStyle={{margin: 5, padding:3}}  onPress={() => this.props.activateTab('time')}>{this.formatDuration(duration)}</LinkCard>
+            <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.fetchActionKinds()}>{kindName}</LinkCard>
             <View style={{flexDirection: 'row', width: '100%'}}>
-              {this.renderKanbanInfo(kanban)}
+              {this.renderKanbanInfo(kanbanName)}
               {this.renderTaskInfo(task)}
             </View>
 
             <StylishInput
               style={{height: 40, width: '100%', borderBottomColor: 'grey', borderBottomWidth: 1 }}
               placeholder="Comments"
-              onChangeText={(comment) => this.props.updateEventComment(comment, eventId)}
+              onChangeText={(comment) => this.props.updateEventComment(comment)}
               value={comment}
             />
 
@@ -86,16 +129,14 @@ class Info extends Component {
               <TouchableOpacity onPress={()=>{this.showDocumentPicker()}}>
                 <Attachment style={svgStyle} fill="#8CCDF8"/>
               </TouchableOpacity>
-              <TouchableOpacity onPress={()=>{this.props.loadProjectKanbans(project.id)}}>
-                <Kameo style={svgStyle} fill='red'/>
-              </TouchableOpacity>
-              <Button customStyle={styles.footerButtonStyle}onPress={()=> Actions.events()} >SAVE</Button>
+              {this.renderKameoButton()}
+              <Button customStyle={styles.footerButtonStyle}onPress={()=>  this.props.updateEvent('subject', comment, duration, timerKind, eventId)} >SAVE</Button>
             </View>
           </Footer>
         </View>
 
     )
-
+    }
   }
 }
 
@@ -131,29 +172,48 @@ const mapStateToProps = (state) => {
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
   console.log(event)
   if (event){
+    let comment
+    if (state.eventsData.currentEventComment == ""){
+      comment = ""
+    }
+    else if (state.eventsData.currentEventComment == null && event.subject == null){
+      comment = ""
+    }
+    else if (state.eventsData.currentEventComment){
+      comment = state.eventsData.currentEventComment
+    }
+    else {
+      comment = event.subject
+    }
     console.log('in event Info')
     return { hour: event.duration.selectedHour,
              minute: event.duration.selectedMinute,
-             timerValue: event.duration.timerValue,
-             timerKind: event.duration.kind,
-             clientName: event.client ? event.client.name : 'client',
-             project: event.project,
-             action: event.action != "" ? event.action : "Actions",
-             comment: event.comment,
+             duration: event.duration,
+             timerKind: event.measure_kind,
+             clientId: event.client_id,
+             clientName: event.client__name ? event.client__name : 'client',
+             projectName: event.project__name,
+             projectId: event.project_id,
+             kindName: event.kind__name ? event.kind__name : "Actions",
+             comment: comment ,
              eventId: event.id,
-             kanban: event.kanban,
-             task: event.task
-
-            };
+             kanbanName: event.kanban__name,
+             kanbanId: event.kanban_id,
+             task: state.eventsData.currentEventTask,
+             kanbans: state.kanbans.list,
+             loading: state.loading
+          };
   }
   else{
     return { hour: '',
              minute: '',
-             action: "Actions"
+             action: "Actions",
+             comment: state.eventsData.currentEventComment,
+             loading: state.loading
             };
   }
 };
 
 
 
-export default connect(mapStateToProps, { updateEventComment, loadProjectKanbans })(Info);
+export default connect(mapStateToProps, { updateEvent,  updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients })(Info);

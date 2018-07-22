@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View } from 'react-native'
+import { View, ScrollView} from 'react-native'
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux'
 import { setCurrentEvent, resetAppInfo, logoutUser } from '../actions';
@@ -15,7 +15,7 @@ class EventList extends Component {
     console.log('in renderEvents')
     console.log(this.props.currentEventId)
     return this.props.events.map(
-      event => <Event key={event.id} event={event} onPress={()=> this.props.setCurrentEvent(this.props.currentEventId)}/>
+      event => <Event key={event.id} event={event} onPress={()=> this.props.setCurrentEvent(event.id)}/>
     )
   }
   render() {
@@ -24,9 +24,9 @@ class EventList extends Component {
 
       <View style={containerStyle}>
         <Header/>
-        <View style={eventsWrapperStyle}>
+        <ScrollView style={eventsWrapperStyle}>
           {this.renderEvents()}
-        </View>
+        </ScrollView>
         <Footer>
           <View style={styles.footerButtonsWrapper}>
             <Button customStyle={styles.footerButtonStyle} onPress = {() => this.props.resetAppInfo()}>NEW</Button>

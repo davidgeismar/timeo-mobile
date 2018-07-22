@@ -59,7 +59,7 @@ class RouterComponent  extends Component {
              <Scene key='chrono' hideNavBar component={Starter}/>
              <Scene key='time' hideNavBar title='TIME' component={TimeCardList} icon={ChronoIcon}/>
              <Scene key='client' hideNavBar title='CLIENT' component={ClientList} icon={TabIcon}/>
-             <Scene key='project' hideNavBar title='PROJECT' component={ProjectList} icon={TabIcon}/>
+             <Scene key='projects' hideNavBar title='PROJECT' component={ProjectList} icon={TabIcon}/>
              <Scene key='info' hideNavBar title='INFO' component={Info} icon={TabIcon}/>
 
             <Scene
@@ -77,6 +77,8 @@ class RouterComponent  extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('in mapStateToProps router')
+  console.log(state.eventsData)
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
   let disableChronoTab
   if (event) {

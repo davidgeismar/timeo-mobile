@@ -7,22 +7,42 @@ import { DELETE_SELECTED_TASK,
          CHANGE_TASKLIST_SCOPE,
          SEARCH_TASK
        } from './types'
+import API from './Api';
+import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
 
-
- const loadKanbanTasksSuccess = (dispatch, projectId) => {
-     dispatch({
-       type: LOAD_KANBAN_TASKS,
-       payload: projectId
-     });
-     Actions.kanbanList()
+ // 
+ // export const setCurrentTaskCreator = (affectedToId) => {
+ //   return (dispatch) => {
+ //     console.log('in setCurrentTaskCreator')
+ //     console.log(affectedToId)
+ //     API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}?limit_to_mine=true`)
+ //       .then(response => loadKanbanTasksSuccess(dispatch, response))
+ //       .catch(error => onRequestErrorCallback(dispatch, error));
+ //   }
+ // }
+ export const loadKanbanTasks= (kanbanId) => {
+   return (dispatch) => {
+     console.log('in loadKanbanTasks')
+     console.log(kanbanId)
+     console.log(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}?limit_to_mine=true`)
+     dispatch(setLoaderState(true))
+     API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}?limit_to_mine=true`)
+       .then(response => loadKanbanTasksSuccess(dispatch, response))
+       .catch(error => onRequestErrorCallback(dispatch, error));
+   };
  }
 
- export const loadKanbanTasks= (kanbanId) => {
-   console.log('in loadProjectKanbansClient')
-   console.log(projectId)
-   return(dispatch) => {
-     loadKanbanTasksSuccess(dispatch, projectId)
-   }
+ const loadKanbanTasksSuccess = (dispatch, data) => {
+   console.log('loadKanbanTasksSuccess')
+   console.log(data)
+   const tasks = data.data
+   dispatch(setLoaderState(false))
+   dispatch(setErrorState(false))
+   dispatch({
+     type: LOAD_KANBAN_TASKS,
+     payload: tasks
+   });
+   Actions.taskList()
  }
 
 export const searchTasks= (query)=> {
@@ -42,6 +62,15 @@ const removeSelectedTaskSuccess = (dispatch) => {
   Actions.info()
 }
 
+export const changeTaskListScope = (switchValue) => {
+  console.log('in changeTaskListScope')
+  const scope = switchValue ? 'all' : 'current_user'
+  console.log(scope)
+  return(dispatch, getState) => {
+    changeTaskListScopeSuccess(dispatch, getState, scope)
+  }
+}
+
 export const changeTaskListScopeSuccess = (dispatch, getState, scope) => {
   console.log('in changeTaskListScopeSuccess')
   const currentUserId = getState().user.id
@@ -53,29 +82,12 @@ export const changeTaskListScopeSuccess = (dispatch, getState, scope) => {
                currentUserId: currentUserId }
   })
 }
-export const changeTaskListScope = (switchValue) => {
-  console.log('in changeTaskListScope')
-  const scope = switchValue ? 'all' : 'current_user'
-  console.log(scope)
-  return(dispatch, getState) => {
-    changeTaskListScopeSuccess(dispatch, getState, scope)
-  }
-}
+
 
 export const removeSelectedTask = () => {
   return(dispatch) => {
     removeSelectedTaskSuccess(dispatch)
   }
-}
-
-
-
-const setCurrentTaskSuccess = (dispatch, task) => {
-  dispatch({
-    type: SET_CURRENT_TASK,
-    payload: task
-  });
-
 }
 
 export const setCurrentTask = (task) => {
@@ -84,6 +96,13 @@ export const setCurrentTask = (task) => {
   return(dispatch) => {
     setCurrentTaskSuccess(dispatch, task)
   }
+}
+
+const setCurrentTaskSuccess = (dispatch, task) => {
+  dispatch({
+    type: SET_CURRENT_TASK,
+    payload: task
+  });
 }
 
 const saveTaskSuccess = (dispatch, eventId, task) => {

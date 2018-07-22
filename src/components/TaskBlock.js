@@ -29,7 +29,7 @@ class TaskBlock extends Component {
   }
 
   renderTasks(tasks){
-    console.log('in render tasks')
+    console.log('in render tasks taskblock')
     console.log(tasks)
 
     return tasks.map(
@@ -38,20 +38,20 @@ class TaskBlock extends Component {
                         onPress={()=> this.props.setCurrentTask(task)}
                         canBeActivated={true}
                         activationKey={task.id}
-                        kindColor={task.kindColor}
+                        card_type={task.card_type}
                         >
                         <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', padding: 4}}>
                           <Text style={{ fontSize: 10, color: 'white'}}>
-                            {task.clientName} {task.projectName} > {task.status} > {task.taskNumber}
+                            {task.client__name} {task.project__name} > {task.card_type} > {task.reference}
                           </Text>
                           <Text style={{fontSize: 10}}>
-                            {task.description}
+                            {task.subject}
                           </Text>
                           <View>
                             <Avatar
                               size="small"
                               rounded
-                              source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"}}
+                              source={{uri: this.props.logo_thumb}}
                               onPress={() => Actions.events()}
                               activeOpacity={0.7}
                               />
@@ -72,7 +72,7 @@ class TaskBlock extends Component {
         <View style={{width: '100%', flexDirection: 'row', justifyContent: 'center'}} >
           <TouchableOpacity style={{position: 'absolute', left: 0, top: 13}} onPress={()=> this.hideTaskBlock()}>
             <Text style={{transform: [{ rotate: '-90deg'}], fontSize: 14, color: '#BFBFBF'}}>
-              {this.props.tasks[0]['status']}
+              {this.props.status}
             </Text>
           </TouchableOpacity>
           <View style={{borderLeftColor: '#8CCDF8', borderLeftWidth: 2, marginBottom: 10}}>
@@ -87,7 +87,7 @@ class TaskBlock extends Component {
         <View style={{alignSelf: 'flex-start', marginLeft: marginLeft, marginBottom: 10 }}>
           <TouchableOpacity onPress={()=> this.showTaskBlock()}>
             <Text style={{fontSize: 14, color: '#BFBFBF'}}>
-              {this.props.tasks[0]['status']}
+              {this.props.status}
             </Text>
           </TouchableOpacity>
         </View>
@@ -97,6 +97,11 @@ class TaskBlock extends Component {
 }
 
 
+const mapStateToProps = (state) => {
+  return {
+    logo_thumb: state.user.user_info.logo_thumb
+  }
 
+}
 
-export default connect(null, { setCurrentTask, changeTaskListScope })(TaskBlock);
+export default connect(mapStateToProps, { setCurrentTask, changeTaskListScope })(TaskBlock);

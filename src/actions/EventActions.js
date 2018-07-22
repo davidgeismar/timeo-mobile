@@ -1,216 +1,229 @@
 import { Actions } from 'react-native-router-flux';
 import { CREATE_EVENT,
          SET_CURRENT_EVENT,
+         UPDATE_EVENT,
          UPDATE_EVENT_CLIENT,
          LOAD_CLIENT_PROJECTS,
          UPDATE_EVENT_ACTION,
          UPDATE_EVENT_DURATION,
          DELETE_EVENT,
-         UPDATE_EVENT_COMMENT,
+         UPDATE_CURRENT_EVENT_COMMENT,
          UPDATE_EVENT_PROJECT,
-         ACTIVATE_TAB
+         LOAD_EVENTS,
+         ACTIVATE_TAB,
+         DELETE_SELECTED_KANBAN,
+         UNSET_CURRENT_TASK,
+         SET_CURRENT_EVENT_TASK,
+         SET_EVENT_TO_DELETE
        } from './types'
-export
+import API from './Api';
+import { fetchClients, fetchClientsSuccess } from './ClientActions'
+import { loadClientProjects, loadClientProjectsSuccess } from './ProjectActions'
+import { loadKanbanTasks } from './TaskActions'
+import { activateTab, activateTabSuccess } from './TabActions'
+import { loadProjectKanbans } from './KanbanActions'
+import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
 
 
-const activateTabSuccess = (dispatch,  tabLabel) => {
-  console.log('in activateTabSuccess')
-  console.log(tabLabel)
-  dispatch({
-    type: ACTIVATE_TAB,
-    payload: tabLabel
-  });
 
-  switch(tabLabel) {
-    case 'chrono':
-      return Actions.chrono()
-    case 'time':
-      console.log('in time')
-      return Actions.time()
-    case 'project':
-      return Actions.project()
-    case 'client':
-      return Actions.client()
-    case 'events':
-      return Actions.events()
-    }
-}
-
-export const activateTab = (tabLabel) => {
-  console.log('in activateTab')
-  console.log(tabLabel)
-  return(dispatch) => {
-    activateTabSuccess(dispatch, tabLabel)
+export const createEvent = ( measure_kind, duration=null) => {
+  return (dispatch) => {
+    console.log('in createEvent actions event')
+    console.log(duration)
+    dispatch(setLoaderState(true))
+    const data = {action: {duration: duration, measure_kind: measure_kind}}
+    API.post('/internal/timeo/api/v0/actions', data)
+      .then(response => createEventSuccess(dispatch, response))
+      .catch(error => onRequestErrorCallback(error));
   }
 }
 
-export const getCurrentTime = () => {
- var d = new Date(); // for now
-  var hour = d.getHours(); // => 9
-  var min = d.getMinutes(); // =>  30
-  if(min<10) {
-      min = '0'+min
-  }
-  return time = hour + 'h' + min
-}
-
-export const getCurrentDate = () =>{
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0!
-  var yyyy = today.getFullYear();
-
-  if(dd<10) {
-      dd = '0'+dd
-  }
-
-  if(mm<10) {
-      mm = '0'+mm
-  }
-
-  return today = mm + '/' + dd + '/' + yyyy;
- }
-
- const generateEventId = () => {
-  return '_' + Math.random().toString(36).substr(2, 9);
- }
-
-export const createEvent = (kind, timerValue=null) => {
-  console.log('in createEvent')
-  console.log(timerValue)
-  let duration
-  if (kind == "chrono"){
-    duration = {kind: kind, timerValue: timerValue}
-  }
-  else {
-
-    duration = Object.assign({kind: kind}, timerValue)
-  }
-
-  let event = { id: generateEventId(),
-                  duration: duration,
-                  creationDate: getCurrentDate(),
-                  creationTime: getCurrentTime(),
-                  action: '',
-                }
-
-  console.log('in createEvent')
-  console.log(event)
-  return(dispatch) => {
-    createEventSuccess(dispatch, event, kind)
-  }
-}
-
-const createEventSuccess = (dispatch, event, kind) => {
+const createEventSuccess = (dispatch, data) => {
+  console.log('createEventSuccess')
+  console.log(data)
+  console.log(data.data)
+  dispatch(setLoaderState(false))
+  dispatch(setErrorState(false))
     dispatch({
       type: CREATE_EVENT,
-      payload: event
+      payload: data.data
     });
     dispatch({
       type: SET_CURRENT_EVENT,
-      payload: event.id
+      payload: data.data.id
     });
-    dispatch({
-      type: ACTIVATE_TAB,
-      payload: 'client'
-    });
-    Actions.client()
+    console.log('before dispatch')
+    dispatch(fetchClients())
 }
 
-const setCurrentEventSuccess = (dispatch, eventId) => {
+
+export const setCurrentEventTask = (cardId) => {
+  console.log('in setCurrentEventTask')
+  console.log(cardId)
+  return(dispatch, getState) => {
+    dispatch(setLoaderState(true))
+    API.get(`/internal/timeo/api/v0/kameo_cards/${cardId}`)
+      .then(response => setCurrentEventTaskSuccess(dispatch, response))
+      .catch(error => onRequestErrorCallback(error));
+  }
+}
+const setCurrentEventTaskSuccess = (dispatch, data) => {
+  console.log('in setCurrentEventTaskSuccess')
+  console.log(data.data)
+  dispatch(setLoaderState(false))
+  dispatch(setErrorState(false))
   dispatch({
-    type: SET_CURRENT_EVENT,
-    payload: eventId
+    type: SET_CURRENT_EVENT_TASK,
+    payload: data.data
   });
-  dispatch(activateTab('time'))
 }
 
 export const setCurrentEvent = (eventId) => {
   console.log('in setCurrentEvent')
   console.log(eventId)
-  return(dispatch) => {
-    setCurrentEventSuccess(dispatch, eventId)
-  }
-}
-
-const updateEventClientSuccess = (dispatch, getState, client, eventId) => {
-    dispatch({
-      type: UPDATE_EVENT_CLIENT,
-      payload: {eventId: eventId, client: client}
-    });
-    dispatch({
-      type: LOAD_CLIENT_PROJECTS,
-      payload: client.id
-    });
-
-    const { projects } = getState();
-
-    console.log('in updateEventClientSuccess')
-    console.log(projects)
-    if (projects.length > 0) {
-      dispatch({
-        type: ACTIVATE_TAB,
-        payload: 'project'
-      })
-      Actions.project()
-    }
-    else{
-      dispatch({
-        type: ACTIVATE_TAB,
-        payload: 'info'
-      })
-      Actions.info()
-    }
-}
-
-export const updateEventClient = (client, eventId) => {
-  console.log('in updateEventClient')
-  console.log(client)
-  console.log(eventId)
   return(dispatch, getState) => {
-    updateEventClientSuccess(dispatch,getState, client, eventId)
+    setCurrentEventSuccess(dispatch, getState, eventId)
   }
 }
 
-export const updateEventAction = (action, eventId) => {
-  console.log('in updateEventAction')
-  console.log(action)
-  console.log(eventId)
-  return(dispatch) => {
-    updateEventActionSuccess(dispatch, action, eventId)
+const setCurrentEventSuccess = (dispatch, getState, eventId) => {
+  dispatch({
+    type: SET_CURRENT_EVENT,
+    payload: eventId
+  });
+  const currentEvent = getState().eventsData.events.find(event => event.id == eventId)
+  if (currentEvent.project_id){
+    dispatch(loadProjectKanbans(currentEvent.project_id))
+  }
+  dispatch(activateTab('info'))
+}
+
+export const fetchEvents= () => {
+  return (dispatch) => {
+    console.log('in fetchEvents')
+    // console.log(kanbanId)
+    console.log('/internal/timeo/api/v0/actions')
+    dispatch(setLoaderState(true))
+    API.get('/internal/timeo/api/v0/actions')
+      .then(response => fetchEventsSuccess(dispatch, response))
+      .catch(error => onRequestErrorCallback(error));
+  };
+}
+
+const fetchEventsSuccess = (dispatch, data) => {
+  console.log('fetchEventsSuccess')
+  console.log(data.data)
+  dispatch(setLoaderState(false))
+  dispatch(setErrorState(false))
+    dispatch({
+      type: LOAD_EVENTS,
+      payload: data.data
+    });
+    dispatch(activateTab('events'))
+}
+
+export const updateEvent = (prop, value, duration, measure_kind, eventId) => {
+  return (dispatch) => {
+      console.log('in updateEvent')
+      console.log(eventId)
+      const data = {action: {
+                        [prop]: value,
+                        duration: duration,
+                        measure_kind: measure_kind
+                      }
+                    }
+      console.log(data)
+      console.log(`/internal/timeo/api/v0/actions/${eventId}`)
+      dispatch(setLoaderState(true))
+      API.patch(`/internal/timeo/api/v0/actions/${eventId}`, data)
+        .then(response => updateEventSuccess(dispatch, response, prop))
+        .catch(error => onRequestErrorCallback(error));
   }
 }
 
-const updateEventActionSuccess = (dispatch, action, eventId) => {
-    dispatch({
-      type: UPDATE_EVENT_ACTION,
-      payload: {eventId: eventId, action: action}
-    });
-    Actions.info()
+
+const updateEventSuccess = (dispatch, data, prop) => {
+  console.log('updateEventSuccess')
+  console.log(data.data)
+  console.log(prop)
+  dispatch(setLoaderState(false))
+  dispatch(setErrorState(false))
+  dispatch({
+    type: UPDATE_EVENT,
+    payload: data.data
+  });
+  switch(prop) {
+    case 'client_id':
+      console.log('in client_id')
+      unsetKanbanAndTask(dispatch)
+      return dispatch(loadClientProjects(data.data.client_id));
+    case 'project_id':
+      console.log('in project_id')
+      unsetKanbanAndTask(dispatch)
+      return dispatch(activateTab('info'))
+    case 'kanban_id':
+      console.log('in kanban_id')
+      return dispatch(loadKanbanTasks(data.data.kanban_id))
+    case 'card_id':
+      return dispatch(activateTab('info'))
+    case 'content':
+      return dispatch(fetchEvents())
+    case 'duration':
+      return dispatch(activateTab('client'))
+    case 'kind_id':
+      console.log('in kind id')
+      return dispatch(activateTab('info'))
+    case 'subject':
+      console.log('in subject')
+      return dispatch(activateTab('events'))
+    }
 }
 
-
-const updateEventDurationSuccess = (dispatch,kind, duration, eventId) => {
-  console.log(duration)
-  console.log(eventId)
-    dispatch({
-      type: UPDATE_EVENT_DURATION,
-      payload: {eventId: eventId, duration: duration}
-    });
-    Actions.info()
+const unsetKanbanAndTask = (dispatch) => {
+  dispatch({
+    type: DELETE_SELECTED_KANBAN,
+    payload: true
+  });
+  dispatch({
+    type: UNSET_CURRENT_TASK,
+    payload: true
+  });
 }
 
-export const updateEventDuration = (kind, duration, eventId) => {
-  console.log('in updateEventDuration')
-  console.log(duration)
-  console.log(kind)
-  console.log(eventId)
+export const setEventToDelete = (event) => {
+  console.log('setEventToDelete')
+  console.log(event)
   return(dispatch) => {
-    updateEventDurationSuccess(dispatch, kind, duration, eventId)
+    setEventToDeleteSuccess(dispatch, event)
+  }
+}
+
+const setEventToDeleteSuccess = (dispatch, event) => {
+  console.log('in setEventToDeleteSuccess')
+  console.log(event)
+  dispatch({
+    type: SET_EVENT_TO_DELETE,
+    payload: event
+  })
+  Actions.deleteEvent()
+}
+
+export const deleteEvent = (eventId) => {
+  return(dispatch) => {
+    console.log('in deleteEvent')
+    console.log(eventId)
+    dispatch(setLoaderState(true))
+    API.delete(`/internal/timeo/api/v0/actions/${eventId}`)
+      .then(response => deleteEventSuccess(dispatch, eventId))
+      .catch(error => onRequestErrorCallback(error));
   }
 }
 
 const deleteEventSuccess = (dispatch, eventId) => {
+    console.log('in deleteEventSuccess')
+    console.log(eventId)
+    dispatch(setLoaderState(false))
+    dispatch(setErrorState(false))
     dispatch({
       type: DELETE_EVENT,
       payload: eventId
@@ -218,41 +231,13 @@ const deleteEventSuccess = (dispatch, eventId) => {
     Actions.events()
 }
 
-export const deleteEvent = (eventId) => {
-  console.log('in deleteEvent')
-  console.log(eventId)
-  return(dispatch) => {
-    deleteEventSuccess(dispatch, eventId)
-  }
-}
 
-export const updateEventComment = (comment, eventId) => {
+// just current state no api call
+export const updateEventComment = (comment) => {
   console.log('in updateEventComment')
   console.log(comment)
-  console.log(eventId)
   return{
-    type: UPDATE_EVENT_COMMENT,
-    payload: {eventId: eventId, comment: comment}
+    type: UPDATE_CURRENT_EVENT_COMMENT,
+    payload: comment
   };
-}
-
-const updateEventProjectSuccess = (dispatch, project, eventId) => {
-    dispatch({
-      type: UPDATE_EVENT_PROJECT,
-      payload: {eventId: eventId, project: project}
-    });
-    dispatch({
-      type: ACTIVATE_TAB,
-      payload: 'info'
-    });
-    Actions.info()
-}
-
-export const updateEventProject = (project, eventId) => {
-  console.log('in updateEventProject')
-  console.log(project)
-  console.log(eventId)
-  return(dispatch) => {
-    updateEventProjectSuccess(dispatch, project, eventId)
-  }
 }

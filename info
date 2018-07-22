@@ -1,0 +1,6 @@
+signed apk with binary file and private key = digital certificate
+
+unsigned apk no digital certificate
+
+why certificate :
+unsigned will not work on device

@@ -16,8 +16,8 @@ class StylishInput extends Component {
     })
   }
   render(){
-    const borderBottomColor = this.state.active ? '#00AFFA' : 'grey'
-    const placeholderTextColor = this.state.active ? '#00AFFA' : 'grey'
+    const borderBottomColor = this.state.active ? '#00AFFA' : 'white'
+    const placeholderTextColor = this.state.active ? '#00AFFA' : 'white'
     return (
       <TextInput
         style={[this.props.style, {borderBottomColor: borderBottomColor, placeholderTextColor: placeholderTextColor}]}

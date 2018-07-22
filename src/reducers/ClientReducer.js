@@ -1,9 +1,11 @@
-import { SELECT_ACTION } from '../actions/types';
+import { LOAD_CLIENTS } from '../actions/types';
 
-const INITIAL_STATE = [{name: 'EDULIB', id: 1},{name: 'RIVP', id: 2},{name: 'DORCEL', id: 3}]
+const INITIAL_STATE = []
 
 export const ClientReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case LOAD_CLIENTS:
+      return action.payload
     default:
       return state;
   }

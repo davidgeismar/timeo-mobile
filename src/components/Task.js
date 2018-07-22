@@ -8,13 +8,31 @@ import { Actions } from 'react-native-router-flux'
 
 class Task extends Component {
 
+
+  setBackgroundColor(card_type){
+    switch(card_type) {
+      case 'task':
+        return '#51B8F3'
+      case 'support':
+        return '#E66C72'
+      case 'issue':
+        return '#F8C67A'
+      case 'improvement':
+        return '#9AD5E2'
+      case 'ticket_support':
+      return '#E66C72'
+      }
+  }
+
   render() {
+    console.log('in render indiv task')
+    console.log(this.props)
     return (
       <TouchableWithoutFeedback
         onPress={this.props.onPress}
         canBeActivated={this.props.canBeActivated}
         activationKey={this.props.activationKey}>
-        <View style={[styles.containerStyle, this.props.customStyle]}  backgroundColor={this.props.kindColor} opacity={this.props.active ? 1 : 0.6}>
+        <View style={[styles.containerStyle, this.props.customStyle]}  backgroundColor={this.setBackgroundColor(this.props.card_type)} opacity={this.props.active ? 1 : 0.6}>
           {this.props.children}
         </View>
       </TouchableWithoutFeedback>

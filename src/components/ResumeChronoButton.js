@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Animated } from 'react-native';
 import Pause from './assets/Pause';
 
 class ResumeChronoButton extends Component {
+
   render(){
     const { textStyle } = styles;
     return (
-      <TouchableOpacity onPress={this.props.onPress}>
-        <Pause style={{height: 50, width: 50}}/>
-      </TouchableOpacity>
+
+            <TouchableOpacity onPress={this.props.onPress}>
+              <Pause style={{height: 50, width: 50}}/>
+            </TouchableOpacity>
+
     );
   }
 };

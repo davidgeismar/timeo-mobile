@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View} from 'react-native'
 import { connect } from 'react-redux';
-import {updateEventAction} from '../actions';
+import {updateEvent} from '../actions';
 import {Actions} from 'react-native-router-flux'
 import LinkCard from './LinkCard'
 
@@ -12,15 +12,19 @@ import LinkCard from './LinkCard'
 
 class ActionList extends Component {
 //  will need to make dynamic
+  renderActionKinds(){
+    const {cardStyle} = styles
+    return this.props.actionKinds.map(
+      actionKind => <LinkCard onPress={()=>this.props.updateEvent('kind_id', actionKind.id, this.props.duration, this.props.measureKind, this.props.currentEventId)} canBeActivated={true} activationKey={actionKind.name} customStyle={cardStyle}>{actionKind.name}</LinkCard>
+    )
+
+  }
   render() {
     const {currentEventId} = this.props
-    const {containerStyle, cardStyle} = styles
+    const {containerStyle} = styles
     return (
       <View style={containerStyle}>
-        <LinkCard onPress={()=>this.props.updateEventAction('call', currentEventId)} canBeActivated={true} activationKey='call' customStyle={cardStyle}>Call</LinkCard>
-        <LinkCard onPress={()=>this.props.updateEventAction('email', currentEventId)} canBeActivated={true} activationKey='email' customStyle={cardStyle}>Email</LinkCard>
-        <LinkCard onPress={()=>this.props.updateEventAction('meeting', currentEventId)} canBeActivated={true} activationKey='meeting' customStyle={cardStyle}>Meeting</LinkCard>
-        <LinkCard onPress={()=>this.props.updateEventAction('video conf', currentEventId)} canBeActivated={true} activationKey='video conf' customStyle={cardStyle}>Video Conf</LinkCard>
+        {this.renderActionKinds()}
       </View>
     )
 
@@ -41,8 +45,17 @@ const styles = {
 
 const mapStateToProps = state => {
   console.log('in mapstatetoprops ActionList')
-  console.log(state.selectedAction)
-  return { selectedAction: state.selectedAction, currentEventId: state.eventsData.currentEventId };
+  console.log(state)
+  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  console.log(event)
+  return { selectedAction: state.selectedAction,
+           actionKinds: state.actionKinds,
+           currentEventId: state.eventsData.currentEventId,
+           duration: event ? event.duration : null,
+           measureKind: event ? event.measure_kind : null
+        };
+
+
 };
 
-export default connect(mapStateToProps, {updateEventAction})(ActionList);
+export default connect(mapStateToProps, {updateEvent})(ActionList);

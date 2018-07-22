@@ -9,6 +9,12 @@ import { KanbanReducer } from './KanbanReducer';
 import { TaskReducer } from './TaskReducer';
 import { TabReducer } from './TabReducer';
 import { UserReducer } from './UserReducer';
+import { AuthenticationReducer } from './AuthenticationReducer';
+import { ErrorReducer } from './ErrorReducer';
+import { LoaderReducer } from './LoaderReducer';
+import { ActionKindsReducer } from './ActionKindsReducer';
+import { BackgroundImageReducer } from './BackgroundImageReducer';
+
 export default combineReducers({
   selectedDuration: DurationReducer,
   selectedAction: ActionReducer,
@@ -19,5 +25,10 @@ export default combineReducers({
   kanbans: KanbanReducer,
   tasks: TaskReducer,
   user: UserReducer,
-  tabs: TabReducer
+  tabs: TabReducer,
+  authentication: AuthenticationReducer,
+  actionKinds: ActionKindsReducer,
+  error: ErrorReducer,
+  loading: LoaderReducer,
+  backgroundImage: BackgroundImageReducer
 });

@@ -31,7 +31,7 @@ class Header extends Component {
           <Avatar
             size="small"
             rounded
-            source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"}}
+            source={{uri: this.props.logo_thumb}}
             onPress={() => console.log("Works!")}
             activeOpacity={0.7}
             />
@@ -64,7 +64,8 @@ const mapStateToProps = (state) => {
   const totalTimeSpent = '10h05'
   return {
     totalTimeSpent: totalTimeSpent,
-    countEvents: state.eventsData.events.length
+    countEvents: state.eventsData.events.length,
+    logo_thumb: state.user.user_info.logo_thumb
   }
 }
 

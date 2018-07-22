@@ -1,10 +1,10 @@
-
 import React, { Component } from 'react';
 import { View, ScrollView} from 'react-native'
 import { connect } from 'react-redux';
-import { activateTab, updateEventDuration, createEvent } from '../actions';
+import { activateTab, updateEventDuration, createEvent, updateEvent } from '../actions';
 import { Actions } from 'react-native-router-flux';
 import TimeCard from './TimeCard';
+import Spinner from './common/Spinner';
 import Button from './common/Button';
 import Footer from './common/Footer';
 import TabBar from './TabBar';
@@ -60,44 +60,53 @@ class TimeCardList extends Component {
     generateEventId(){
       return '_' + Math.random().toString(36).substr(2, 9);
     }
-
+    getMillisFromTimeSelection(timeSelection){
+      console.log('in getMillisFromTimeSelection')
+      console.log(timeSelection)
+      let hoursMillis = timeSelection.selectedHour*3600*1000
+      let minutesMillis = timeSelection.selectedMinute*60*1000
+      return hoursMillis+minutesMillis
+    }
     saveEvent(){
+      const duration = this.getMillisFromTimeSelection(this.props.timeSelection)
       if (!this.props.eventId){
         console.log('in createEvent')
-        this.props.createEvent('selection', this.props.timeSelection)
-        this.props.activateTab("client")
+        this.props.createEvent('manual', duration)
       }
       else {
         console.log('in updateEvent')
-        this.props.updateEventDuration("selection", this.props.timeSelection, this.props.eventId)
-        this.props.activateTab("events")
+        this.props.updateEvent('duration', duration, duration, 'manual', this.props.eventId)
       }
     }
   render() {
     const { containerStyle, buttonWrapperStyle } = styles
-    return (
-      <View style={{flex: 1}}>
-        <TabBar/>
-        <View style={{flexDirection: 'column', flex: 1}}>
-          <View style={{flexDirection: 'row', flex: 1}}>
-              <ScrollView style={containerStyle}>
-                {this.renderHours()}
-              </ScrollView>
-              <ScrollView style={containerStyle}>
-                {this.renderMinutes()}
-              </ScrollView>
-          </View>
-          <Footer>
-            <View style={buttonWrapperStyle}>
-              <Button customStyle={{width: '50%'}} onPress={()=>this.saveEvent()}>
-                Save
-              </Button>
+    if (this.props.loading) {
+      return <Spinner size="large" />;
+    }
+    else {
+      return (
+        <View style={{flex: 1}}>
+          <TabBar/>
+          <View style={{flexDirection: 'column', flex: 1}}>
+            <View style={{flexDirection: 'row', flex: 1}}>
+                <ScrollView style={containerStyle}>
+                  {this.renderHours()}
+                </ScrollView>
+                <ScrollView style={containerStyle}>
+                  {this.renderMinutes()}
+                </ScrollView>
             </View>
-          </Footer>
+            <Footer>
+              <View style={buttonWrapperStyle}>
+                <Button customStyle={{width: '50%'}} onPress={()=>this.saveEvent()}>
+                  Save
+                </Button>
+              </View>
+            </Footer>
+          </View>
         </View>
-      </View>
-    )
-
+      )
+    }
   }
 }
 const styles = {
@@ -126,8 +135,9 @@ const mapStateToProps = (state) => {
 
   return {
     eventId: state.eventsData.currentEventId,
+    loading: state.loading,
     timeSelection: timeSelection
   }
 }
 
-export default connect(mapStateToProps, { activateTab, updateEventDuration, createEvent })(TimeCardList);
+export default connect(mapStateToProps, { activateTab, updateEventDuration, createEvent, updateEvent })(TimeCardList);

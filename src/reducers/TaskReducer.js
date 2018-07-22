@@ -4,20 +4,21 @@ import { RESET_INFO,
          LOAD_KANBAN_TASKS,
          DELETE_SELECTED_TASK,
          CHANGE_TASKLIST_SCOPE,
-         SEARCH_TASK
+         SEARCH_TASK,
+         UNSET_CURRENT_TASK
        } from '../actions/types';
 
 
-const TASKS = [ {id: 1, description: 'Tester Fonction 31/07', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Do', taskNumber: 'Edul-2691', kindColor: '#4EBAD1', kanbanId: 1, userId: 1},
-                {id: 2, description: 'staging > erreur 500 sur...', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Do', taskNumber: 'Edul-2731', kindColor: '#F8C67A', kanbanId: 1, userId: 1},
-                {id: 6, description: 'blablabla', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Do', taskNumber: 'Edul-2731', kindColor: '#F8C67A', kanbanId: 1, userId: 2},
-
-                {id: 3, description: 'Fichier source rne', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Fix', taskNumber: 'Edul-2630', kindColor: '#ECA9AD', kanbanId: 1, userId: 1},
-                {id: 4, description: 'Fichier source rne', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Fix', taskNumber: 'Edul-2630', kindColor: '#51B8F3', kanbanId: 1, userId: 1},
-                {id: 5, description: 'Fichier source rne', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Fix', taskNumber: 'Edul-2630', kindColor: '#51B8F3', kanbanId: 1, userId: 1},
-                {id: 7, description: 'bloubloublou', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Fix', taskNumber: 'Edul-2630', kindColor: '#51B8F3', kanbanId: 1, userId: 2}
-              ]
-const INITIAL_STATE = {list: TASKS, selectedTask: null, searchInit: false, scope: 'current_user'}
+// const TASKS = [ {id: 1, description: 'Tester Fonction 31/07', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Do', taskNumber: 'Edul-2691', kindColor: '#4EBAD1', kanbanId: 1, userId: 1},
+//                 {id: 2, description: 'staging > erreur 500 sur...', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Do', taskNumber: 'Edul-2731', kindColor: '#F8C67A', kanbanId: 1, userId: 1},
+//                 {id: 6, description: 'blablabla', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Do', taskNumber: 'Edul-2731', kindColor: '#F8C67A', kanbanId: 1, userId: 2},
+//
+//                 {id: 3, description: 'Fichier source rne', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Fix', taskNumber: 'Edul-2630', kindColor: '#ECA9AD', kanbanId: 1, userId: 1},
+//                 {id: 4, description: 'Fichier source rne', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Fix', taskNumber: 'Edul-2630', kindColor: '#51B8F3', kanbanId: 1, userId: 1},
+//                 {id: 5, description: 'Fichier source rne', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Fix', taskNumber: 'Edul-2630', kindColor: '#51B8F3', kanbanId: 1, userId: 1},
+//                 {id: 7, description: 'bloubloublou', creationDate: '2018-06-11', clientName: 'EDULIB', projectName: 'Edulib 2018', status: 'To Fix', taskNumber: 'Edul-2630', kindColor: '#51B8F3', kanbanId: 1, userId: 2}
+//               ]
+const INITIAL_STATE = {list: [], selectedTask: null, searchInit: false, scope: 'current_user'}
 
 const searchTasks = (tasks, query) => {
   var results = [];
@@ -57,13 +58,15 @@ export const TaskReducer = (state = INITIAL_STATE, action) => {
     case LOAD_KANBAN_TASKS:
         console.log('LOAD_KANBAN_TASKS')
         console.log(action.payload)
-        tasks = TASKS.filter(task => task.kanbanId == action.payload )
-        console.log(tasks)
-        return {...state, list: tasks}
+        return {...state, list: action.payload}
     case SET_CURRENT_TASK:
         console.log('SET_CURRENT_TASK')
         console.log(action.payload)
         return {...state, selectedTask: action.payload}
+    case UNSET_CURRENT_TASK:
+        console.log('SET_CURRENT_TASK')
+        console.log(action.payload)
+        return {...state, selectedTask: null}
     case SEARCH_TASK_INIT:
         console.log('SEARCH_TASK_INIT')
         console.log(action.payload)

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, TouchableOpacity} from 'react-native'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import { setEventToDelete } from '../actions';
 import {Actions} from 'react-native-router-flux'
 import Timeo from './assets/Timeo'
 import Kameo from './assets/Kameo'
@@ -13,8 +14,16 @@ import * as utilities from '../lib/Utilities';
 
 class Event extends Component {
   // this should be in utility class
+  spitDate(date){
+    const ts = new Date (date)
+    return ts.toLocaleDateString()
+  }
+  spitTime(date){
+    const ts = new Date (date)
+    return ts.toLocaleTimeString()
+  }
   renderIcon(){
-    if (this.props.event.task){
+    if (this.props.event.card_id){
       return <Kameo style={styles.svgStyle} fill='red'/>
     }
     else {
@@ -23,7 +32,8 @@ class Event extends Component {
   }
   render() {
     // destructuring
-    const { creationDate, creationTime, client, action, duration, task, project } = this.props.event;
+    const event = this.props.event
+    const { created_at, creationTime, client__name, action, duration, kanban__name, project__name } = this.props.event;
     const { textWrapperStyle, svgStyle, containerStyle, textStyle } = styles
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -31,23 +41,23 @@ class Event extends Component {
           <View style={[containerStyle, this.props.customStyle]}>
             <View style={textWrapperStyle}>
               <Text style={[textStyle, {color: '#8CCDF8'}]}>
-                {creationDate}{"\n"}
-                {creationTime}
+                {this.spitDate(created_at)}{"\n"}
+                {this.spitTime(created_at)}
               </Text>
             </View>
             <View style={textWrapperStyle}>
               <Text style={textStyle}>
-                  {client ? client.name : ''}
+                  {client__name ? client__name : ''}
               </Text>
             </View>
             <View style={textWrapperStyle}>
               <Text style={textStyle}>
-                {project ? project.name : ''}
+                {project__name ? project__name : ''}
               </Text>
             </View>
             <View style={textWrapperStyle}>
               <Text style={textStyle}>
-                { duration.kind == "chrono" ? TimeFormatter(duration.timerValue) : utilities.formatDuration(duration.selectedHour, duration.selectedMinute) }
+                { TimeFormatter(duration)  }
               </Text>
             </View>
             <View style={textWrapperStyle}>
@@ -55,7 +65,7 @@ class Event extends Component {
             </View>
           </View>
         </TouchableWithoutFeedback>
-        <TouchableOpacity onPress={()=> Actions.deleteEvent({eventId: this.props.event.id})}>
+        <TouchableOpacity onPress={()=> this.props.setEventToDelete(event)}>
           <Close style={styles.svgStyle} fill='red'/>
         </TouchableOpacity>
       </View>
@@ -91,4 +101,4 @@ const styles = {
 
 
 
-export default connect(null, actions)(Event);
+export default connect(null, { setEventToDelete })(Event);

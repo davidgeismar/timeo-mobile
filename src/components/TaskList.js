@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Switch} from 'react-native';
 import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
-import { removeSelectedTask, saveTask, changeTaskListScope, searchTasks } from '../actions';
+import { removeSelectedTask, updateEvent, changeTaskListScope, searchTasks } from '../actions';
 import Button from './common/Button';
 import Footer from './common/Footer';
 import Header from './common/Header';
@@ -18,29 +18,18 @@ import SearchBar from './SearchBar';
 // how is it possible to transmit from child to parent without redux that seems
 
 class TaskList extends Component {
+
+  returnTaskBlock(taskBucket){
+    if (taskBucket.cards.length > 0){
+      return <TaskBlock tasks={taskBucket.cards} status={taskBucket.name}/>
+    }
+  }
   renderTasks(){
-    console.log('in renderTasks')
+    console.log('in renderTasks tasklist')
     console.log(this.props.tasks)
     const tasks = this.props.tasks
-    let taskBuckets = {}
-    for (i = 0; i < tasks.length; i++) {
-        let status = tasks[i].status
-        if (taskBuckets[status]){
-          taskBuckets[status].push(tasks[i])
-        }
-        else{
-          taskBuckets[status] = [tasks[i]]
-        }
-    }
-
-    let taskblocks = []
-    for (key in taskBuckets){
-      console.log(key)
-      console.log(taskBuckets[key])
-      taskblocks.push(<TaskBlock tasks={taskBuckets[key]} status={key}/>)
-    }
-    return (
-        taskblocks
+    return tasks.map(
+      taskBucket => this.returnTaskBlock(taskBucket)
     )
   }
   renderSwitch(){
@@ -93,7 +82,7 @@ class TaskList extends Component {
       <Header>
         {this.renderTitle()}
         {this.renderToggle()}
-        <View style={{height: '100%', width: this.props.searchInit ? '90%' : null, flexDirection: 'row',   alignSelf: 'center', paddingRight: 15}}>
+        <View style={{height: '100%', width: this.props.searchInit ? '90%' : 20, flexDirection: 'row',   alignSelf: 'center'}}>
           <SearchBar onChangeText={(value)=> this.props.searchTasks(value)}/>
         </View>
       </Header>
@@ -104,7 +93,8 @@ class TaskList extends Component {
     console.log('in savekanban')
     console.log(this.props.eventId)
     console.log(this.props.selectedTask)
-    this.props.saveTask(this.props.eventId, this.props.selectedTask)
+    this.props.updateEvent('card_id', this.props.selectedTask.id, this.props.duration, this.props.measureKind, this.props.eventId)
+    // this.props.saveTask(this.props.eventId, this.props.selectedTask)
   }
   renderSelectedKanban(selectedKanban){
     console.log('in renderSelectedKanban')
@@ -167,14 +157,18 @@ const styles = {
 const mapStateToProps = (state) => {
   console.log('in mapStateToProps tasks')
   console.log(state)
-    const disabled = state.tasks.selectedTask ? false : true
+  const disabled = state.tasks.selectedTask ? false : true
+  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  console.log(event)
   return { tasks: state.tasks.list,
            selectedKanban: state.kanbans.selectedKanban,
            searchInit: state.tasks.searchInit,
            selectedTask: state.tasks.selectedTask,
            eventId: state.eventsData.currentEventId,
            scope: state.tasks.scope,
+           duration: event.duration,
+           measureKind: event.measure_kind,
            disabled: disabled
          }
 }
-export default connect(mapStateToProps, { removeSelectedTask, saveTask, changeTaskListScope, searchTasks })(TaskList);
+export default connect(mapStateToProps, { removeSelectedTask, updateEvent, changeTaskListScope, searchTasks })(TaskList);
