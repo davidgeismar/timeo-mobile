@@ -18,11 +18,21 @@ import * as utilities from '../lib/Utilities';
 
 class Starter extends Component {
   componentWillMount() {
+    console.log('in Starter componentWillMount')
+    console.log(this.props)
+    console.log(this.state)
     Keyboard.dismiss();
-    if (this.props.isSaved) {
+    if (this.props.isSaved && this.props.timerValue) {
       this.setState({
-        timerValue: this.props.timerValue ? this.props.timerValue : this.state.timerValue
+        timerValue: this.props.timerValue
       })
+    }
+    else if (this.props.isSaved && this.state){
+      if (this.state.timerValue){
+        this.setState({
+          timerValue:  this.state.timerValue
+        })
+      }
     }
     else {
       this.setState({
@@ -54,9 +64,13 @@ class Starter extends Component {
 
   saveEvent(){
     if (this.props.eventId){
+      console.log('in save event update')
+      console.log(this.state)
       this.props.updateEvent('duration', this.state.timerValue, this.state.timerValue, 'automatic', this.props.eventId)
     }
     else {
+      console.log('in save event create')
+      console.log(this.state)
       this.props.createEvent('automatic', this.state.timerValue)
     }
   }
@@ -230,7 +244,10 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
+  console.log('in mapStateToProps Starter')
+  console.log(state)
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  console.log(event)
   if (event){
     if (event.measure_kind == 'automatic'){
       return {

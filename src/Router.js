@@ -16,6 +16,8 @@ import DeleteConfirmation from './components/DeleteConfirmation'
 import { connect } from 'react-redux';
 import TaskList from './components/TaskList'
 import LoginForm from './components/LoginForm'
+import API from './actions/Api';
+
 const TabIcon = ({selected, title}) => {
   return (
     <Text style={{color: selected ? 'red' : 'black'}}> {title}</Text>
@@ -38,7 +40,7 @@ class RouterComponent  extends Component {
             renderBackButton={()=>(null)}
             component={LoginForm}
             title='TIMEO'
-            initial
+            initial={this.props.initialPage == 'login'}
             />
           <Scene
             leftTitle="Logout"
@@ -55,17 +57,17 @@ class RouterComponent  extends Component {
               hideNavBar
               />
 
-             <Scene key='chrono' hideNavBar component={Starter}/>
-             <Scene key='time' hideNavBar title='TIME' component={TimeCardList} icon={ChronoIcon}/>
-             <Scene key='client' hideNavBar title='CLIENT' component={ClientList} icon={TabIcon}/>
-             <Scene key='projects' hideNavBar title='PROJECT' component={ProjectList} icon={TabIcon}/>
-             <Scene key='info' hideNavBar title='INFO' component={Info} icon={TabIcon}/>
+             <Scene key='chrono' hideNavBar component={Starter} initial={ this.props.initialPage == 'chrono' }/>
+             <Scene key='time' hideNavBar title='TIME' component={TimeCardList} icon={ChronoIcon} initial={ this.props.initialPage == 'time'}/>
+             <Scene key='client' hideNavBar title='CLIENT' component={ClientList} icon={TabIcon} initial={ this.props.initialPage == 'client'}/>
+             <Scene key='projects' hideNavBar title='PROJECT' component={ProjectList} icon={TabIcon} initial={ this.props.initialPage == 'projects'}/>
+             <Scene key='info' hideNavBar title='INFO' component={Info} icon={TabIcon} initial={ this.props.initialPage == 'info'}/>
 
             <Scene
               key='kanbanList'
               component={KanbanList}
               />
-            <Scene key='events' hideNavBar title='EVENTS' component={EventList} icon={TabIcon}/>
+            <Scene key='events' hideNavBar title='EVENTS' component={EventList} icon={TabIcon} initial={ this.props.initialPage == 'events'}/>
             <Scene key='deleteEvent' hideNavBar title='DELETE' component={DeleteConfirmation} />
 
         </Scene>
@@ -76,16 +78,19 @@ class RouterComponent  extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
-  let disableChronoTab
-  if (event) {
-   disableChronoTab = event.duration.kind == 'selection' ? true : false
+  console.log('in mapStateToProps')
+  console.log(state)
+  let initialPage = 'login'
+  if (state._persist){
+    if (state._persist.rehydrated && state.authentication.token){
+      API.defaults.headers.common['Authorization'] = 'Bearer ' + state.authentication.token;
+      console.log('fu')
+      initialPage = state.tabs.activeTab
+    }
   }
-  else {
-    disableChronoTab = false
-  }
+  console.log(initialPage)
   return {
-    disableChronoTab: disableChronoTab
+    initialPage: initialPage
   }
 }
 export default connect(mapStateToProps, null)(RouterComponent)

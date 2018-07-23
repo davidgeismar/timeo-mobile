@@ -57,7 +57,7 @@ class Info extends Component {
     DocumentPicker.show({
         filetype: [DocumentPickerUtil.images()],
       },(error,res) => {
-        
+
       });
   }
 
@@ -200,4 +200,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, { updateEvent,  updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients })(Info);
+export default connect(mapStateToProps, { updateEvent,  updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients, loadClientProjects})(Info);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
-import { RESET_AUTH_TOKEN, AUTH_UPDATE, GET_USER_INFO, INITIALIZE_USER, LOGIN_SUCCESS } from './types'
+import { RESET_AUTH_TOKEN, AUTH_UPDATE, GET_USER_INFO, INITIALIZE_USER, SET_AUTH_TOKEN } from './types'
 import API from './Api';
 import { AsyncStorage } from 'react-native'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
@@ -35,7 +35,7 @@ const loginUserSuccess = (dispatch, data) => {
   API.defaults.headers.common['Accept'] = 'application/json'
   API.defaults.headers.common['Authorization'] = 'Bearer ' + data.data.access_token;
   dispatch({
-    type: LOGIN_SUCCESS,
+    type: SET_AUTH_TOKEN,
     payload: {token: data.data.access_token}
   })
   API.get('/internal/timeo/api/v0/me')

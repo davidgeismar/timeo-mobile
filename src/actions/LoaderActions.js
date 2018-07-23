@@ -32,6 +32,8 @@ const fetchImageOfTheDaySuccess = (dispatch, data) => {
 }
 
 export const onRequestErrorCallback = (dispatch, error) => {
-  dispatch(setLoaderState(false))
-  dispatch(setErrorState(error.message))
+  console.log('onRequestErrorCallback')
+  console.log(error)
+  // dispatch(setLoaderState(false))
+  // dispatch(setErrorState(error.message))
 };
