@@ -162,6 +162,7 @@ const updateEventSuccess = (dispatch, data, prop) => {
 }
 
 const unsetKanbanAndTask = (dispatch) => {
+  console.log('in unsetKanbanAndTask')
   dispatch({
     type: DELETE_SELECTED_KANBAN,
     payload: true
