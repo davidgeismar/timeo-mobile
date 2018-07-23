@@ -29,8 +29,6 @@ class TaskBlock extends Component {
   }
 
   renderTasks(tasks){
-    console.log('in render tasks taskblock')
-    console.log(tasks)
 
     return tasks.map(
               task => <Task
@@ -65,8 +63,6 @@ class TaskBlock extends Component {
   }
 
   render() {
-    console.log('in render taskblock')
-    console.log(this.props.tasks)
     if (this.state.visible) {
       return (
         <View style={{width: '100%', flexDirection: 'row', justifyContent: 'center'}} >

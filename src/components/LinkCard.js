@@ -47,15 +47,10 @@ const isActiveKanban = (ownProps, event) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('in mapstatetoprops LinkCard')
-  console.log(ownProps)
-  console.log(state)
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
-  console.log(event)
   let active;
     if (event) {
        if (isActiveClient(ownProps, event) || isActiveProject(ownProps, event) || isActiveKanban(ownProps, event)){
-         console.log('in active LinkCard')
           active = true
        }
        else {

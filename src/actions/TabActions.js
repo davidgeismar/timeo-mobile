@@ -4,8 +4,6 @@ import { loadProjectKanbans } from './KanbanActions'
 import { setCurrentEventTask } from './EventActions'
 
 const activateTabSuccess = (dispatch, getState,  tabLabel) => {
-  console.log('in activateTabSuccess')
-  console.log(tabLabel)
   dispatch({
     type: ACTIVATE_TAB,
     payload: tabLabel
@@ -15,7 +13,6 @@ const activateTabSuccess = (dispatch, getState,  tabLabel) => {
     case 'chrono':
       return Actions.chrono()
     case 'time':
-      console.log('in time')
       return Actions.time()
     case 'projects':
       return Actions.projects()
@@ -34,8 +31,6 @@ const activateTabSuccess = (dispatch, getState,  tabLabel) => {
 }
 
 export const activateTab = (tabLabel) => {
-  console.log('in activateTab')
-  console.log(tabLabel)
   return(dispatch, getState) => {
     activateTabSuccess(dispatch, getState, tabLabel)
   }

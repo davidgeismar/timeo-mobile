@@ -21,13 +21,11 @@ import TabBar from './TabBar';
 
 class Info extends Component {
   renderKanbanInfo(kanbanName){
-    console.log('renderKanbanInfo')
     if (kanbanName) {
       return <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => Actions.kanbanList()}>{kanbanName}</LinkCard>
     }
   }
   renderTaskInfo(task){
-    console.log('renderTaskInfo')
     if (task) {
         return (<SmallTaskCard
                   customStyle={{margin: 5, padding:3,
@@ -40,7 +38,6 @@ class Info extends Component {
   }
 
   renderProject(projectName){
-    console.log('in renderProject')
     if (projectName){
       return (
         <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.loadClientProjects(this.props.clientId)}>{projectName}</LinkCard>
@@ -49,7 +46,6 @@ class Info extends Component {
   }
 
   renderClient(client){
-    console.log('in renderClient')
     if (client){
       return (
         <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.fetchClients()}>{client}</LinkCard>
@@ -61,13 +57,7 @@ class Info extends Component {
     DocumentPicker.show({
         filetype: [DocumentPickerUtil.images()],
       },(error,res) => {
-        // Android
-        console.log(
-           res.uri,
-           res.type, // mime type
-           res.fileName,
-           res.fileSize
-        );
+        
       });
   }
 
@@ -96,8 +86,6 @@ class Info extends Component {
   render() {
     const {comment, hour, minute, kindName, clientName, projectName, projectId, timerKind, duration, eventId, kanbanName, task} = this.props
     const {containerStyle, formWrapperStyle, footerStyle, svgStyle} = styles
-    console.log('blopppp')
-    console.log(comment)
     if (this.props.loading) {
       return <Spinner size="large" />;
     }
@@ -167,10 +155,7 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  console.log('in mapstatetoprops Info')
-  console.log(state)
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
-  console.log(event)
   if (event){
     let comment
     if (state.eventsData.currentEventComment == ""){
@@ -185,7 +170,6 @@ const mapStateToProps = (state) => {
     else {
       comment = event.subject
     }
-    console.log('in event Info')
     return { hour: event.duration.selectedHour,
              minute: event.duration.selectedMinute,
              duration: event.duration,

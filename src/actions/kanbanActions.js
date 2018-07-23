@@ -11,8 +11,6 @@ import API from './Api';
 
  export const loadProjectKanbans= (projectId, dispatch) => {
    return (dispatch) => {
-     console.log('in loadProjectKanbans')
-     console.log(projectId)
      dispatch(setLoaderState(true))
      API.get(`/internal/timeo/api/v0/kameo_kanbans/by-project-id/${projectId}`)
        .then(response => loadProjectKanbansSuccess(dispatch, response))
@@ -21,8 +19,6 @@ import API from './Api';
  }
 
  const loadProjectKanbansSuccess = (dispatch, data) => {
-     console.log('loadProjectKanbansSuccess')
-     console.log(data)
      const kanbans = data.data
      dispatch(setLoaderState(false))
      dispatch({
@@ -54,8 +50,6 @@ const setCurrentKanbanSuccess = (dispatch, kanban) => {
 }
 
 export const setCurrentKanban = (kanban) => {
-  console.log('in setCurrentKanban')
-  console.log(kanban)
   return(dispatch) => {
     setCurrentKanbanSuccess(dispatch, kanban)
   }

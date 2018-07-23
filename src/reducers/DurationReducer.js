@@ -12,8 +12,6 @@ const INITIAL_STATE = {
 export const DurationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SELECT_HOUR:
-      console.log('in selecthour reducer')
-      console.log(action.payload)
       return {...state, selectedHour: action.payload}
     case SELECT_MINUTE:
       return {...state, selectedMinute: action.payload}

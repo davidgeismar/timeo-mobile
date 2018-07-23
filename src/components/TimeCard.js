@@ -64,7 +64,6 @@ const styles = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('in mapStateToProps TimeCard')
    if ((state.selectedDuration.selectedHour == ownProps.value && ownProps.kind == 'hour') || (state.selectedDuration.selectedMinute == ownProps.value && ownProps.kind == 'minute')){
       active = true
    }

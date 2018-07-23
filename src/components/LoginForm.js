@@ -35,8 +35,6 @@ class LoginForm extends Component {
       return <Spinner size="large" />;
     }
     else {
-      console.log('le login form')
-      console.log(this.props.backgroundImage)
       return (
         <ImageBackground style={styles.containerStyle} source={{uri: "http://www.bing.com/az/hprichbg/rb/StinkBugSmiley_FR-FR7711508774_1920x1080.jpg"}}>
               <StylishInput
@@ -93,8 +91,6 @@ const styles = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('in mapstatetoprops LoginForm')
-  console.log(state)
   const { username, password } = state.authentication;
   const {error, loading, backgroundImage} = state
 

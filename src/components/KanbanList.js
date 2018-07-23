@@ -12,8 +12,6 @@ import Header from './Header';
 class KanbanList extends Component {
 
   renderKanbans(){
-    console.log('in renderKanbans')
-    console.log(this.props.kanbans)
     return this.props.kanbans.map(
       kanban => <LinkCard
                           customStyle={{width: '47%', height: 60, margin: 5}}
@@ -27,9 +25,6 @@ class KanbanList extends Component {
   }
 
   saveKanban(){
-    console.log('in savekanban')
-    console.log(this.props.eventId)
-    console.log(this.props.selectedKanban)
     this.props.updateEvent('kanban_id', this.props.selectedKanban.id, this.props.duration, this.props.measureKind, this.props.eventId)
   }
   render() {
@@ -91,10 +86,7 @@ const styles = {
 
 
 const mapStateToProps = (state) => {
-    console.log('in mapStateToProps kanbans')
-  console.log(state)
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
-  console.log(event)
   const disabled = state.kanbans.selectedKanban ? false : true
   return { kanbans: state.kanbans.list,
            selectedKanban: state.kanbans.selectedKanban,

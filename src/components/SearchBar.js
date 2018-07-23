@@ -43,8 +43,6 @@ class SearchBar extends Component {
     }
   }
   render() {
-    console.log('in SearchBar')
-    console.log(this.props)
     return (
       <View style={{flex: 1, alignSelf: 'center'}}>
         { this.renderSearchBar() }

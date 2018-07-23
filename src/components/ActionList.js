@@ -44,10 +44,7 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-  console.log('in mapstatetoprops ActionList')
-  console.log(state)
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
-  console.log(event)
   return { selectedAction: state.selectedAction,
            actionKinds: state.actionKinds,
            currentEventId: state.eventsData.currentEventId,

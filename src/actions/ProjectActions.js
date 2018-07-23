@@ -8,9 +8,6 @@ import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderA
 
 export const loadClientProjects = (clientId) => {
   return (dispatch) => {
-    console.log('in loadClientProjects')
-    console.log(clientId)
-    console.log(`/internal/timeo/api/v0/projects/by-client-id/${clientId}`)
     dispatch(setLoaderState(true))
     API.get(`/internal/timeo/api/v0/projects/by-client-id/${clientId}`)
       .then(response => loadClientProjectsSuccess(dispatch, response))
@@ -19,8 +16,6 @@ export const loadClientProjects = (clientId) => {
 }
 
 const loadClientProjectsSuccess = (dispatch, data) => {
-    console.log('loadClientProjectsSuccess')
-    console.log(data)
     const projects = data.data
     dispatch(setLoaderState(false))
     dispatch(setErrorState(false))
@@ -28,8 +23,6 @@ const loadClientProjectsSuccess = (dispatch, data) => {
       type: LOAD_CLIENT_PROJECTS,
       payload: projects
     });
-    console.log(projects)
-    console.log(projects.length)
     return dispatch(activateTab('projects'))
     // projects.length > 0 ? dispatch(activateTab('projects')) : dispatch(activateTab('info'))
 }

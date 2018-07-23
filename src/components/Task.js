@@ -25,8 +25,6 @@ class Task extends Component {
   }
 
   render() {
-    console.log('in render indiv task')
-    console.log(this.props)
     return (
       <TouchableWithoutFeedback
         onPress={this.props.onPress}
@@ -46,13 +44,9 @@ const styles = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('in mapstatetoprops Task')
-  console.log(ownProps)
-  console.log(state)
   let active;
   if (state.tasks.selectedTask){
      if (ownProps.canBeActivated && state.tasks.selectedTask.id == ownProps.activationKey){
-       console.log('in active Task')
         active = true
      }
    }

@@ -25,8 +25,6 @@ class TaskList extends Component {
     }
   }
   renderTasks(){
-    console.log('in renderTasks tasklist')
-    console.log(this.props.tasks)
     const tasks = this.props.tasks
     return tasks.map(
       taskBucket => this.returnTaskBlock(taskBucket)
@@ -34,10 +32,7 @@ class TaskList extends Component {
   }
   renderSwitch(){
     if (!this.props.searchInit){
-      console.log('in renderExtras')
-      console.log(this.props.scope)
       const switchValue = this.props.scope == 'current_user' ? false : true
-      console.log(switchValue)
       return (
           <Switch
             onValueChange={ (switchValue) => this.props.changeTaskListScope(switchValue) }
@@ -90,14 +85,10 @@ class TaskList extends Component {
   }
 
   saveTask(){
-    console.log('in savekanban')
-    console.log(this.props.eventId)
-    console.log(this.props.selectedTask)
     this.props.updateEvent('card_id', this.props.selectedTask.id, this.props.duration, this.props.measureKind, this.props.eventId)
     // this.props.saveTask(this.props.eventId, this.props.selectedTask)
   }
   renderSelectedKanban(selectedKanban){
-    console.log('in renderSelectedKanban')
     if (selectedKanban){
       return (
         <LinkCard customStyle={{ alignSelf: 'center', width: 300, marginTop: 30, height: 80, marginBottom: 10}} onPress={() => Actions.kanbanList()}>{selectedKanban.name}</LinkCard>
@@ -155,11 +146,8 @@ const styles = {
 
 
 const mapStateToProps = (state) => {
-  console.log('in mapStateToProps tasks')
-  console.log(state)
   const disabled = state.tasks.selectedTask ? false : true
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
-  console.log(event)
   return { tasks: state.tasks.list,
            selectedKanban: state.kanbans.selectedKanban,
            searchInit: state.tasks.searchInit,

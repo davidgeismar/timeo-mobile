@@ -5,7 +5,6 @@ import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderA
 
 export const fetchClients = () => {
   return (dispatch) => {
-    console.log('in fetchClients');
     dispatch(setLoaderState(true))
     API.get('/internal/timeo/api/v0/clients')
       .then(response => fetchClientsSuccess(dispatch, response))
@@ -14,8 +13,6 @@ export const fetchClients = () => {
 };
 
 const fetchClientsSuccess = (dispatch, data) => {
-  console.log('in fetchClientsSuccess');
-  console.log(data);
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({

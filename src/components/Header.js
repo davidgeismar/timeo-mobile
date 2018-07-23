@@ -14,7 +14,7 @@ class Header extends Component {
     var now       = new Date();
     var monthIndex = now.getMonth();
     var monthName = months[monthIndex]
-    console.log(monthName)
+
     return monthName
   }
   render() {
@@ -32,7 +32,6 @@ class Header extends Component {
             size="small"
             rounded
             source={{uri: this.props.logo_thumb}}
-            onPress={() => console.log("Works!")}
             activeOpacity={0.7}
             />
           </View>
@@ -70,11 +69,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, { resetAppInfo })(Header)
-
-// const mapStateToProps = state => {
-//   console.log('in mapstatetoprops authorlist')
-//   console.log(state.authorsData)
-//   return { authorsData: state.authorsData };
-// };
-//
-// export default connect(mapStateToProps, actions)(AuthorList);

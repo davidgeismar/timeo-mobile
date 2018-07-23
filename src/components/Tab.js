@@ -43,11 +43,3 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default connect(mapStateToProps, null)(Tab)
-
-// const mapStateToProps = state => {
-//   console.log('in mapstatetoprops authorlist')
-//   console.log(state.authorsData)
-//   return { authorsData: state.authorsData };
-// };
-//
-// export default connect(mapStateToProps, actions)(AuthorList);

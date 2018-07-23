@@ -55,9 +55,6 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  console.log('in mapstatetoprops smallTaskCard')
-  console.log(state)
-  console.log(state.eventsData.currentEventTask)
   return {
     task: state.eventsData.currentEventTask
   }

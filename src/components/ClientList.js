@@ -12,8 +12,6 @@ class ClientList extends Component {
     this.props.updateEvent('client_id', client.id, this.props.duration, this.props.measureKind, this.props.currentEventId)
   }
   renderClients(){
-    console.log('in renderEvents')
-    console.log(this.props.currentEventId)
     return this.props.clients.map(
       client => <LinkCard key={client.id} activationKey={client.id} canBeActivated={true}
                           client={client} customStyle={{width: '47%', height: 60, margin: 5}}
@@ -57,11 +55,7 @@ const styles = {
 
 
 const mapStateToProps = (state) => {
-  console.log('in mapStateToProps clientlist')
-  console.log(state.eventsData)
-
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
-  console.log(event)
   return { events: state.eventsData.events,
            currentEventId: state.eventsData.currentEventId,
            clients: state.clients,

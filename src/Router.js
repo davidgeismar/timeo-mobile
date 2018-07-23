@@ -22,7 +22,6 @@ const TabIcon = ({selected, title}) => {
   );
 };
 const ChronoIcon = () => {
-  console.log('in ChronoIcon')
   return (
     <Text style={{color: selected ? 'red' : 'black'}}>Brutasse</Text>
 
@@ -77,8 +76,6 @@ class RouterComponent  extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('in mapStateToProps router')
-  console.log(state.eventsData)
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
   let disableChronoTab
   if (event) {

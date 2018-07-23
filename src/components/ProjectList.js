@@ -11,8 +11,6 @@ import TabBar from './TabBar';
 
 class ProjectList extends Component {
   renderProjects(){
-    console.log('in renderEvents')
-    console.log(this.props.currentEventId)
     return this.props.projects.map(
       project => <LinkCard  key={project.id}
                             canBeActivated={true}
@@ -60,10 +58,7 @@ const styles = {
 
 
 const mapStateToProps = (state) => {
-  console.log('in mapStateToProps ProjectList')
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
-  console.log(event)
-
   return { events: state.eventsData.events,
            currentEventId: state.eventsData.currentEventId,
            projects: state.projects,

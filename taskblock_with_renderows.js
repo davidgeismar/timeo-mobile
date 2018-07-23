@@ -12,8 +12,6 @@ import Task from './Task';
 
 class TaskBlock extends Component {
   componentWillMount() {
-     console.log('in componentWillMount')
-    console.log(this.props)
     this.createDataSource(this.props.tasks);
     this.setState({
       visible: true
@@ -23,14 +21,11 @@ class TaskBlock extends Component {
 
 
   createDataSource( tasks ) {
-    console.log('in createDataSource')
-    console.log(tasks)
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
 
     this.dataSource = ds.cloneWithRows(tasks);
-    console.log(this.dataSource)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,10 +50,6 @@ class TaskBlock extends Component {
 
 
   renderRow(task) {
-
-    console.log('in renderRow')
-      console.log(task)
-    console.log(this.props)
 
     return (
       <Task
@@ -94,47 +85,7 @@ class TaskBlock extends Component {
 
     )
   }
-  // renderTasks(tasks){
-  //   console.log('in render tasks')
-  //   console.log(tasks)
-  //   console.log(this.props)
-  //   return tasks.map(
-  //             task => <Task
-  //                       customStyle={{width: 300, height: 80, margin: 5,}}
-  //                       onPress={()=> this.props.setCurrentTask(task)}
-  //                       canBeActivated={true}
-  //                       activationKey={task.id}
-  //                       kindColor={task.kindColor}
-  //                       >
-  //                       <View style={{flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', padding: 4}}>
-  //                         <Text style={{ fontSize: 10, color: 'white'}}>
-  //                           {task.clientName} {task.projectName} > {task.status} > {task.taskNumber}
-  //                         </Text>
-  //                         <Text style={{fontSize: 10}}>
-  //                           {task.description}
-  //                         </Text>
-  //                         <View>
-  //                           <Avatar
-  //                             size="small"
-  //                             rounded
-  //                             source={{uri: "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"}}
-  //                             onPress={() => Actions.events()}
-  //                             activeOpacity={0.7}
-  //                             />
-  //                         </View>
-  //                       </View>
-  //                       <View>
-  //                       <Text style={{fontSize: 12, position: 'absolute', top: 3, right: 3, color: 'white'}}>
-  //                         {task.creationDate}
-  //                       </Text>
-  //                       </View>
-  //                     </Task>
-  //               )
-  // }
-
   render() {
-    console.log('in render taskblock')
-    console.log(this.props.tasks)
     if (this.state.visible) {
       return (
         <View style={{width: '100%', flexDirection: 'row', justifyContent: 'center'}} >

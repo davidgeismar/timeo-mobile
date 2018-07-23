@@ -9,8 +9,6 @@ class StylishInput extends Component {
     })
   }
   activate(status){
-    console.log('in activate stylish input')
-    console.log(status)
     this.setState({
       active: status
     })

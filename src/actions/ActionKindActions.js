@@ -6,7 +6,6 @@ import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderA
 
 export const fetchActionKinds = () => {
   return (dispatch) => {
-    console.log('in fetchActionKinds');
     setLoaderState(dispatch, true)
     API.get('/internal/timeo/api/v0/action_kinds')
       .then(response => fetchActionKindsSuccess(dispatch, response))
@@ -15,8 +14,6 @@ export const fetchActionKinds = () => {
 };
 
 const fetchActionKindsSuccess = (dispatch, data) => {
-  console.log('in fetchActionKindsSuccess');
-  console.log(data);
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({

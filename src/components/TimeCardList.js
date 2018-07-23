@@ -61,8 +61,6 @@ class TimeCardList extends Component {
       return '_' + Math.random().toString(36).substr(2, 9);
     }
     getMillisFromTimeSelection(timeSelection){
-      console.log('in getMillisFromTimeSelection')
-      console.log(timeSelection)
       let hoursMillis = timeSelection.selectedHour*3600*1000
       let minutesMillis = timeSelection.selectedMinute*60*1000
       return hoursMillis+minutesMillis
@@ -70,11 +68,9 @@ class TimeCardList extends Component {
     saveEvent(){
       const duration = this.getMillisFromTimeSelection(this.props.timeSelection)
       if (!this.props.eventId){
-        console.log('in createEvent')
         this.props.createEvent('manual', duration)
       }
       else {
-        console.log('in updateEvent')
         this.props.updateEvent('duration', duration, duration, 'manual', this.props.eventId)
       }
     }

@@ -92,8 +92,6 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  console.log('in mapStateToProps DeleteConfirmation')
-  console.log(state)
   return {
     loading: state.loading,
     eventToDelete: state.eventsData.eventToDelete
@@ -101,11 +99,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {deleteEvent})(DeleteConfirmation)
-
-// const mapStateToProps = state => {
-//   console.log('in mapstatetoprops authorlist')
-//   console.log(state.authorsData)
-//   return { authorsData: state.authorsData };
-// };
-//
-// export default connect(mapStateToProps, actions)(AuthorList);

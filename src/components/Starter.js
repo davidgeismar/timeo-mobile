@@ -20,13 +20,11 @@ class Starter extends Component {
   componentWillMount() {
     Keyboard.dismiss();
     if (this.props.isSaved) {
-      console.log('in ancestral state')
       this.setState({
         timerValue: this.props.timerValue ? this.props.timerValue : this.state.timerValue
       })
     }
     else {
-      console.log('in timervalue 0')
       this.setState({
         startDate: new Date(),
         timerValue: 0
@@ -35,7 +33,6 @@ class Starter extends Component {
   }
   renderTabBar(){
     if (this.props.hasRun){
-      console.log('rendering tabbar')
       return (
         <TabBar />
       )
@@ -64,12 +61,7 @@ class Starter extends Component {
     }
   }
   renderButtons(){
-    console.log('render buttons')
-    console.log(this.props.isRunning)
-    console.log(this.props.onHold)
     if (this.props.isRunning  && !this.props.onHold){
-      console.log('in isRunning')
-      console.log(this.props)
       return(
         <View style={styles.buttonWrapperStyle}>
           <Button customStyle={styles.basicButtonStyle} onPress={() => this.stopChrono()}>Stop</Button>
@@ -77,8 +69,6 @@ class Starter extends Component {
       )
     }
     else if ((this.props.isOnHold && !this.props.isRunning)){
-      console.log('in isonhold')
-      console.log(this.props)
       return(
         <View style={styles.chronoButtonsWrapper}>
           <ResumeChronoButton onPress={()=> this.startChrono()}/>
@@ -88,8 +78,6 @@ class Starter extends Component {
       )
     }
     else if (!this.props.isRunning && !this.props.isSaved && !this.props.isOnHold){
-      console.log('in basic')
-      console.log(this.props)
       return(
         <View style={styles.buttonWrapperStyle}>
           <Button customStyle={styles.basicButtonStyle} onPress={() => this.props.activateTab('time')}>ADD</Button>
@@ -109,8 +97,6 @@ class Starter extends Component {
 
   startChrono(){
     this.props.setChronoRunning()
-    console.log('in startchrono')
-    console.log(this.props.timerValue)
     this.setState({
       startDate: new Date()
     });
@@ -126,8 +112,6 @@ class Starter extends Component {
   renderChrono(){
 
     if (this.props.isRunning || this.props.isOnHold || (!this.props.isRunning && this.props.isSaved)) {
-      console.log('in renderChrono')
-      console.log(this.state)
       let timerValue
       timerValue = this.state.timerValue
 
@@ -246,13 +230,8 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  console.log('in mapStateToProps starter')
-  console.log(state.user.user_info)
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
-  console.log(state)
   if (event){
-    console.log('in event')
-    console.log(event)
     if (event.measure_kind == 'automatic'){
       return {
         logo_thumb: state.user.user_info.logo_thumb,
@@ -268,7 +247,6 @@ const mapStateToProps = (state) => {
       }
     }
     else {
-      console.log('not chrono')
       return {
         logo_thumb: state.user.user_info.logo_thumb,
         isChrono: false,
@@ -277,8 +255,6 @@ const mapStateToProps = (state) => {
     }
   }
   else {
-    console.log('no currrent event yo')
-    console.log(state.user.user_info)
     return {
       logo_thumb: state.user.user_info.logo_thumb,
       hasRun: state.chrono.hasRun,

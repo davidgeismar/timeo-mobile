@@ -28,8 +28,6 @@ import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderA
 
 export const createEvent = ( measure_kind, duration=null) => {
   return (dispatch) => {
-    console.log('in createEvent actions event')
-    console.log(duration)
     dispatch(setLoaderState(true))
     const data = {action: {duration: duration, measure_kind: measure_kind}}
     API.post('/internal/timeo/api/v0/actions', data)
@@ -39,9 +37,6 @@ export const createEvent = ( measure_kind, duration=null) => {
 }
 
 const createEventSuccess = (dispatch, data) => {
-  console.log('createEventSuccess')
-  console.log(data)
-  console.log(data.data)
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
     dispatch({
@@ -52,24 +47,27 @@ const createEventSuccess = (dispatch, data) => {
       type: SET_CURRENT_EVENT,
       payload: data.data.id
     });
-    console.log('before dispatch')
     dispatch(fetchClients())
 }
 
 
 export const setCurrentEventTask = (cardId) => {
-  console.log('in setCurrentEventTask')
-  console.log(cardId)
   return(dispatch, getState) => {
-    dispatch(setLoaderState(true))
-    API.get(`/internal/timeo/api/v0/kameo_cards/${cardId}`)
-      .then(response => setCurrentEventTaskSuccess(dispatch, response))
-      .catch(error => onRequestErrorCallback(error));
+    if (cardId){
+      dispatch(setLoaderState(true))
+      API.get(`/internal/timeo/api/v0/kameo_cards/${cardId}`)
+        .then(response => setCurrentEventTaskSuccess(dispatch, response))
+        .catch(error => onRequestErrorCallback(error));
+    }
+    else {
+      dispatch({
+        type: SET_CURRENT_EVENT_TASK,
+        payload: null
+      })
+    }
   }
 }
 const setCurrentEventTaskSuccess = (dispatch, data) => {
-  console.log('in setCurrentEventTaskSuccess')
-  console.log(data.data)
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({
@@ -79,8 +77,6 @@ const setCurrentEventTaskSuccess = (dispatch, data) => {
 }
 
 export const setCurrentEvent = (eventId) => {
-  console.log('in setCurrentEvent')
-  console.log(eventId)
   return(dispatch, getState) => {
     setCurrentEventSuccess(dispatch, getState, eventId)
   }
@@ -95,14 +91,14 @@ const setCurrentEventSuccess = (dispatch, getState, eventId) => {
   if (currentEvent.project_id){
     dispatch(loadProjectKanbans(currentEvent.project_id))
   }
+
+  dispatch(setCurrentEventTask(currentEvent.project_id))
+
   dispatch(activateTab('info'))
 }
 
 export const fetchEvents= () => {
   return (dispatch) => {
-    console.log('in fetchEvents')
-    // console.log(kanbanId)
-    console.log('/internal/timeo/api/v0/actions')
     dispatch(setLoaderState(true))
     API.get('/internal/timeo/api/v0/actions')
       .then(response => fetchEventsSuccess(dispatch, response))
@@ -111,8 +107,6 @@ export const fetchEvents= () => {
 }
 
 const fetchEventsSuccess = (dispatch, data) => {
-  console.log('fetchEventsSuccess')
-  console.log(data.data)
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
     dispatch({
@@ -124,16 +118,12 @@ const fetchEventsSuccess = (dispatch, data) => {
 
 export const updateEvent = (prop, value, duration, measure_kind, eventId) => {
   return (dispatch) => {
-      console.log('in updateEvent')
-      console.log(eventId)
       const data = {action: {
                         [prop]: value,
                         duration: duration,
                         measure_kind: measure_kind
                       }
                     }
-      console.log(data)
-      console.log(`/internal/timeo/api/v0/actions/${eventId}`)
       dispatch(setLoaderState(true))
       API.patch(`/internal/timeo/api/v0/actions/${eventId}`, data)
         .then(response => updateEventSuccess(dispatch, response, prop))
@@ -143,9 +133,6 @@ export const updateEvent = (prop, value, duration, measure_kind, eventId) => {
 
 
 const updateEventSuccess = (dispatch, data, prop) => {
-  console.log('updateEventSuccess')
-  console.log(data.data)
-  console.log(prop)
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({
@@ -154,15 +141,12 @@ const updateEventSuccess = (dispatch, data, prop) => {
   });
   switch(prop) {
     case 'client_id':
-      console.log('in client_id')
       unsetKanbanAndTask(dispatch)
       return dispatch(loadClientProjects(data.data.client_id));
     case 'project_id':
-      console.log('in project_id')
       unsetKanbanAndTask(dispatch)
       return dispatch(activateTab('info'))
     case 'kanban_id':
-      console.log('in kanban_id')
       return dispatch(loadKanbanTasks(data.data.kanban_id))
     case 'card_id':
       return dispatch(activateTab('info'))
@@ -171,10 +155,8 @@ const updateEventSuccess = (dispatch, data, prop) => {
     case 'duration':
       return dispatch(activateTab('client'))
     case 'kind_id':
-      console.log('in kind id')
       return dispatch(activateTab('info'))
     case 'subject':
-      console.log('in subject')
       return dispatch(activateTab('events'))
     }
 }
@@ -191,16 +173,12 @@ const unsetKanbanAndTask = (dispatch) => {
 }
 
 export const setEventToDelete = (event) => {
-  console.log('setEventToDelete')
-  console.log(event)
   return(dispatch) => {
     setEventToDeleteSuccess(dispatch, event)
   }
 }
 
 const setEventToDeleteSuccess = (dispatch, event) => {
-  console.log('in setEventToDeleteSuccess')
-  console.log(event)
   dispatch({
     type: SET_EVENT_TO_DELETE,
     payload: event
@@ -210,8 +188,6 @@ const setEventToDeleteSuccess = (dispatch, event) => {
 
 export const deleteEvent = (eventId) => {
   return(dispatch) => {
-    console.log('in deleteEvent')
-    console.log(eventId)
     dispatch(setLoaderState(true))
     API.delete(`/internal/timeo/api/v0/actions/${eventId}`)
       .then(response => deleteEventSuccess(dispatch, eventId))
@@ -220,8 +196,6 @@ export const deleteEvent = (eventId) => {
 }
 
 const deleteEventSuccess = (dispatch, eventId) => {
-    console.log('in deleteEventSuccess')
-    console.log(eventId)
     dispatch(setLoaderState(false))
     dispatch(setErrorState(false))
     dispatch({
@@ -234,8 +208,6 @@ const deleteEventSuccess = (dispatch, eventId) => {
 
 // just current state no api call
 export const updateEventComment = (comment) => {
-  console.log('in updateEventComment')
-  console.log(comment)
   return{
     type: UPDATE_CURRENT_EVENT_COMMENT,
     payload: comment

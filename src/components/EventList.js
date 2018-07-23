@@ -12,8 +12,6 @@ import Header from './Header'
 class EventList extends Component {
 
   renderEvents(){
-    console.log('in renderEvents')
-    console.log(this.props.currentEventId)
     return this.props.events.map(
       event => <Event key={event.id} event={event} onPress={()=> this.props.setCurrentEvent(event.id)}/>
     )
@@ -63,9 +61,6 @@ const styles = {
 
 
 const mapStateToProps = (state) => {
-  console.log('in mapStateToProps events')
-  console.log(state)
-  console.log(state.eventsData.currentEventId)
   return { events: state.eventsData.events, currentEventId: state.eventsData.currentEventId}
 }
 export default connect(mapStateToProps, { setCurrentEvent, resetAppInfo, logoutUser })(EventList);
