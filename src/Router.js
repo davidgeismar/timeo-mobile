@@ -42,11 +42,6 @@ class RouterComponent  extends Component {
             title='TIMEO'
             initial={this.props.initialPage == 'login'}
             />
-          <Scene
-            leftTitle="Logout"
-            key='starter'
-            component={Starter}
-            />
             <Scene
               key='actionList'
               component={ActionList}

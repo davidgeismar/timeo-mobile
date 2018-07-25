@@ -16,6 +16,8 @@ class EventList extends Component {
       event => <Event key={event.id} event={event} onPress={()=> this.props.setCurrentEvent(event.id)}/>
     )
   }
+
+
   render() {
     const {containerStyle, eventsWrapperStyle, footerStyle} = styles
     return (

@@ -11,7 +11,6 @@ class Tab extends Component {
 
   render() {
     return (
-
       <TouchableOpacity onPress={this.props.disabled ? null : this.props.onPress} activationKey={this.props.activationKey}>
         <View style={{height: '100%', flexDirection: 'row'}} borderBottomWidth= {this.props.active ? 2 : null} borderBottomColor={this.props.active ? 'red' : null}>
           {this.props.children}
@@ -27,6 +26,8 @@ class Tab extends Component {
 const mapStateToProps = (state, ownProps) => {
   let active;
   let disabled;
+  console.log('in mapStateToProps tab')
+  console.log(state.tabs.disabledTabs)
   if (state.tabs.disabledTabs.includes(ownProps.activationKey)){
     disabled = true
   }

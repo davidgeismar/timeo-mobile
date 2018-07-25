@@ -27,7 +27,9 @@ class TabBar extends Component {
       return <Chrono style={styles.svgStyle} fill="#8CCDF8"/>
     }
     else if (this.props.enableChronoNav){
-      return <Chrono style={styles.svgStyle} fill="#BFBFBF"/>
+      return (
+              <Chrono style={styles.svgStyle} fill="#BFBFBF"/>
+            )
     }
     else {
       return <Absent style={styles.svgStyle} fill='#BFBFBF'/>
@@ -43,9 +45,11 @@ class TabBar extends Component {
   render() {
     const {textStyle, containerStyle, svgStyle } = styles
     const {clientId} = this.props
+    console.log('enableChronoNav in render tabar')
+    console.log(this.props.enableChronoNav)
     return (
       <View style={containerStyle}>
-          <Tab onPress={() => this.props.activateTab('chrono')} activationKey='chrono'>
+          <Tab disabled={false} onPress={() => this.props.enableChronoNav ? this.props.activateTab('chrono') : null} activationKey='chrono'>
             {this.renderIcon()}
           </Tab>
           <Tab onPress={() => this.props.activateTab('time')} activationKey='time'>
@@ -112,7 +116,8 @@ const mapStateToProps = (state) => {
   const activeInfo = state.tabs.activeTab == 'info'
   const logo_thumb = state.user.user_info.logo_thumb
   const kanbans = state.kanbans.list
-
+  console.log('enableChronoNav')
+  console.log(enableChronoNav)
   return {
     enableChronoNav,
     activeChrono,

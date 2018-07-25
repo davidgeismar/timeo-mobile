@@ -51,7 +51,7 @@ const getUserInfoSuccess = (dispatch, data) => {
     type: INITIALIZE_USER,
     payload: data.data
   })
-  Actions.starter()
+  Actions.chrono()
 }
 
 export const logoutUser = () => {

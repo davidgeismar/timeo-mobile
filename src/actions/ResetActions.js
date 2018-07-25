@@ -7,7 +7,7 @@ const resetAppInfoSuccess = (dispatch) => {
    type: RESET_INFO,
    payload: null
  })
- Actions.starter()
+ Actions.chrono()
 }
 export const resetAppInfo = () => {
  return(dispatch) => {

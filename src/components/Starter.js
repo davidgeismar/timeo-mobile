@@ -17,6 +17,7 @@ import * as utilities from '../lib/Utilities';
 // import * as actions from '../actions';
 
 class Starter extends Component {
+
   componentWillMount() {
     Keyboard.dismiss();
     if (this.props.isSaved) {
@@ -262,7 +263,7 @@ const mapStateToProps = (state) => {
         isRunning: state.chrono.isRunning,
         hasRun: state.chrono.hasRun,
         chronoStart: state.chrono.chronoStart,
-        timerValue: state.chrono.timerValue,
+        timerValue: event.duration,
         eventId: event.id,
         loading: state.loading
       }

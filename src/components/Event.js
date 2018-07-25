@@ -22,6 +22,13 @@ class Event extends Component {
     const ts = new Date (date)
     return ts.toLocaleTimeString()
   }
+  formatDuration(ms){
+    let time = new Date(ms);
+    let hours = time.getUTCHours() < 10 ? `0${time.getUTCHours()}` : time.getUTCHours();
+    let minutes = time.getUTCMinutes() < 10 ? `0${time.getUTCMinutes()}` : time.getUTCMinutes();
+    let seconds = time.getUTCSeconds() < 10 ? `0${time.getUTCSeconds()}` : time.getUTCSeconds();
+    return hours + ":" + minutes + ":" + seconds
+  }
   renderIcon(){
     if (this.props.event.card_id){
       return <Kameo style={styles.svgStyle} fill='red'/>
@@ -57,7 +64,7 @@ class Event extends Component {
             </View>
             <View style={textWrapperStyle}>
               <Text style={textStyle}>
-                { TimeFormatter(duration)  }
+                { this.formatDuration(duration)  }
               </Text>
             </View>
             <View style={textWrapperStyle}>

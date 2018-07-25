@@ -32,6 +32,7 @@ class ActionList extends Component {
 }
 const styles = {
   containerStyle: {
+    paddingTop: 50,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center'
@@ -39,6 +40,7 @@ const styles = {
   cardStyle: {
     width: '40%',
     padding: 20,
+    margin: 10,
     backgroundColor: 'white'
   }
 }

@@ -6,6 +6,8 @@ const INITIAL_STATE = {
   disabledTabs: ['chrono', 'time', 'client', 'project', 'info']
 };
 
+// revoir la nav
+// sur tout les activateTab inclure un deuxieme parametre qui set les disabledTabs
 export const TabReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ACTIVATE_TAB:
