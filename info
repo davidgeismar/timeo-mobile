@@ -4,3 +4,294 @@ unsigned apk no digital certificate
 
 why certificate :
 unsigned will not work on device
+
+
+
+import React, { Component } from 'react';
+import { View, TouchableOpacity, Text, Keyboard, Animated } from 'react-native'
+import { connect } from 'react-redux';
+import { createEvent, activateTab, stopChrono, setChronoRunning, fetchEvents, updateEvent } from '../actions';
+import { Actions } from 'react-native-router-flux';
+import Button from './common/Button'
+import Footer from './common/Footer'
+import Spinner from './common/Spinner';
+import Chrono from './assets/Chrono'
+import Avatar from './Avatar'
+import TabBar from './TabBar'
+import ResumeChronoButton from './ResumeChronoButton'
+import SelectChronoButton from './SelectChronoButton'
+import * as utilities from '../lib/Utilities';
+
+// import * as actions from '../actions';
+
+class Starter extends Component {
+  componentWillMount() {
+    console.log('in Starter componentWillMount')
+    Keyboard.dismiss();
+    if (this.props.isSaved && this.props.timerValue) {
+      this.setState({
+        timerValue: this.props.timerValue
+      })
+    }
+    else if (this.props.isSaved && this.state){
+      if (this.state.timerValue){
+        this.setState({
+          timerValue:  this.state.timerValue
+        })
+      }
+    }
+    else {
+      console.log('else')
+      this.setState({
+        startDate: new Date(),
+        timerValue: this.props.timerValue ? this.props.timerValue : 0,
+        timerChrono: (this.state && this.state.timerChrono) ? this.state.timerChrono : null
+      })
+    }
+  }
+  renderTabBar(){
+    if (this.props.hasRun){
+      return (
+        <TabBar />
+      )
+    }
+  }
+  renderAvatar(){
+    if (!this.props.isRunning && !this.props.hasRun){
+      return(
+        <Avatar
+          size="small"
+          rounded
+          source={{uri: this.props.logo_thumb}}
+          onPress={() => this.props.fetchEvents()}
+          activeOpacity={0.7}
+          />
+      )
+    }
+  }
+
+  saveEvent(){
+    if (this.props.eventId){
+      // console.log('in save event update')
+      // console.log(this.state)
+      this.props.updateEvent('duration', this.state.timerValue, this.state.timerValue, 'automatic', this.props.eventId)
+    }
+    else {
+      // console.log('in save event create')
+      // console.log(this.state)
+      this.props.createEvent('automatic', this.state.timerValue)
+    }
+  }
+  renderButtons(){
+    if (this.props.isRunning  && !this.props.onHold){
+      return(
+        <View style={styles.buttonWrapperStyle}>
+          <Button customStyle={styles.basicButtonStyle} onPress={() => this.stopChrono()}>Stop</Button>
+        </View>
+      )
+    }
+    else if ((this.props.isOnHold && !this.props.isRunning)){
+      return(
+        <View style={styles.chronoButtonsWrapper}>
+          <ResumeChronoButton onPress={()=> this.startChrono()}/>
+          <SelectChronoButton onPress={()=> this.props.activateTab('time')}/>
+          <Button customStyle={styles.saveButtonStyle} onPress={()=>this.saveEvent()}>Save</Button>
+        </View>
+      )
+    }
+    else if (!this.props.isRunning && !this.props.isSaved && !this.props.isOnHold){
+      return(
+        <View style={styles.buttonWrapperStyle}>
+          <Button customStyle={styles.basicButtonStyle} onPress={() => this.props.activateTab('time')}>ADD</Button>
+        </View>
+
+      )
+    }
+  }
+
+  stopChrono(){
+    console.log('stop chrono')
+    console.log(this.state)
+    clearInterval(this.state.timerChrono);
+    this.props.stopChrono(this.state.timerValue)
+    // this.props.stopChrono()
+  }
+
+  intervalLoop(){
+    console.log('set interval')
+    console.log(this)
+    this.setState({
+      timerValue: new Date() - this.state.startDate + this.state.timerValue
+    })
+  }
+  startChrono(){
+    this.props.setChronoRunning()
+    this.setState({
+      timerChrono: setInterval(this.intervalLoop.bind(this), 10000)
+    })
+  }
+
+  renderChrono(){
+
+    if (this.props.isRunning || this.props.isOnHold || (!this.props.isRunning && this.props.isSaved)) {
+      let timerValue
+      timerValue = this.state.timerValue
+
+      return(
+        <View style={styles.chronoContainer}>
+          <Text style={[styles.hoursStyle, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
+            {utilities.spitHours(timerValue)}
+          </Text>
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={[styles.minutesStyle, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
+              {utilities.spitMinutes(timerValue)}
+            </Text>
+            <Text style={[{fontSize: 40}, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
+              MN
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent:'center', alignItems: 'center'}}>
+            <Text style={[styles.secondsStyle, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
+              {utilities.spitSeconds(timerValue)}
+            </Text>
+            <Text style={[{fontSize: 20}, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
+              SEC
+            </Text>
+          </View>
+        </View>
+      )
+    }
+    else {
+      return (
+        <TouchableOpacity onPress={()=>this.startChrono()}>
+          <Chrono style={styles.svgStyle} fill="#00AFFA"/>
+        </TouchableOpacity>
+      )
+    }
+
+  }
+  render() {
+    if (this.props.loading) {
+      return <Spinner size="large" />;
+    }
+    else {
+      return (
+      <View style={styles.containerStyle}>
+        {this.renderTabBar()}
+        <View style={styles.avatarWrapperStyle}>
+          {this.renderAvatar()}
+        </View>
+        <View style={styles.chronoWrapperStyle}>
+          {this.renderChrono()}
+        </View>
+        <Footer>
+          {this.renderButtons()}
+        </Footer>
+      </View>
+    )
+    }
+  }
+}
+const styles = {
+  chronoContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    flex: 1
+  },
+  hoursStyle: {
+    alignSelf: 'flex-start',
+    fontSize: 30,
+    color: 'orange'
+  },
+  minutesStyle: {
+    fontSize: 110,
+    color: 'orange'
+  },
+  secondsStyle: {
+    fontSize: 30,
+    color: 'orange',
+    alignSelf: 'flex-end'
+  },
+  basicButtonStyle: {
+    width: 200
+  },
+  saveButtonStyle: {
+    width: 120
+  },
+  chronoButtonsWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  avatarWrapperStyle: {
+    alignSelf: 'flex-end',
+    marginTop: 30,
+    marginRight: 20
+  },
+  chronoWrapperStyle: {
+    flex: 1,
+    marginTop: 60 // height of tabbar
+  },
+  svgStyle: {
+    height: 180,
+    width: 180
+  },
+  buttonWrapperStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+};
+
+const mapStateToProps = (state) => {
+  // console.log('in mapStateToProps Starter')
+  // console.log(state)
+  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  // console.log(event)
+  if (event){
+    if (event.measure_kind == 'automatic'){
+      return {
+        logo_thumb: state.user.user_info.logo_thumb,
+        isChrono: true,
+        isSaved: true,
+        isOnHold: state.chrono.isOnHold,
+        isRunning: state.chrono.isRunning,
+        hasRun: state.chrono.hasRun,
+        chronoStart: state.chrono.chronoStart,
+        timerValue: state.chrono.timerValue,
+        eventId: event.id,
+        loading: state.loading
+      }
+    }
+    else {
+      return {
+        logo_thumb: state.user.user_info.logo_thumb,
+        isChrono: false,
+        loading: state.loading
+      }
+    }
+  }
+  else {
+    // console.log('in return no event')
+    // console.log(state)
+    return {
+      logo_thumb: state.user.user_info.logo_thumb,
+      hasRun: state.chrono.hasRun,
+      isRunning: state.chrono.isRunning,
+      isSaved: state.chrono.isSaved,
+      timerValue: state.chrono.timerValue,
+      isOnHold: state.chrono.isOnHold,
+      loading: state.loading
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, { createEvent, activateTab, stopChrono, setChronoRunning, fetchEvents, updateEvent })(Starter);

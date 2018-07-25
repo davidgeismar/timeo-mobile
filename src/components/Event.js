@@ -75,7 +75,7 @@ class Event extends Component {
 
 const styles = {
   containerStyle: {
-    width: '90%',
+    width: '85%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

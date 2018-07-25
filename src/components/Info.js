@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, TouchableOpacity, ScrollView, Text} from 'react-native'
+import { View, TextInput, TouchableOpacity, ScrollView, Text, Platform} from 'react-native'
 import { connect } from 'react-redux';
 import { updateEvent, updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients, loadClientProjects } from '../actions';
 import Button from './common/Button';
@@ -57,7 +57,10 @@ class Info extends Component {
     DocumentPicker.show({
         filetype: [DocumentPickerUtil.images()],
       },(error,res) => {
-
+        console.log('in picker')
+        console.log(res)
+        this.props.sendFileToApi(this.props.eventId, res.fileName, res.fileType, res.uri)
+        // this.props.sendFileToA
       });
   }
 
@@ -82,7 +85,28 @@ class Info extends Component {
       }
     }
   }
-
+  renderCommentInput(){
+    if (Platform.OS === 'ios'){
+      return (
+        <StylishInput
+          style={{height: 40, width: '100%', borderBottomColor: 'grey', borderBottomWidth: 1 }}
+          placeholder="Comments"
+          onChangeText={(comment) => this.props.updateEventComment(comment)}
+          value={this.props.comment}
+        />
+      )
+    }
+    else {
+      return (
+        <TextInput
+          style={{height: 40, width: '100%' }}
+          placeholder="Comments"
+          onChangeText={(comment) => this.props.updateEventComment(comment)}
+          value={this.props.comment}
+        />
+      )
+    }
+  }
   render() {
     const {comment, hour, minute, kindName, clientName, projectName, projectId, timerKind, duration, eventId, kanbanName, task} = this.props
     const {containerStyle, formWrapperStyle, footerStyle, svgStyle} = styles
@@ -103,14 +127,7 @@ class Info extends Component {
               {this.renderKanbanInfo(kanbanName)}
               {this.renderTaskInfo(task)}
             </View>
-
-            <StylishInput
-              style={{height: 40, width: '100%', borderBottomColor: 'grey', borderBottomWidth: 1 }}
-              placeholder="Comments"
-              onChangeText={(comment) => this.props.updateEventComment(comment)}
-              value={comment}
-            />
-
+            {this.renderCommentInput()}
           </View>
           <Footer>
             <View style={styles.footerButtonsWrapper}>

@@ -42,15 +42,20 @@ const isActiveProject = (ownProps, event) => {
   return (ownProps.canBeActivated && event.project_id == ownProps.activationKey)
 }
 
-const isActiveKanban = (ownProps, event) => {
-  return (ownProps.canBeActivated && event.kanban_id == ownProps.activationKey)
+const isActiveKanban = (ownProps, selectedKanban) => {
+if (selectedKanban){
+  return ((ownProps.canBeActivated && selectedKanban.id == ownProps.activationKey ))
+}
+else {
+  return false
+}
 }
 
 const mapStateToProps = (state, ownProps) => {
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
   let active;
     if (event) {
-       if (isActiveClient(ownProps, event) || isActiveProject(ownProps, event) || isActiveKanban(ownProps, event)){
+       if (isActiveClient(ownProps, event) || isActiveProject(ownProps, event) || isActiveKanban(ownProps, state.kanbans.selectedKanban)){
           active = true
        }
        else {

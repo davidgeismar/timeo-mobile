@@ -32,10 +32,10 @@ class TaskList extends Component {
   }
   renderSwitch(){
     if (!this.props.searchInit){
-      const switchValue = this.props.scope == 'current_user' ? false : true
+      const switchValue = this.props.limitToMine ? false : true
       return (
           <Switch
-            onValueChange={ (switchValue) => this.props.changeTaskListScope(switchValue) }
+            onValueChange={ (switchValue) => this.props.changeTaskListScope(switchValue, this.props.searchPattern, this.props.selectedKanban.id) }
             value={switchValue}
             style={{ transform: [{ scaleX: .6 }, { scaleY: .6 }],   alignSelf: 'center' }}/>
       )
@@ -46,7 +46,7 @@ class TaskList extends Component {
     if (!this.props.searchInit){
       return(
         <View style={{height: '100%', flexDirection: 'row', borderBottomWidth: 2, borderBottomColor: 'red'}}>
-          <Text style={{color: '#00AFFA',  alignSelf: 'center', borderBottomColor: 'red', borderBottomWidth: 1, fontSize: 12}}>
+          <Text style={{color: '#00AFFA',  alignSelf: 'center', fontSize: 12}}>
             Link to a Kameo Task
           </Text>
         </View>
@@ -78,7 +78,10 @@ class TaskList extends Component {
         {this.renderTitle()}
         {this.renderToggle()}
         <View style={{height: '100%', width: this.props.searchInit ? '90%' : 20, flexDirection: 'row',   alignSelf: 'center'}}>
-          <SearchBar onChangeText={(value)=> this.props.searchTasks(value)}/>
+          <SearchBar
+            onChangeText={(pattern)=> this.props.searchTasks(this.props.selectedKanban.id, pattern, this.props.limitToMine)}
+            value={this.props.searchPattern}
+            />
         </View>
       </Header>
     )
@@ -101,13 +104,13 @@ class TaskList extends Component {
       <View style={containerStyle}>
         {this.renderHeader()}
         {this.renderSelectedKanban(this.props.selectedKanban)}
-        <ScrollView>
+        <ScrollView style={{marginBottom: 130}}>
           {this.renderTasks()}
         </ScrollView>
         <Footer customStyle={{backgroundColor: '#E62B5A'}}>
           <View style={ footerButtonsWrapper }>
             <Button customStyle={ footerButtonStyle } onPress={()=> this.props.removeSelectedTask()}>CANCEL</Button>
-            <Button disabled={this.props.disabled} customStyle={styles.footerButtonStyle} onPress={()=> this.saveTask()}>SAVE</Button>
+            <Button disabled={this.props.disabled} customStyle={footerButtonStyle} onPress={()=> this.saveTask()}>SAVE</Button>
           </View>
         </Footer>
       </View>
@@ -129,7 +132,7 @@ const styles = {
     justifyContent: 'center'
   },
   footerButtonStyle: {
-    width: 180
+    width: 170
   },
   taskHeaderStyle: {
     width: '100%',
@@ -138,25 +141,25 @@ const styles = {
     justifyContent: 'space-around',
     paddingLeft: 10,
     paddingRight: 10
-  },
-  footerButtonStyle: {
-    width: 180
   }
 };
 
 
 const mapStateToProps = (state) => {
   const disabled = state.tasks.selectedTask ? false : true
+  console.log('in mapStateToProps tasklist')
+  console.log(state.tasks.limitToMine)
   const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
   return { tasks: state.tasks.list,
            selectedKanban: state.kanbans.selectedKanban,
            searchInit: state.tasks.searchInit,
            selectedTask: state.tasks.selectedTask,
            eventId: state.eventsData.currentEventId,
-           scope: state.tasks.scope,
-           duration: event.duration,
-           measureKind: event.measure_kind,
-           disabled: disabled
+           limitToMine: state.tasks.limitToMine,
+           duration: event ? event.duration : null,
+           measureKind: event ? event.measure_kind : null,
+           disabled: disabled,
+           searchPattern: state.tasks.searchPattern
          }
 }
 export default connect(mapStateToProps, { removeSelectedTask, updateEvent, changeTaskListScope, searchTasks })(TaskList);

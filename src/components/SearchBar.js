@@ -29,6 +29,7 @@ class SearchBar extends Component {
           <TextInput
             style={{height: 40, width: '100%', borderBottomColor: 'grey', borderBottomWidth: 1 }}
             placeholder="Search"
+            value={this.props.value}
             onChangeText={this.props.onChangeText}
           />
         </View>

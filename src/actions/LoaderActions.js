@@ -4,7 +4,7 @@ import axios from 'axios';
 export const setLoaderState = (loaderState) => {
   return {
           type: SET_LOADER,
-          payload: false
+          payload: loaderState
         }
 
 }
@@ -34,6 +34,6 @@ const fetchImageOfTheDaySuccess = (dispatch, data) => {
 export const onRequestErrorCallback = (dispatch, error) => {
   console.log('onRequestErrorCallback')
   console.log(error)
-  // dispatch(setLoaderState(false))
+  dispatch(setLoaderState(false))
   // dispatch(setErrorState(error.message))
 };

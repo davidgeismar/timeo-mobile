@@ -20,7 +20,10 @@ export const loginUser = (creds) => {
                   client_secret: '8463d7894c7531aee91e5dfbb80cffa40fd94fd319b2aa2407ae437ab309c5ce',
                   grant_type: 'password',
                 }
-
+    const creds = {
+      username: 'd.sylla@xair.fr',
+      password: 'whazaaz313'
+    }
     const fullConf = {...creds, ...conf}
     API.post('/oauth/token', fullConf)
       .then(response => loginUserSuccess(dispatch, response))

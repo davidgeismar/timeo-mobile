@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback, TouchableOpacity, ImageBackground, Image} from 'react-native'
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity, ImageBackground, Image, TextInput, Platform} from 'react-native'
 import { connect } from 'react-redux';
 import { loginUser, authUpdate, fetchImageOfTheDay} from '../actions';
 import {Actions} from 'react-native-router-flux'
@@ -30,6 +30,48 @@ class LoginForm extends Component {
       return <Text style={styles.errorStyle}>{this.props.error}</Text>
     }
   }
+  renderForm(){
+    if (Platform.OS === 'ios'){
+      return (
+        <View style={{width: '100%'}}>
+          <StylishInput
+            style={{height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', fontWeight: 'bold', alignSelf: 'center' }}
+            // value={this.props.username}
+            value= "d.sylla@xair.fr"
+            placeholder="Login"
+            onChangeText={text => this.props.authUpdate({prop: 'username', value: text})}
+          />
+          <StylishInput
+            style={{height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', alignSelf: 'center', fontWeight: 'bold'}}
+            placeholder="Password"
+            // value={this.props.password}
+            value="whazaaz313"
+            onChangeText={text => this.props.authUpdate({prop: 'password', value: text})}
+          />
+        </View>
+      )
+    }
+    else {
+      return (
+        <View style={{width: '100%'}}>
+        <TextInput
+          style={{height: 50, width: '60%', alignSelf: 'center', color: 'white', fontWeight: 'bold' }}
+          // value={this.props.username}
+          value= "d.sylla@xair.fr"
+          placeholder="Login"
+          onChangeText={text => this.props.authUpdate({prop: 'username', value: text})}
+        />
+        <TextInput
+          style={{height: 50, width: '60%', color: 'white', alignSelf: 'center', fontWeight: 'bold'}}
+          placeholder="Password"
+          // value={this.props.password}
+            value="whazaaz313"
+          onChangeText={text => this.props.authUpdate({prop: 'password', value: text})}
+        />
+        </View>
+      )
+    }
+  }
   render() {
     if (this.props.loading) {
       return <Spinner size="large" />;
@@ -37,19 +79,7 @@ class LoginForm extends Component {
     else {
       return (
         <ImageBackground style={styles.containerStyle} source={{uri: "http://www.bing.com/az/hprichbg/rb/StinkBugSmiley_FR-FR7711508774_1920x1080.jpg"}}>
-              <StylishInput
-                style={{height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', fontWeight: 'bold' }}
-                value={this.props.username}
-                placeholder="Login"
-                onChangeText={text => this.props.authUpdate({prop: 'username', value: text})}
-              />
-
-              <StylishInput
-                style={{height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', fontWeight: 'bold'}}
-                placeholder="Password"
-                value={this.props.password}
-                onChangeText={text => this.props.authUpdate({prop: 'password', value: text})}
-              />
+              {this.renderForm()}
               <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center', marginTop: 20}}>
                 <TouchableOpacity onPress={() => this.loginUser('great')}>
                   <Great style={{height: 50, width: 50}}/>

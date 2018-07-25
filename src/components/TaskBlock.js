@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setCurrentTask, changeTaskListScope } from '../actions';
 import { Actions } from 'react-native-router-flux'
 import Avatar from './Avatar';
-
+import API from '../actions/Api';
 import Task from './Task';
 
 // import * as actions from '../actions';
@@ -13,6 +13,9 @@ import Task from './Task';
 class TaskBlock extends Component {
 
   componentWillMount(){
+    // API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}/pattern?pattern=${pattern}&limit_to_mine=${limitToMine}`)
+    //   .then(response => searchTasksSuccess(dispatch, response))
+    //   .catch(error => onRequestErrorCallback(dispatch, error));
     this.setState({
       visible: true
     })

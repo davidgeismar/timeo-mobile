@@ -54,7 +54,6 @@ const mapStateToProps = (state, ownProps) => {
      active = false
    }
    return { active }
-  // return { authorsData: state.authorsData };
 };
 
 export default connect(mapStateToProps, null)(Task);

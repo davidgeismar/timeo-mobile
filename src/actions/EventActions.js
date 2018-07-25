@@ -206,7 +206,32 @@ const deleteEventSuccess = (dispatch, eventId) => {
     Actions.events()
 }
 
+export const sendFileToApi = (eventId, fileTitle, fileKind, file) =>{
+  return(dispatch) => {
+    dispatch(setLoaderState(true))
+    const data = {
+      id: eventId,
+      action_file: {
+        title: fileTitle,
+        kind: fileKind,
+        file: file
+      }
 
+    }
+    API.post(`/internal/timeo/api/v0/actions/${eventId}/action-file`)
+      .then(response => sendFileToApiSuccess(dispatch, eventId))
+      .catch(error => onRequestErrorCallback(error));
+  }
+}
+
+const sendFileToApiSuccess = (dispatch, eventId) => {
+  console.log('sendFileToApiSuccess')
+    // dispatch({
+    //   type: SET_FILE,
+    //   payload: {eventId
+    // });
+    // Actions.events()
+}
 // just current state no api call
 export const updateEventComment = (comment) => {
   return{

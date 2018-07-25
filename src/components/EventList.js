@@ -50,12 +50,13 @@ const styles = {
     justifyContent: 'center'
   },
   footerButtonStyle: {
-    width: 180
+    width: 170
   },
   eventsWrapperStyle: {
     marginTop: 50,
     padding: 30,
-    width: '100%'
+    flex: 1,
+    marginBottom: 40
   }
 };
 

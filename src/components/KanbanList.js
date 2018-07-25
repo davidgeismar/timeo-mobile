@@ -6,6 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import { setCurrentKanban, updateEvent, removeSelectedKanban } from '../actions';
 import Button from './common/Button';
 import Footer from './common/Footer';
+import Spinner from './common/Spinner';
 import LinkCard from './LinkCard';
 import Header from './Header';
 
@@ -29,7 +30,11 @@ class KanbanList extends Component {
   }
   render() {
     const { kanbanHeaderStyle, containerStyle, kanbansWrapperStyle, footerStyle} = styles
-    return (
+    if (this.props.loading){
+      return <Spinner size="large" />;
+    }
+    else {
+      return (
 
       <View style={containerStyle}>
         <View style={kanbanHeaderStyle}>
@@ -48,7 +53,7 @@ class KanbanList extends Component {
         </Footer>
       </View>
     )
-
+    }
   }
 }
 
@@ -92,8 +97,9 @@ const mapStateToProps = (state) => {
            selectedKanban: state.kanbans.selectedKanban,
            eventId: state.eventsData.currentEventId,
            disabled: disabled,
-           duration: event.duration,
-           measureKind: event.measure_kind,
+           duration: event ? event.duration : null,
+           measureKind: event ? event.measure_kind : null,
+           loading: state.loading
          }
 }
 export default connect(mapStateToProps, { setCurrentKanban, updateEvent, removeSelectedKanban } )(KanbanList);

@@ -5,29 +5,17 @@ import { RESET_INFO,
          DELETE_SELECTED_TASK,
          CHANGE_TASKLIST_SCOPE,
          SEARCH_TASK,
-         UNSET_CURRENT_TASK
+         UNSET_CURRENT_TASK,
+         UPDATE_SEARCH_PATTERN
        } from '../actions/types';
 
 
-const INITIAL_STATE = {list: [], selectedTask: null, searchInit: false, scope: 'current_user'}
-
-const searchTasks = (tasks, query) => {
-  var results = [];
-  if (query == "") {
-    return tasks
-  }
-  var re = new RegExp(query, "i");
-  for(var i=0; i<tasks.length; i++) {
-    for(key in tasks[i]) {
-      if (typeof(tasks[i][key]) == 'string') {
-        if(tasks[i][key].search(re)!=-1) {
-          results.push(tasks[i]);
-        }
-      }
-    }
-  }
-  return results
-}
+const INITIAL_STATE = { list: [],
+                        selectedTask: null,
+                        searchInit: false,
+                        limitToMine: false,
+                        searchPattern: ''
+                      }
 
 const filterTaskListByScope = (tasks, scope, currentUserId) => {
   var results = []
@@ -48,6 +36,8 @@ export const TaskReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOAD_KANBAN_TASKS:
         return {...state, list: action.payload}
+    case UPDATE_SEARCH_PATTERN:
+        return { ...state, searchPattern: action.payload}
     case SET_CURRENT_TASK:
         return {...state, selectedTask: action.payload}
     case UNSET_CURRENT_TASK:
@@ -57,11 +47,15 @@ export const TaskReducer = (state = INITIAL_STATE, action) => {
     case DELETE_SELECTED_TASK:
         return {...state, selectedTask: null}
     case CHANGE_TASKLIST_SCOPE:
-        filteredTasks = filterTaskListByScope(TASKS, action.payload.scope, action.payload.currentUserId)
-        return {...state, list: filteredTasks, scope: action.payload.scope}
+        console.log('CHANGE_TASKLIST_SCOPE')
+        console.log(action.payload)
+        return {  ...state,
+                  list: action.payload.tasks,
+                  limitToMine: action.payload.limitToMine }
     case SEARCH_TASK:
-      filteredTasks = searchTasks(TASKS, action.payload)
-      return {...state, list: filteredTasks}
+      return {  ...state,
+                list: action.payload,
+               }
       return INITIAL_STATE
     case RESET_INFO:
       return INITIAL_STATE
