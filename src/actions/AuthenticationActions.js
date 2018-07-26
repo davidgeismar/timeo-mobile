@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
-import { RESET_INFO, RESET_AUTH_TOKEN, AUTH_UPDATE, GET_USER_INFO, INITIALIZE_USER, SET_AUTH_TOKEN } from './types'
+import {SET_RESOURCES, RESET_INFO, RESET_AUTH_TOKEN, AUTH_UPDATE, GET_USER_INFO, INITIALIZE_USER, SET_AUTH_TOKEN } from './types'
 import API from './Api';
 import { AsyncStorage } from 'react-native'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
@@ -19,10 +19,10 @@ export const loginUser = (creds) => {
                   client_secret: '8463d7894c7531aee91e5dfbb80cffa40fd94fd319b2aa2407ae437ab309c5ce',
                   grant_type: 'password',
                 }
-    // const creds = {
-    //   username: 'd.sylla@xair.fr',
-    //   password: 'whazaaz313'
-    // }
+    const creds = {
+      username: 'd.sylla@xair.fr',
+      password: 'whazaaz313'
+    }
     const fullConf = {...creds, ...conf}
     API.post('/oauth/token', fullConf)
       .then(response => loginUserSuccess(dispatch, response))
@@ -58,7 +58,23 @@ const getUserInfoSuccess = (dispatch, data) => {
     type: INITIALIZE_USER,
     payload: data.data
   })
+  dispatch(getResources())
   Actions.chrono()
+}
+
+const getResources = () => {
+  return (dispatch) => {
+    API.get('/internal/obeya/api/v0/resources')
+            .then(response => getRessourcesSuccess(dispatch, response))
+            .catch(error => onRequestErrorCallback(error));
+  }
+}
+
+const getRessourcesSuccess = (dispatch, data) => {
+  dispatch({
+    type: SET_RESOURCES,
+    payload: data.data
+  })
 }
 
 export const logoutUser = () => {

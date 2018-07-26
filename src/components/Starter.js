@@ -120,6 +120,7 @@ class Starter extends Component {
       startDate: new Date()
     });
     this.timerValue = setInterval(() => {
+                      console.log('setState', new Date())
                       this.setState({
                         timerValue: new Date() - this.state.startDate + this.props.timerValue
                       })

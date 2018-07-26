@@ -14,6 +14,7 @@ import { ErrorReducer } from './ErrorReducer';
 import { LoaderReducer } from './LoaderReducer';
 import { ActionKindsReducer } from './ActionKindsReducer';
 import { BackgroundImageReducer } from './BackgroundImageReducer';
+import { ResourceReducer } from './ResourceReducer';
 
 export default combineReducers({
   selectedDuration: DurationReducer,
@@ -30,5 +31,6 @@ export default combineReducers({
   actionKinds: ActionKindsReducer,
   error: ErrorReducer,
   loading: LoaderReducer,
-  backgroundImage: BackgroundImageReducer
+  backgroundImage: BackgroundImageReducer,
+  resources: ResourceReducer
 });

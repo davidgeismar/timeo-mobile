@@ -15,8 +15,7 @@ console.disableYellowBox = true
 export default class App extends React.Component {
   componentDidMount(){
     console.log('in app componentDidmount')
-    console.log(store.getState())
-    console.log(persistor.getState())
+
   }
 
   render() {
