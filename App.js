@@ -6,6 +6,7 @@ import Starter from './src/components/Starter';
 import Avatar from './src/components/Avatar';
 import Button from './src/components/common/Button';
 import Chrono from './src/components/assets/Chrono';
+import {SET_LOADER} from './src/actions/types'
 import Router from './src/Router';
 import API from './src/actions/Api';
 
@@ -14,8 +15,10 @@ console.disableYellowBox = true
 
 export default class App extends React.Component {
   componentDidMount(){
-    console.log('in app componentDidmount')
-
+    store.dispatch({
+      type: SET_LOADER,
+      payload: false
+    })
   }
 
   render() {
