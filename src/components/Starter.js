@@ -17,10 +17,12 @@ import * as utilities from '../lib/Utilities';
 // import * as actions from '../actions';
 
 class Starter extends Component {
-
   componentWillMount() {
     Keyboard.dismiss();
-    if (this.props.isSaved) {
+    console.log('compo starter')
+    console.log(this.props.isSaved)
+    console.log(this.props.isRunning)
+    if (this.props.isSaved && !this.props.isRunning) {
       console.log('in ancestral state')
       this.setState({
         timerValue: this.props.timerValue ? this.props.timerValue : this.state.timerValue
@@ -103,7 +105,9 @@ class Starter extends Component {
     console.log(this.timerValue)
     clearInterval(this.timerValue);
     this.props.stopChrono(this.state.timerValue)
-    // this.props.stopChrono()
+    if (this.props.eventId){
+      this.props.updateEvent('duration', this.state.timerValue, this.state.timerValue, 'automatic', this.props.eventId, false, false)
+    }
   }
 
 

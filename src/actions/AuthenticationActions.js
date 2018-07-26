@@ -1,10 +1,9 @@
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
-import { RESET_AUTH_TOKEN, AUTH_UPDATE, GET_USER_INFO, INITIALIZE_USER, SET_AUTH_TOKEN } from './types'
+import { RESET_INFO, RESET_AUTH_TOKEN, AUTH_UPDATE, GET_USER_INFO, INITIALIZE_USER, SET_AUTH_TOKEN } from './types'
 import API from './Api';
 import { AsyncStorage } from 'react-native'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
-
 
 export const authUpdate = ({ prop, value }) => {
   return {
@@ -20,14 +19,14 @@ export const loginUser = (creds) => {
                   client_secret: '8463d7894c7531aee91e5dfbb80cffa40fd94fd319b2aa2407ae437ab309c5ce',
                   grant_type: 'password',
                 }
-    const creds = {
-      username: 'd.sylla@xair.fr',
-      password: 'whazaaz313'
-    }
+    // const creds = {
+    //   username: 'd.sylla@xair.fr',
+    //   password: 'whazaaz313'
+    // }
     const fullConf = {...creds, ...conf}
     API.post('/oauth/token', fullConf)
       .then(response => loginUserSuccess(dispatch, response))
-      .catch(error => onRequestErrorCallback(dispatch, error));
+      .catch(error => onRequestErrorCallbackLogin(dispatch, error));
   };
 };
 
@@ -46,6 +45,14 @@ const loginUserSuccess = (dispatch, data) => {
     .catch(error => onRequestErrorCallback(dispatch, error));
 };
 
+export const onRequestErrorCallbackLogin = (dispatch, error) => {
+  console.log('onRequestErrorCallback')
+  console.log(error.message)
+  dispatch(setLoaderState(false))
+
+  dispatch(setErrorState(error.message))
+};
+
 const getUserInfoSuccess = (dispatch, data) => {
   dispatch({
     type: INITIALIZE_USER,
@@ -56,12 +63,15 @@ const getUserInfoSuccess = (dispatch, data) => {
 
 export const logoutUser = () => {
   return (dispatch) => {
-    AsyncStorage.setItem('token', '')
     API.defaults.headers.common['Authorization'] = '';
     logoutUserSuccess(dispatch)
   }
 };
 
 const logoutUserSuccess = (dispatch) => {
+  dispatch({
+    type: RESET_INFO,
+    payload: true
+  })
   Actions.login()
 }

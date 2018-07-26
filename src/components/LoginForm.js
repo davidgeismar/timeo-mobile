@@ -26,6 +26,8 @@ class LoginForm extends Component {
   }
 
   renderError(){
+    console.log('in rendererror')
+    console.log(this.props.error)
     if (this.props.error){
       return <Text style={styles.errorStyle}>{this.props.error}</Text>
     }
@@ -36,16 +38,16 @@ class LoginForm extends Component {
         <View style={{width: '100%'}}>
           <StylishInput
             style={{height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', fontWeight: 'bold', alignSelf: 'center' }}
-            // value={this.props.username}
-            value= "d.sylla@xair.fr"
+            value={this.props.username}
+            // value= "d.sylla@xair.fr"
             placeholder="Login"
             onChangeText={text => this.props.authUpdate({prop: 'username', value: text})}
           />
           <StylishInput
             style={{height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', alignSelf: 'center', fontWeight: 'bold'}}
             placeholder="Password"
-            // value={this.props.password}
-            value="whazaaz313"
+            value={this.props.password}
+            // value="whazaaz313"
             onChangeText={text => this.props.authUpdate({prop: 'password', value: text})}
           />
         </View>
@@ -123,7 +125,7 @@ const styles = {
 const mapStateToProps = (state, ownProps) => {
   const { username, password } = state.authentication;
   const {error, loading, backgroundImage} = state
-
+  console.log(state)
   return { username, password, error, loading, backgroundImage };
 };
 

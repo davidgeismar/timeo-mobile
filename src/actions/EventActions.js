@@ -116,7 +116,7 @@ const fetchEventsSuccess = (dispatch, data) => {
     dispatch(activateTab('events'))
 }
 
-export const updateEvent = (prop, value, duration, measure_kind, eventId) => {
+export const updateEvent = (prop, value, duration, measure_kind, eventId, redirect=true, loader=true) => {
   return (dispatch) => {
       const data = {action: {
                         [prop]: value,
@@ -124,22 +124,25 @@ export const updateEvent = (prop, value, duration, measure_kind, eventId) => {
                         measure_kind: measure_kind
                       }
                     }
-      dispatch(setLoaderState(true))
+      if (loader){
+        dispatch(setLoaderState(true))
+      }
       API.patch(`/internal/timeo/api/v0/actions/${eventId}`, data)
-        .then(response => updateEventSuccess(dispatch, response, prop))
+        .then(response => updateEventSuccess(dispatch, response, prop, redirect))
         .catch(error => onRequestErrorCallback(error));
   }
 }
 
 
-const updateEventSuccess = (dispatch, data, prop) => {
+const updateEventSuccess = (dispatch, data, prop, redirect) => {
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({
     type: UPDATE_EVENT,
     payload: data.data
   });
-  switch(prop) {
+  if (redirect){
+    switch(prop) {
     case 'client_id':
       unsetKanbanAndTask(dispatch)
       return dispatch(loadClientProjects(data.data.client_id));
@@ -159,6 +162,7 @@ const updateEventSuccess = (dispatch, data, prop) => {
     case 'subject':
       return dispatch(activateTab('events'))
     }
+  }
 }
 
 const unsetKanbanAndTask = (dispatch) => {
