@@ -2,10 +2,9 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, TouchableOpacity, Dimensions} from 'react-native'
 import { connect } from 'react-redux';
-import { setCurrentTask, changeTaskListScope } from '../actions';
+import { setCurrentTask, changeTaskListScope, getResources } from '../actions';
 import { Actions } from 'react-native-router-flux'
 import Avatar from './Avatar';
-import API from '../actions/Api';
 import Task from './Task';
 
 // import * as actions from '../actions';
@@ -13,13 +12,11 @@ import Task from './Task';
 class TaskBlock extends Component {
 
   componentWillMount(){
-    // API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}/pattern?pattern=${pattern}&limit_to_mine=${limitToMine}`)
-    //   .then(response => searchTasksSuccess(dispatch, response))
-    //   .catch(error => onRequestErrorCallback(dispatch, error));
     this.setState({
       visible: true
     })
   }
+
   hideTaskBlock(){
     this.setState({
       visible: false
@@ -31,8 +28,25 @@ class TaskBlock extends Component {
     })
   }
 
+  userThumbUrl(affected_to_id){
+    console.log('in userThumbUrl')
+    console.log(affected_to_id)
+    console.log(this.props.resources.resources)
+    if (this.props.resources.resources.length > 0 ){
+      const affectedTo = this.props.resources.resources.find((resource) => resource.id == affected_to_id)
+      if (affectedTo){
+        console.log(affectedTo.user_info.logo_thumb)
+        return affectedTo.user_info.logo_thumb
+      }
+      else {
+        return ""
+      }
+    }
+    else {
+      return ""
+    }
+  }
   renderTasks(tasks){
-
     return tasks.map(
               task => <Task
                         customStyle={{width: 300, height: 80, margin: 5,}}
@@ -52,7 +66,7 @@ class TaskBlock extends Component {
                             <Avatar
                               size="small"
                               rounded
-                              source={{uri: this.props.logo_thumb}}
+                              source={{uri: this.userThumbUrl(task.affected_to_id)}}
                               onPress={() => Actions.events()}
                               activeOpacity={0.7}
                               />
@@ -97,10 +111,13 @@ class TaskBlock extends Component {
 
 
 const mapStateToProps = (state) => {
+  console.log('mapStateToProps taskblock')
+  console.log(state)
   return {
-    logo_thumb: state.user.user_info.logo_thumb
+    logo_thumb: state.user.user_info.logo_thumb,
+    resources: state.resources
   }
 
 }
 
-export default connect(mapStateToProps, { setCurrentTask, changeTaskListScope })(TaskBlock);
+export default connect(mapStateToProps, { setCurrentTask, changeTaskListScope, getResources })(TaskBlock);

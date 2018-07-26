@@ -1,7 +1,8 @@
 import { RESET_INFO,
          STOP_CHRONO,
          UPDATE_INTERVAL,
-         SET_CHRONO_RUNNING } from '../actions/types';
+         SET_CHRONO_RUNNING,
+        UPDATE_TIMERVALUE} from '../actions/types';
 
 const INITIAL_STATE = {
   isRunning: false,
@@ -20,7 +21,9 @@ export const ChronoReducer = (state = INITIAL_STATE, action) => {
     case UPDATE_INTERVAL:
       return {...state, interval: state.startDate - action.payload}
     case SET_CHRONO_RUNNING:
-      return {...state, isRunning: action.payload, hasRun: true}
+      return {...state, isRunning: action.payload, hasRun: true, startDate: new Date ()}
+    case UPDATE_TIMERVALUE:
+      return {...state, timerValue: action.payload}
     case RESET_INFO:
       return INITIAL_STATE
     default:

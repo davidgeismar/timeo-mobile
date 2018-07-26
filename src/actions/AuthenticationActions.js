@@ -33,7 +33,6 @@ export const loginUser = (creds) => {
 const loginUserSuccess = (dispatch, data) => {
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
-  AsyncStorage.setItem('token', data.data.access_token);
   API.defaults.headers.common['Accept'] = 'application/json'
   API.defaults.headers.common['Authorization'] = 'Bearer ' + data.data.access_token;
   dispatch({
@@ -62,7 +61,7 @@ const getUserInfoSuccess = (dispatch, data) => {
   Actions.chrono()
 }
 
-const getResources = () => {
+export const getResources = () => {
   return (dispatch) => {
     API.get('/internal/obeya/api/v0/resources')
             .then(response => getRessourcesSuccess(dispatch, response))
@@ -71,6 +70,7 @@ const getResources = () => {
 }
 
 const getRessourcesSuccess = (dispatch, data) => {
+  console.log('getRessourcesSuccess')
   dispatch({
     type: SET_RESOURCES,
     payload: data.data

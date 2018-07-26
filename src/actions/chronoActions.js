@@ -1,7 +1,8 @@
 import { SET_CHRONO_RUNNING,
          UPDATE_INTERVAL,
          STOP_CHRONO,
-        ACTIVATE_TAB } from './types'
+        ACTIVATE_TAB,
+        UPDATE_TIMERVALUE} from './types'
 
 
 const setChronoRunningSuccess = (dispatch) => {
@@ -20,10 +21,10 @@ export const setChronoRunning = (dispatch) =>{
   }
 }
 
-export const updateInterval = (eventId) => {
+export const updateChronoTimerValue = (timerValue) => {
   return {
-    type: UPDATE_INTERVAL,
-    payload: eventId
+    type: UPDATE_TIMERVALUE,
+    payload: timerValue
   }
 }
 export const stopChrono = (timerValue) => {

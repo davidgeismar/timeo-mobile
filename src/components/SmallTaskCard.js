@@ -22,6 +22,24 @@ class SmallTaskCard extends Component {
       }
   }
 
+  userThumbUrl(affected_to_id){
+    console.log('in userThumbUrl')
+    console.log(affected_to_id)
+    console.log(this.props.resources)
+    if (this.props.resources.length > 0 ){
+      const affectedTo = this.props.resources.find((resource) => resource.id == affected_to_id)
+      if (affectedTo){
+        console.log(affectedTo.user_info.logo_thumb)
+        return affectedTo.user_info.logo_thumb
+      }
+      else {
+        return ""
+      }
+    }
+    else {
+      return ""
+    }
+  }
   render() {
     const { task } = this.props
     return (
@@ -31,7 +49,7 @@ class SmallTaskCard extends Component {
           <Avatar
               size="small"
               rounded
-              source={{uri: this.props.logo_thumb}}
+              source={{uri: this.userThumbUrl(task.affected_to_id)}}
               activeOpacity={0.7}
               />
           <Text style= {{fontSize: 9, color: 'white'}}>
@@ -56,7 +74,8 @@ const styles = {
 
 const mapStateToProps = (state) => {
   return {
-    task: state.eventsData.currentEventTask
+    task: state.eventsData.currentEventTask,
+    resources: state.resources.resources
   }
 }
 

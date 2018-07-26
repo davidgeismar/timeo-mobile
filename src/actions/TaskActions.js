@@ -15,7 +15,7 @@ import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderA
    return (dispatch) => {
      dispatch(setLoaderState(true))
      dispatch(updateSearchPattern(''))
-     API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}?limit_to_mine=true`)
+     API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}?limit_to_mine=false`)
        .then(response => loadKanbanTasksSuccess(dispatch, response))
        .catch(error => onRequestErrorCallback(dispatch, error));
    };
