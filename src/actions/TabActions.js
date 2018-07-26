@@ -11,7 +11,6 @@ const activateTabSuccess = (dispatch, getState,  tabLabel) => {
 
   switch(tabLabel) {
     case 'chrono':
-      console.log('in chrono')
       return Actions.chrono()
     case 'time':
       return Actions.time()

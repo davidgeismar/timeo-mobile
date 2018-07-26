@@ -49,7 +49,7 @@ class TabBar extends Component {
     console.log(this.props.enableChronoNav)
     return (
       <View style={containerStyle}>
-          <Tab disabled={false} onPress={() => this.props.enableChronoNav ? this.props.activateTab('chrono') : null} activationKey='chrono'>
+          <Tab forceActivation={this.props.enableChronoNav} onPress={() => this.props.enableChronoNav ? this.props.activateTab('chrono') : null} activationKey='chrono'>
             {this.renderIcon()}
           </Tab>
           <Tab onPress={() => this.props.activateTab('time')} activationKey='time'>

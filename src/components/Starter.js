@@ -75,7 +75,7 @@ class Starter extends Component {
         </View>
       )
     }
-    else if ((this.props.isOnHold && !this.props.isRunning)){
+    else if (this.props.isSaved || (this.props.isOnHold && !this.props.isRunning)){
       console.log('in isonhold')
       console.log(this.props)
       return(

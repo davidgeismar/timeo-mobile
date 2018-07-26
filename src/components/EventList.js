@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, ScrollView} from 'react-native'
+import { View, ScrollView, Text} from 'react-native'
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux'
 import { setCurrentEvent, resetAppInfo, logoutUser } from '../actions';
@@ -17,7 +17,35 @@ class EventList extends Component {
     )
   }
 
+  renderMonthlyStats(){
+    return (
+      <View style={styles.monthlyStatsWrapper}>
+        <View style={styles.monthlyStatsLine}>
+          <Text>
+          2018
+          </Text>
+          <Text>
+          June
+          </Text>
+          <Text>
+            Actions: 2 Total: 10mn
+          </Text>
+        </View>
+        <View style={styles.monthlyStatsLine}>
+          <Text>
+          2018
+          </Text>
+          <Text>
+          June
+          </Text>
+          <Text>
+            Actions: 2 Total: 10mn
+          </Text>
 
+        </View>
+      </View>
+    )
+  }
   render() {
     const {containerStyle, eventsWrapperStyle, footerStyle} = styles
     return (
@@ -26,6 +54,7 @@ class EventList extends Component {
         <Header/>
         <ScrollView style={eventsWrapperStyle}>
           {this.renderEvents()}
+          {this.renderMonthlyStats()}
         </ScrollView>
         <Footer>
           <View style={styles.footerButtonsWrapper}>
@@ -40,6 +69,17 @@ class EventList extends Component {
 }
 
 const styles = {
+  monthlyStatsWrapper: {
+    margin: 10,
+    flexDirection: 'column'
+  },
+  monthlyStatsLine: {
+    width: '85%',
+    alignItems: 'center',
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   containerStyle: {
     flex: 1,
     flexDirection: 'column',
@@ -62,8 +102,52 @@ const styles = {
   }
 };
 
+// i should create actionBucket like
+// {year: {
+      // month: {
+      //   actionsCount:
+      //   total:
+      // }
+// }}
 
 const mapStateToProps = (state) => {
-  return { events: state.eventsData.events, currentEventId: state.eventsData.currentEventId}
-}
+  console.log('in mapStateToProps eventlist')
+  console.log(state.eventsData.events)
+  // function createEventsBucket(events){
+  //   // group by year
+  //   var i = 0, val, groupedByYear = [];
+  //   for ( ;i < events.length; i++){
+  //     val = new Date(events[i]['created_at']).getFullYear()
+  //     // si la date existe je push
+  //     if (result[val]){
+  //       console.log(index)
+  //       console.log(result)
+  //       groupedByYear[val].push(events[i])
+  //     }
+  //     // sinon je cree la clé puis je push
+  //     else {
+  //       groupedByYear[val] = []
+  //       groupedByYear[val].push(events[i])
+  //     }
+  //   }
+  //   var i = 0, val,
+  //         groupedByMonth = [];
+  //
+  //   for ( ;i < groupedByYear.length; i++){
+  //     for (j=0, j< groupedByYear[i].length; j++){
+  //       val = new Date(groupedByYear[i][j]['created_at'].getFullMonth())
+  //       if groupedByYear[i][j]
+  //     }
+  //   }
+  //
+  //   console.log('before result')
+  //   console.log(result)
+  //   return result
+  // }
+
+
+  // createEventsBucket(state.eventsData.events)
+  return { events: state.eventsData.events,
+           currentEventId: state.eventsData.currentEventId}
+        }
 export default connect(mapStateToProps, { setCurrentEvent, resetAppInfo, logoutUser })(EventList);

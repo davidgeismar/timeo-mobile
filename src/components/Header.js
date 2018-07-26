@@ -17,6 +17,13 @@ class Header extends Component {
 
     return monthName
   }
+  formatDuration(ms){
+    let time = new Date(ms);
+    let hours = time.getUTCHours() < 10 ? `0${time.getUTCHours()}` : time.getUTCHours();
+    let minutes = time.getUTCMinutes() < 10 ? `0${time.getUTCMinutes()}` : time.getUTCMinutes();
+    let seconds = time.getUTCSeconds() < 10 ? `0${time.getUTCSeconds()}` : time.getUTCSeconds();
+    return hours + ":" + minutes + ":" + seconds
+  }
   render() {
     return (
       <View style={styles.containerStyle}>
@@ -26,7 +33,7 @@ class Header extends Component {
           </TouchableOpacity>
           <Text>{this.getCurrentMonth()}</Text>
           <Text>ACTIONS: {this.props.countEvents}</Text>
-          <Text>TOTAL: {this.props.totalTimeSpent} </Text>
+          <Text>TOTAL: {this.formatDuration(this.props.totalTimeSpent)} </Text>
 
           <Avatar
             size="small"
@@ -60,7 +67,11 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const totalTimeSpent = '10h05'
+  const durations = state.eventsData.events.map((event)=>event.duration)
+  console.log(durations)
+  const reducer = (accumulator, currentValue) =>  accumulator + currentValue
+  const totalTimeSpent = durations.reduce(reducer)
+
   return {
     totalTimeSpent: totalTimeSpent,
     countEvents: state.eventsData.events.length,

@@ -31,6 +31,7 @@ const ChronoIcon = () => {
 };
 
 class RouterComponent  extends Component {
+    
     render() {
     return (
       <Router>
