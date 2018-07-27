@@ -149,7 +149,7 @@ const mapStateToProps = (state) => {
   const disabled = state.tasks.selectedTask ? false : true
   console.log('in mapStateToProps tasklist')
   console.log(state.tasks.limitToMine)
-  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  const event = state.eventsData.currentEvent
   return { tasks: state.tasks.list,
            selectedKanban: state.kanbans.selectedKanban,
            searchInit: state.tasks.searchInit,

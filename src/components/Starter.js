@@ -249,7 +249,7 @@ const styles = {
 const mapStateToProps = (state) => {
   console.log('in mapStateToProps starter')
   console.log(state.user.user_info)
-  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  const event = state.eventsData.currentEvent
   console.log(state)
   if (event){
     console.log('in event')

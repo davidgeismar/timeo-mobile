@@ -52,7 +52,7 @@ else {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  const event = state.eventsData.currentEvent
   let active;
     if (event) {
        if (isActiveClient(ownProps, event) || isActiveProject(ownProps, event) || isActiveKanban(ownProps, state.kanbans.selectedKanban)){

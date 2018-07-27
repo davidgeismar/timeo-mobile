@@ -172,7 +172,7 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  const event = state.eventsData.currentEvent
   console.log('in mapStateToProps info')
   console.log(event)
   console.log(state)

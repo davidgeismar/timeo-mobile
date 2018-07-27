@@ -98,7 +98,7 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  const event = state.eventsData.currentEvent
   let enableChronoNav = true
   let clientId
 

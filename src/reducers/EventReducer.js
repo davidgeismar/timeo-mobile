@@ -38,7 +38,8 @@ export const EventReducer = (state = INITIAL_STATE, action) => {
       // pushé le payload dans le tableau d'event
       return {...state, events: [...state.events, action.payload]};
     case SET_CURRENT_EVENT:
-        return { ...state, currentEventId: action.payload, currentEventComment: null}
+        const currentEvent = state.events.find(event => event.id == action.payload)
+        return { ...state, currentEventId: action.payload, currentEventComment: null, currentEvent: currentEvent}
     case UPDATE_EVENT_ACTION:
       events = [...state.events];
       index = events.findIndex(event => event.id === action.payload.eventId)

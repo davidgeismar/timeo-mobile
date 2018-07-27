@@ -91,7 +91,7 @@ const styles = {
 
 
 const mapStateToProps = (state) => {
-  const event = state.eventsData.events.find(event => event.id == state.eventsData.currentEventId)
+  const event = state.eventsData.currentEvent
   const disabled = state.kanbans.selectedKanban ? false : true
   return { kanbans: state.kanbans.list,
            selectedKanban: state.kanbans.selectedKanban,
