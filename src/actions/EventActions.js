@@ -117,13 +117,38 @@ const fetchEventsSuccess = (dispatch, data) => {
 }
 
 export const updateEvent = (prop, value, duration, measure_kind, eventId, redirect=true, loader=true) => {
-  return (dispatch) => {
-      const data = {action: {
+  return (dispatch, getState) => {
+    const event = getState().eventsData.events.find(event => event.id == eventId)
+    let data
+    if (prop == 'client_id' && event.client_id != value){
+       data = {action: {
+                        [prop]: value,
+                        duration: duration,
+                        measure_kind: measure_kind,
+                        project_id: null,
+                        kanban_id: null,
+                        card_id: null
+                      }
+                    }
+    }
+    else if (prop == 'project_id' && event.project_id != value){
+       data = {action: {
+                        [prop]: value,
+                        duration: duration,
+                        measure_kind: measure_kind,
+                        kanban_id: null,
+                        card_id: null
+                      }
+                    }
+    }
+    else {
+       data = {action: {
                         [prop]: value,
                         duration: duration,
                         measure_kind: measure_kind
                       }
                     }
+    }
       if (loader){
         dispatch(setLoaderState(true))
       }

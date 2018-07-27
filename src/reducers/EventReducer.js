@@ -88,8 +88,7 @@ export const EventReducer = (state = INITIAL_STATE, action) => {
       events = [...state.events];
       index = events.findIndex(event => event.id === action.payload.id)
       events[index] = action.payload
-      return {...state, events: events}
-    return {...state, events: events}
+      return {...state, events: events, currentEvent: action.payload}
     case RESET_INFO:
       return  {...state, currentEventId: null}
     default:
