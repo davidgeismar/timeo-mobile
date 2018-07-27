@@ -23,6 +23,7 @@ export const store = createStore(
 );
 
 export const persistor = persistStore(store);
+persistor.purge()
 console.log('in store')
 console.log(persistor.getState())
 console.log(store.getState())

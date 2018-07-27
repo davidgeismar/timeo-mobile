@@ -4,6 +4,7 @@ import { View, TouchableOpacity, Text, Keyboard, Animated  } from 'react-native'
 import { connect } from 'react-redux';
 import { createEvent, activateTab, stopChrono, setChronoRunning, fetchEvents, updateEvent } from '../actions';
 import { Actions } from 'react-native-router-flux';
+import { store } from  './store'
 import Button from './common/Button'
 import Footer from './common/Footer'
 import Spinner from './common/Spinner';
@@ -17,51 +18,28 @@ import * as utilities from '../lib/Utilities';
 // import * as actions from '../actions';
 
 class Starter extends Component {
+  // renderTabBar(){
+  //   if (this.props.hasRun){
+  //     console.log('rendering tabbar')
+  //     return (
+  //       <TabBar />
+  //     )
+  //   }
+  // }
+  // renderAvatar(){
+  //   if (!this.props.isRunning && !this.props.hasRun){
+  //     return(
+  //       <Avatar
+  //         size="small"
+  //         rounded
+  //         source={{uri: this.props.logo_thumb}}
+  //         onPress={() => this.props.fetchEvents()}
+  //         activeOpacity={0.7}
+  //         />
+  //     )
+  //   }
+  // }
 
-  componentWillMount() {
-    Keyboard.dismiss();
-    if (this.props.isSaved) {
-      console.log('in ancestral state')
-      this.setState({
-        timerValue: this.props.timerValue ? this.props.timerValue : this.state.timerValue
-      })
-    }
-    else if (!this.state){
-      this.setState({
-        timerValue: 0
-      })
-    }
-  }
-  renderTabBar(){
-    if (this.props.hasRun){
-      console.log('rendering tabbar')
-      return (
-        <TabBar />
-      )
-    }
-  }
-  renderAvatar(){
-    if (!this.props.isRunning && !this.props.hasRun){
-      return(
-        <Avatar
-          size="small"
-          rounded
-          source={{uri: this.props.logo_thumb}}
-          onPress={() => this.props.fetchEvents()}
-          activeOpacity={0.7}
-          />
-      )
-    }
-  }
-
-  saveEvent(){
-    if (this.props.eventId){
-      this.props.updateEvent('duration', this.state.timerValue, this.state.timerValue, 'automatic', this.props.eventId)
-    }
-    else {
-      this.props.createEvent('automatic', this.state.timerValue)
-    }
-  }
   renderButtons(){
     console.log('render buttons')
     console.log(this.props.isRunning)
@@ -98,6 +76,15 @@ class Starter extends Component {
     }
   }
 
+  saveEvent(){
+    if (this.props.eventId){
+      this.props.updateEvent('duration', this.state.timerValue, this.state.timerValue, 'automatic', this.props.eventId)
+    }
+    else {
+      this.props.createEvent('automatic', this.state.timerValue)
+    }
+  }
+
   stopChrono(){
     console.log('in stopChrono')
     console.log(this.timerValue)
@@ -107,21 +94,23 @@ class Starter extends Component {
   }
 
 
-
-  startChrono(){
-    this.props.setChronoRunning()
-    console.log('in startchrono')
-    console.log(this.props.timerValue)
-    this.setState({
-      startDate: new Date()
-    });
+  runTimeLoop() {
+    console.log('run timeloop')
     this.timerValue = setInterval(() => {
+                      console.log(this.props.startDate)
                       this.setState({
-                        timerValue: new Date() - this.state.startDate + this.props.timerValue
+                        timerValue: new Date() - this.props.startDate + this.props.timerValue
                       })
                     }, 30);
-
-    // },30);
+  }
+  startChrono(){
+    store.dispatch({
+      type: SET_CHRONO_RUNNING,
+      payload: true
+    })
+    console.log('in startchrono')
+    console.log(this.props.timerValue)
+    this.runTimeLoop()
   }
 
   renderChrono(){
@@ -130,7 +119,7 @@ class Starter extends Component {
       console.log('in renderChrono')
       console.log(this.state)
       let timerValue
-      timerValue = this.state.timerValue
+      timerValue = this.state ? this.state.timerValue : this.props.timerValue
 
       return(
         <View style={styles.chronoContainer}>
@@ -172,9 +161,9 @@ class Starter extends Component {
     else {
       return (
       <View style={styles.containerStyle}>
-        {this.renderTabBar()}
+
         <View style={styles.avatarWrapperStyle}>
-          {this.renderAvatar()}
+
         </View>
         <View style={styles.chronoWrapperStyle}>
           {this.renderChrono()}
