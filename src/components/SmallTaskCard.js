@@ -26,7 +26,6 @@ class SmallTaskCard extends Component {
     if (this.props.resources.length > 0 ){
       const affectedTo = this.props.resources.find((resource) => resource.id == affected_to_id)
       if (affectedTo){
-        console.log(affectedTo.user_info.logo_thumb)
         return affectedTo.user_info.logo_thumb
       }
       else {

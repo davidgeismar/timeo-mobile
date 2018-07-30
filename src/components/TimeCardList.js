@@ -68,11 +68,9 @@ class TimeCardList extends Component {
     saveEvent(){
       const duration = this.getMillisFromTimeSelection(this.props.timeSelection)
       if (!this.props.eventId){
-        console.log('createevnet')
         this.props.createEvent('manual', duration)
       }
       else {
-              console.log('updateevent')
         this.props.updateEvent('duration', duration, duration, 'manual', this.props.eventId)
       }
     }
@@ -130,9 +128,6 @@ const mapStateToProps = (state) => {
   const hour = state.selectedDuration.selectedHour
   const minute = state.selectedDuration.selectedMinute
   const timeSelection = {selectedHour: hour, selectedMinute: minute}
-  console.log(state)
-  console.log('in mapStateToProps timecardlist')
-  console.log(state.loading)
   return {
     eventId: state.eventsData.currentEventId,
     loading: state.loading,

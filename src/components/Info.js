@@ -57,8 +57,8 @@ class Info extends Component {
     DocumentPicker.show({
         filetype: [DocumentPickerUtil.images()],
       },(error,res) => {
-        console.log('in picker')
-        console.log(res)
+        // console.log('in picker')
+        // console.log(res)
         this.props.sendFileToApi(this.props.eventId, res.fileName, res.fileType, res.uri)
         // this.props.sendFileToA
       });
@@ -173,9 +173,6 @@ const styles = {
 
 const mapStateToProps = (state) => {
   const event = state.eventsData.currentEvent
-  console.log('in mapStateToProps info')
-  console.log(event)
-  console.log(state)
   if (event){
     let comment
     if (state.eventsData.currentEventComment == ""){

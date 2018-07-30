@@ -9,8 +9,6 @@ import { START_TIMER,
 
 
 export const startTimer = (baseTime = 0) => {
-  console.log('in startimers')
-  console.log(baseTime)
   return(dispatch) => {
       dispatch({
         type: ACTIVATE_TAB,

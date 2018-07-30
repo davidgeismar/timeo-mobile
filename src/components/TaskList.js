@@ -147,8 +147,6 @@ const styles = {
 
 const mapStateToProps = (state) => {
   const disabled = state.tasks.selectedTask ? false : true
-  console.log('in mapStateToProps tasklist')
-  console.log(state.tasks.limitToMine)
   const event = state.eventsData.currentEvent
   return { tasks: state.tasks.list,
            selectedKanban: state.kanbans.selectedKanban,

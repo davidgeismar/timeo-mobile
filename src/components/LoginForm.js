@@ -26,8 +26,6 @@ class LoginForm extends Component {
   }
 
   renderError(){
-    console.log('in rendererror')
-    console.log(this.props.error)
     if (this.props.error){
       return <Text style={styles.errorStyle}>{this.props.error}</Text>
     }
@@ -121,7 +119,6 @@ const styles = {
 const mapStateToProps = (state, ownProps) => {
   const { username, password } = state.authentication;
   const {error, loading, backgroundImage} = state
-  console.log(state)
   return { username, password, error, loading, backgroundImage };
 };
 

@@ -42,10 +42,6 @@ const updateSearchPattern = (pattern) => {
 
 
 export const searchTasks= (kanbanId, pattern, limitToMine)=> {
-  console.log('in searchTasks')
-  console.log(kanbanId)
-  console.log(pattern)
-  console.log(limitToMine)
   if (pattern == ""){
     return (dispatch) => {
       dispatch(setLoaderState(true))
@@ -64,7 +60,6 @@ export const searchTasks= (kanbanId, pattern, limitToMine)=> {
 }
 
 const searchTasksSuccess = (dispatch, data) => {
-  console.log('in searchTasksSuccess')
   const tasks = data.data
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
@@ -84,16 +79,11 @@ const removeSelectedTaskSuccess = (dispatch) => {
 
 
 export const changeTaskListScope = (switchValue, searchPattern, kanbanId) => {
-  console.log('changeTaskListScope')
   const limitToMine = switchValue ? false : true
-  console.log(switchValue)
-  console.log(limitToMine)
-  console.log(searchPattern)
-  console.log(kanbanId)
   return(dispatch) => {
     dispatch(setLoaderState(true))
     const url = searchPattern == '' ? `/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}?limit_to_mine=${limitToMine}` : `/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}/pattern?pattern=${pattern}&limit_to_mine=${limitToMine}`
-    console.log(url)
+
     API.get(url)
       .then(response => changeTaskListScopeSuccess(dispatch, response, limitToMine))
       .catch(error => onRequestErrorCallback(dispatch, error));
@@ -101,8 +91,6 @@ export const changeTaskListScope = (switchValue, searchPattern, kanbanId) => {
 }
 
 export const changeTaskListScopeSuccess = (dispatch, data, limitToMine) => {
-  console.log('changeTaskListScopeSuccess')
-  console.log(data.data)
   dispatch({
     type: CHANGE_TASKLIST_SCOPE,
     payload: { limitToMine: limitToMine,

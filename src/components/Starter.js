@@ -20,18 +20,14 @@ class Starter extends Component {
 
   componentDidMount() {
     // le composant est rerendered a interval regulier
-    console.log('in component did mount')
     this.interval = setInterval(() => this.forceUpdate(), 1000);
   }
 
   componentWillUnmount() {
-    console.log('in componentWillUnmount')
-    console.log(this.interval)
     clearInterval(this.interval);
  }
   renderTabBar(){
     if (this.props.hasRun){
-      console.log('rendering tabbar')
       return (
         <TabBar />
       )
@@ -52,12 +48,7 @@ class Starter extends Component {
   }
 
    getElapsedTime(baseTime, startedAt= new Date().getTime(), stoppedAt = new Date().getTime()) {
-     console.log('in getElapsedTime')
-      console.log(baseTime)
-      console.log(startedAt)
-      console.log(stoppedAt)
       if (this.props.eventId && !startedAt) {
-          console.log('returning basetime')
          return baseTime;
        }
        else if (!startedAt){
@@ -90,8 +81,6 @@ class Starter extends Component {
       )
     }
     else if (!this.props.isRunning && !this.props.isSaved && !this.props.isOnHold){
-      console.log('in basic')
-      console.log(this.props)
       return(
         <View style={styles.buttonWrapperStyle}>
           <Button customStyle={styles.basicButtonStyle} onPress={() => this.props.activateTab('time')}>ADD</Button>
@@ -115,8 +104,6 @@ class Starter extends Component {
   renderChrono(){
    const { baseTime, startedAt, stoppedAt } = this.props;
    const elapsed = this.getElapsedTime(baseTime, startedAt, stoppedAt);
-   console.log('in renderChrono')
-   console.log(elapsed)
     if (this.props.isRunning || this.props.isOnHold || (!this.props.isRunning && this.props.isSaved)) {
 
       return(
@@ -234,13 +221,8 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  console.log('in mapStateToProps starter')
-  console.log(state.user.user_info)
   const event = state.eventsData.currentEvent
-  console.log(state)
   if (event){
-    console.log('in event')
-    console.log(event)
     if (event.measure_kind == 'automatic'){
       return {
         logo_thumb: state.user.user_info.logo_thumb,
@@ -257,8 +239,6 @@ const mapStateToProps = (state) => {
       }
     }
     else {
-      // should never be here
-      console.log('not chrono')
       return {
         logo_thumb: state.user.user_info.logo_thumb,
         isChrono: false,
@@ -267,8 +247,6 @@ const mapStateToProps = (state) => {
     }
   }
   else {
-    console.log('no currrent event yo')
-    console.log(state.user.user_info)
     return {
       logo_thumb: state.user.user_info.logo_thumb,
       hasRun: state.chrono.hasRun,

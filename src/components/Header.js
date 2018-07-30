@@ -68,7 +68,6 @@ const styles = {
 
 const mapStateToProps = (state) => {
   const durations = state.eventsData.events.map((event)=>event.duration)
-  console.log(durations)
   const reducer = (accumulator, currentValue) =>  accumulator + currentValue
   const totalTimeSpent = durations.reduce(reducer)
 

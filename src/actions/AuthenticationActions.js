@@ -45,8 +45,6 @@ const loginUserSuccess = (dispatch, data) => {
 };
 
 export const onRequestErrorCallbackLogin = (dispatch, error) => {
-  console.log('onRequestErrorCallback')
-  console.log(error.message)
   dispatch(setLoaderState(false))
 
   dispatch(setErrorState(error.message))
@@ -70,7 +68,6 @@ export const getResources = () => {
 }
 
 const getRessourcesSuccess = (dispatch, data) => {
-  console.log('getRessourcesSuccess')
   dispatch({
     type: SET_RESOURCES,
     payload: data.data

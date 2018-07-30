@@ -10,7 +10,6 @@ import Chrono from './assets/Chrono';
 class Tab extends Component {
   onPressTab(){
     if (this.props.forceActivation){
-      console.log('in forceActivation')
       return this.props.onPress
     }
     else if (this.props.disabled){
@@ -37,8 +36,6 @@ class Tab extends Component {
 const mapStateToProps = (state, ownProps) => {
   let active;
   let disabled;
-  console.log('in mapStateToProps tab')
-  console.log(state.tabs.disabledTabs)
   if (state.tabs.disabledTabs.includes(ownProps.activationKey)){
     disabled = true
   }

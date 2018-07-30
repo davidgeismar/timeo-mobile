@@ -29,13 +29,9 @@ class TaskBlock extends Component {
   }
 
   userThumbUrl(affected_to_id){
-    console.log('in userThumbUrl')
-    console.log(affected_to_id)
-    console.log(this.props.resources.resources)
     if (this.props.resources.resources.length > 0 ){
       const affectedTo = this.props.resources.resources.find((resource) => resource.id == affected_to_id)
       if (affectedTo){
-        console.log(affectedTo.user_info.logo_thumb)
         return affectedTo.user_info.logo_thumb
       }
       else {
@@ -111,8 +107,6 @@ class TaskBlock extends Component {
 
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps taskblock')
-  console.log(state)
   return {
     logo_thumb: state.user.user_info.logo_thumb,
     resources: state.resources

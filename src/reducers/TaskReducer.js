@@ -47,8 +47,6 @@ export const TaskReducer = (state = INITIAL_STATE, action) => {
     case DELETE_SELECTED_TASK:
         return {...state, selectedTask: null}
     case CHANGE_TASKLIST_SCOPE:
-        console.log('CHANGE_TASKLIST_SCOPE')
-        console.log(action.payload)
         return {  ...state,
                   list: action.payload.tasks,
                   limitToMine: action.payload.limitToMine }

@@ -161,9 +161,7 @@ export const updateEvent = (prop, value, duration, measure_kind, eventId, redire
                     }
     }
       if (loader){
-        console.log('before loader')
         dispatch(setLoaderState(true))
-        console.log('after loader')
       }
       API.patch(`/internal/timeo/api/v0/actions/${eventId}`, data)
         .then(response => updateEventSuccess(dispatch, response, prop, redirect))
@@ -173,7 +171,6 @@ export const updateEvent = (prop, value, duration, measure_kind, eventId, redire
 
 
 const updateEventSuccess = (dispatch, data, prop, redirect) => {
-  console.log('in update event success')
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({
@@ -205,7 +202,6 @@ const updateEventSuccess = (dispatch, data, prop, redirect) => {
 }
 
 const unsetKanbanAndTask = (dispatch) => {
-  console.log('in unsetKanbanAndTask')
   dispatch({
     type: DELETE_SELECTED_KANBAN,
     payload: true
@@ -268,7 +264,6 @@ export const sendFileToApi = (eventId, fileTitle, fileKind, file) =>{
 }
 
 const sendFileToApiSuccess = (dispatch, eventId) => {
-  console.log('sendFileToApiSuccess')
     // dispatch({
     //   type: SET_FILE,
     //   payload: {eventId

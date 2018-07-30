@@ -31,7 +31,7 @@ const ChronoIcon = () => {
 };
 
 class RouterComponent  extends Component {
-    
+
     render() {
     return (
       <Router>
@@ -74,17 +74,13 @@ class RouterComponent  extends Component {
 }
 
 const mapStateToProps = (state) => {
-  // console.log('in mapStateToProps')
-  // console.log(state)
   let initialPage = 'login'
   if (state._persist){
     if (state._persist.rehydrated && state.authentication.token){
       API.defaults.headers.common['Authorization'] = 'Bearer ' + state.authentication.token;
-      // console.log('fu')
       initialPage = state.tabs.activeTab
     }
   }
-  // console.log(initialPage)
   return {
     initialPage: initialPage
   }

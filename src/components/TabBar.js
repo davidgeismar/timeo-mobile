@@ -45,8 +45,6 @@ class TabBar extends Component {
   render() {
     const {textStyle, containerStyle, svgStyle } = styles
     const {clientId} = this.props
-    console.log('enableChronoNav in render tabar')
-    console.log(this.props.enableChronoNav)
     return (
       <View style={containerStyle}>
           <Tab forceActivation={this.props.enableChronoNav} onPress={() => this.props.enableChronoNav ? this.props.activateTab('chrono') : null} activationKey='chrono'>
@@ -116,8 +114,6 @@ const mapStateToProps = (state) => {
   const activeInfo = state.tabs.activeTab == 'info'
   const logo_thumb = state.user.user_info.logo_thumb
   const kanbans = state.kanbans.list
-  console.log('enableChronoNav')
-  console.log(enableChronoNav)
   return {
     enableChronoNav,
     activeChrono,
