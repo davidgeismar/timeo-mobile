@@ -19,10 +19,10 @@ export const loginUser = (creds) => {
                   client_secret: '8463d7894c7531aee91e5dfbb80cffa40fd94fd319b2aa2407ae437ab309c5ce',
                   grant_type: 'password',
                 }
-    // const creds = {
-    //   username: 'd.sylla@xair.fr',
-    //   password: 'whazaaz313'
-    // }
+    const creds = {
+      username: 'd.sylla@xair.fr',
+      password: 'whazaaz313'
+    }
     const fullConf = {...creds, ...conf}
     API.post('/oauth/token', fullConf)
       .then(response => loginUserSuccess(dispatch, response))
@@ -51,14 +51,35 @@ export const onRequestErrorCallbackLogin = (dispatch, error) => {
 };
 
 const getUserInfoSuccess = (dispatch, data) => {
+  console.log('getUserInfoSuccess')
+  console.log(data.data)
   dispatch({
     type: INITIALIZE_USER,
     payload: data.data
   })
+
   dispatch(getResources())
+  dispatch(initialFetchEvents())
   Actions.chrono()
 }
 
+const initialFetchEvents= () => {
+  return (dispatch) => {
+    dispatch(setLoaderState(true))
+    API.get('/internal/timeo/api/v0/actions')
+      .then(response => fetchEventsSuccess(dispatch, response))
+      .catch(error => onRequestErrorCallback(dispatch, error));
+  };
+}
+
+const initialFetchEventsSuccess = (dispatch, data) => {
+  dispatch(setLoaderState(false))
+  dispatch(setErrorState(false))
+    dispatch({
+      type: LOAD_EVENTS,
+      payload: data.data
+    });
+}
 export const getResources = () => {
   return (dispatch) => {
     API.get('/internal/obeya/api/v0/resources')

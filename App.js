@@ -9,7 +9,7 @@ import Chrono from './src/components/assets/Chrono';
 import {SET_LOADER} from './src/actions/types'
 import Router from './src/Router';
 import API from './src/actions/Api';
-
+import Spinner from './src/components/common/Spinner';
 import { persistor, store } from  './src/store'
 console.disableYellowBox = true
 
@@ -19,12 +19,17 @@ export default class App extends React.Component {
       type: SET_LOADER,
       payload: false
     })
+    console.log(store.getState())
   }
-
+  // onBeforeLift(){
+  //   console.log(store.getState())
+  // }
   render() {
     return (
       <Provider store={store}>
-        <PersistGate persistor={persistor}>
+        <PersistGate
+          loading={<Spinner />}
+          persistor={persistor}>
           <Router />
         </PersistGate>
       </Provider>

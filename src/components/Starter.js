@@ -222,10 +222,12 @@ const styles = {
 
 const mapStateToProps = (state) => {
   const event = state.eventsData.currentEvent
+  console.log(event)
+  console.log(state)
   if (event){
     if (event.measure_kind == 'automatic'){
       return {
-        logo_thumb: state.user.user_info.logo_thumb,
+        logo_thumb: state.user.user_info ? state.user.user_info.logo_thumb : null,
         isChrono: true,
         isSaved: true,
         isOnHold: state.chrono.isOnHold,
@@ -240,7 +242,7 @@ const mapStateToProps = (state) => {
     }
     else {
       return {
-        logo_thumb: state.user.user_info.logo_thumb,
+        logo_thumb: state.user.user_info ? state.user.user_info.logo_thumb : null,
         isChrono: false,
         loading: state.loading
       }
@@ -248,7 +250,7 @@ const mapStateToProps = (state) => {
   }
   else {
     return {
-      logo_thumb: state.user.user_info.logo_thumb,
+      logo_thumb: state.user.user_info ? state.user.user_info.logo_thumb : null,
       hasRun: state.chrono.hasRun,
       isRunning: state.chrono.isRunning,
       isSaved: state.chrono.isSaved,

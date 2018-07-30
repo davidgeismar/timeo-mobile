@@ -25,7 +25,9 @@ import { loadKanbanTasks } from './TaskActions'
 import { activateTab, activateTabSuccess } from './TabActions'
 import { loadProjectKanbans } from './KanbanActions'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
-
+import * as RNFS from 'react-native-fs'
+import axios from 'axios';
+// import * as RNFS from 'react-native-fs'
 
 
 export const createEvent = ( measure_kind, duration=null) => {
@@ -245,23 +247,146 @@ const deleteEventSuccess = (dispatch, eventId) => {
     Actions.events()
 }
 
-export const sendFileToApi = (eventId, fileTitle, fileKind, file) =>{
-  return(dispatch) => {
-    dispatch(setLoaderState(true))
-    const data = {
-      id: eventId,
-      action_file: {
-        title: fileTitle,
-        kind: fileKind,
-        file: file
-      }
+export const sendFileToApi = (eventId, fileTitle, fileKind, fileUrl) =>{
+  return(dispatch, getState) => {
+    console.log('in sendFileToApi')
 
-    }
-    API.post(`/internal/timeo/api/v0/actions/${eventId}/action-file`)
-      .then(response => sendFileToApiSuccess(dispatch, eventId))
-      .catch(error => onRequestErrorCallback(dispatch, error));
+    var doc = {
+      	uri: fileUrl,
+      	type: 'image/png',
+      	name: fileTitle,
+      };
+    console.log(doc)
+//
+    var fileData = new FormData();
+    fileData.append('file', doc)
+    console.log(fileData)
+    var data = {   'action_file': {
+                   'title': fileTitle,
+                   'kind': 'image/png',
+                    fileData
+                 }
+              }
+    console.log(data)
+    const uploadUrl = `http://staging.obeya.xair.cloud/internal/timeo/api/v0/actions/${eventId}/action-file`
+    const config = {
+      method: 'POST',
+      url: uploadUrl,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data;',
+        Authorization: 'Bearer ' + getState().authentication.token
+      },
+      body: data
+    };
+    console.log(config)
+    axios(config)
+      .then(resp => console.log(resp))
+    // fetch(uploadUrl, config)
+    //   .then(responseData => {
+    //     console.log(responseData);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    // }
   }
 }
+
+//
+
+    // let url = fileUrl; //The url you received from the DocumentPicker
+
+
+
+    // I STRONGLY RECOMMEND ADDING A SMALL SETTIMEOUT before uploading the url you just got.
+    // const token = getState().authentication.token
+    // const split = url.split('/');
+    // const name = split.pop();
+    // const inbox = split.pop();
+    // const realPath = `${RNFS.TemporaryDirectoryPath}${inbox}/${name}`;
+
+
+    // console.log(split, name, inbox, realPath)
+    // const uploadBegin = (response) => {
+    //   const jobId = response.jobId;
+    //   console.log('UPLOAD HAS BEGUN! JobId: ' + jobId);
+    // };
+    //
+    // const uploadProgress = (response) => {
+    //   const percentage = Math.floor((response.totalBytesSent/response.totalBytesExpectedToSend) * 100);
+    //   console.log('UPLOAD IS ' + percentage + '% DONE!');
+    // };
+    //
+    // // upload files
+    // console.log(uploadUrl)
+    // console.log(RNFS)
+    // RNFS.uploadFiles({
+    //    toUrl: uploadUrl,
+    //    method: 'POST',
+    //    files: [{
+    //      name,
+    //      filename: name,
+    //      filepath: realPath,
+    //    }],
+    //    headers: {
+    //       'Accept': 'application/json',
+    //       'Authorization': 'Bearer ' + token
+    //    },
+    //    fields: {
+    //      id: eventId,
+    //      action_file: {
+    //        title: fileTitle,
+    //        kind: fileKind,
+    //        file: realPath
+    //      }
+    //    },
+    //    begin: uploadBegin,
+    //    beginCallback: uploadBegin, // Don't ask me, only way I made it work as of 1.5.1
+    //    progressCallback: uploadProgress,
+    //    progress: uploadProgress
+    //  }).promise.then((response) => {
+    //  console.log(response,"<<< Response");
+    //  if (response.statusCode == 200) { //You might not be getting a statusCode at all. Check
+    //     console.log('FILES UPLOADED!');
+    //   } else {
+    //     console.log('SERVER ERROR');
+    //     console.log(response)
+    //    }
+    //  })
+    //  .catch((err) => {
+    //    if (err.description) {
+    //      switch (err.description) {
+    //        case "cancelled":
+    //          console.log("Upload cancelled");
+    //          break;
+    //        case "empty":
+    //          console.log("Empty file");
+    //        default:
+    //         //Unknown
+    //      }
+    //    } else {
+    //     //Weird
+    //    }
+    //    console.log(err);
+    // });
+  // }
+
+  //   dispatch(setLoaderState(true))
+  //   const data = {
+  //     id: eventId,
+  //     action_file: {
+  //       title: fileTitle,
+  //       kind: fileKind,
+  //       file: file
+  //     }
+  //
+  //   }
+  //   API.post(`/internal/timeo/api/v0/actions/${eventId}/action-file`)
+  //     .then(response => sendFileToApiSuccess(dispatch, eventId))
+  //     .catch(error => onRequestErrorCallback(dispatch, error));
+  // }
+// }
 
 const sendFileToApiSuccess = (dispatch, eventId) => {
     // dispatch({

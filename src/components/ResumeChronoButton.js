@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Animated } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Pause from './assets/Pause';
 
 class ResumeChronoButton extends Component {
 
+  componentWillMount(){
+    // A setState used in this function is “free” and will not trigger a re-render.
+    console.log('in componentWillMount')
+    this.setState({visible: true})
+  }
+  componentDidUpdate(){
+    console.log('in componentDidUpdate')
+    setTimeout(() =>this.setState({visible: !this.state.visible}), 1000)
+  }
+
+  // componentWillUnmount(){
+  //   clearInterval(this.interval)
+  // }
   render(){
     const { textStyle } = styles;
-    return (
-
-            <TouchableOpacity onPress={this.props.onPress}>
-              <Pause style={{height: 50, width: 50}}/>
-            </TouchableOpacity>
-
-    );
+    if (this.state.visible){
+      return (
+              <TouchableOpacity onPress={this.props.onPress}>
+                <Pause style={{height: 50, width: 50}}/>
+              </TouchableOpacity>
+      );
+    }
+    else {
+      return (
+        <View style={{height: 50, width: 50}}>
+        </View>
+      )
+    }
   }
 };
 

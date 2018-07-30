@@ -22,6 +22,7 @@ const INITIAL_STATE = { events: [],
                         currentEventId: null,
                         currentEventComment: null,
                         currentEventTask: null,
+                        currentEvent: null,
                         eventToDelete: null
                       }
 
@@ -90,7 +91,7 @@ export const EventReducer = (state = INITIAL_STATE, action) => {
       events[index] = action.payload
       return {...state, events: events, currentEvent: action.payload}
     case RESET_INFO:
-      return  {...state, currentEventId: null}
+      return  {...state, currentEventId: null, currentEvent: null}
     default:
       return state;
   }

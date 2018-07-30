@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity, ScrollView, Text, Platform} from 'react-native'
 import { connect } from 'react-redux';
-import { updateEvent, updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients, loadClientProjects } from '../actions';
+import { updateEvent, updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients, loadClientProjects, sendFileToApi } from '../actions';
 import Button from './common/Button';
 import Spinner from './common/Spinner';
 import { Actions } from 'react-native-router-flux';
@@ -57,9 +57,11 @@ class Info extends Component {
     DocumentPicker.show({
         filetype: [DocumentPickerUtil.images()],
       },(error,res) => {
-        // console.log('in picker')
-        // console.log(res)
-        this.props.sendFileToApi(this.props.eventId, res.fileName, res.fileType, res.uri)
+        console.log('in picker')
+        console.log(Object.getOwnPropertyNames(res))
+        console.log(res.fileName)
+        console.log(res.type, res.uri)
+        this.props.sendFileToApi(this.props.eventId, res.fileName, res.type, res.uri)
         // this.props.sendFileToA
       });
   }
@@ -217,4 +219,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, { updateEvent,  updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients, loadClientProjects})(Info);
+export default connect(mapStateToProps, { updateEvent,  updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients, loadClientProjects, sendFileToApi})(Info);
