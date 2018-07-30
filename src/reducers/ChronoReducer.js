@@ -1,29 +1,55 @@
 import { RESET_INFO,
          STOP_CHRONO,
-         UPDATE_INTERVAL,
-         SET_CHRONO_RUNNING,
-        UPDATE_TIMERVALUE} from '../actions/types';
+         RESET_CHRONO,
+         START_TIMER,
+         STOP_TIMER,
+         SET_CURRENT_CHRONO_BASETIME
+      } from '../actions/types';
 
 const INITIAL_STATE = {
   isRunning: false,
   hasRun: false,
   timerValue: 0,
-  startDate: null,
-  stopDate: null,
+  baseTime: 0,
+  startedAt: undefined,
+  stoppedAt: undefined,
   isSaved: false,
   isOnHold: false
 };
 
 export const ChronoReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case STOP_CHRONO:
-      return {...state, stopDate: action.payload, timerValue: action.payload, isRunning: false, isOnHold: true}
-    case UPDATE_INTERVAL:
-      return {...state, interval: state.startDate - action.payload}
-    case SET_CHRONO_RUNNING:
-      return {...state, isRunning: action.payload, hasRun: true, startDate: new Date ()}
-    case UPDATE_TIMERVALUE:
-      return {...state, timerValue: action.payload}
+    case START_TIMER:
+      return {
+         ...state,
+         baseTime: action.payload.baseTime,
+         startedAt: action.payload.now,
+         stoppedAt: undefined,
+         isRunning: true,
+         hasRun: true,
+       };
+    case STOP_TIMER:
+      return  {
+        ...state,
+        stoppedAt: undefined,
+        startedAt: undefined,
+        baseTime: action.payload.baseTime,
+        isRunning: false,
+        isOnHold: true
+      }
+    case RESET_CHRONO:
+      return {
+        ...state,
+        startedAt: undefined,
+        stoppedAt: undefined
+      }
+    case SET_CURRENT_CHRONO_BASETIME:
+      return {
+        ...state,
+        baseTime: action.payload,
+        startedAt: undefined,
+        stoppedAt: undefined
+      }
     case RESET_INFO:
       return INITIAL_STATE
     default:

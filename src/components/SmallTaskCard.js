@@ -23,9 +23,6 @@ class SmallTaskCard extends Component {
   }
 
   userThumbUrl(affected_to_id){
-    console.log('in userThumbUrl')
-    console.log(affected_to_id)
-    console.log(this.props.resources)
     if (this.props.resources.length > 0 ){
       const affectedTo = this.props.resources.find((resource) => resource.id == affected_to_id)
       if (affectedTo){

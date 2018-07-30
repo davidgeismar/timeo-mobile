@@ -39,7 +39,6 @@ class LoginForm extends Component {
           <StylishInput
             style={{height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', fontWeight: 'bold', alignSelf: 'center' }}
             value={this.props.username}
-            // value= "d.sylla@xair.fr"
             placeholder="Login"
             onChangeText={text => this.props.authUpdate({prop: 'username', value: text})}
           />
@@ -47,7 +46,6 @@ class LoginForm extends Component {
             style={{height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', alignSelf: 'center', fontWeight: 'bold'}}
             placeholder="Password"
             value={this.props.password}
-            // value="whazaaz313"
             onChangeText={text => this.props.authUpdate({prop: 'password', value: text})}
           />
         </View>
@@ -58,16 +56,14 @@ class LoginForm extends Component {
         <View style={{width: '100%'}}>
         <TextInput
           style={{height: 50, width: '60%', alignSelf: 'center', color: 'white', fontWeight: 'bold' }}
-          // value={this.props.username}
-          value= "d.sylla@xair.fr"
+          value={this.props.username}
           placeholder="Login"
           onChangeText={text => this.props.authUpdate({prop: 'username', value: text})}
         />
         <TextInput
           style={{height: 50, width: '60%', color: 'white', alignSelf: 'center', fontWeight: 'bold'}}
           placeholder="Password"
-          // value={this.props.password}
-            value="whazaaz313"
+          value={this.props.password}
           onChangeText={text => this.props.authUpdate({prop: 'password', value: text})}
         />
         </View>

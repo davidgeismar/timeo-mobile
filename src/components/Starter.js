@@ -2,9 +2,8 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Keyboard, Animated  } from 'react-native'
 import { connect } from 'react-redux';
-import { createEvent, activateTab, stopChrono, setChronoRunning, fetchEvents, updateEvent } from '../actions';
+import { createEvent, activateTab, stopChrono, setChronoRunning, fetchEvents, updateEvent, startTimer, stopTimer} from '../actions';
 import { Actions } from 'react-native-router-flux';
-import { store } from  './store'
 import Button from './common/Button'
 import Footer from './common/Footer'
 import Spinner from './common/Spinner';
@@ -18,47 +17,73 @@ import * as utilities from '../lib/Utilities';
 // import * as actions from '../actions';
 
 class Starter extends Component {
-  // renderTabBar(){
-  //   if (this.props.hasRun){
-  //     console.log('rendering tabbar')
-  //     return (
-  //       <TabBar />
-  //     )
-  //   }
-  // }
-  // renderAvatar(){
-  //   if (!this.props.isRunning && !this.props.hasRun){
-  //     return(
-  //       <Avatar
-  //         size="small"
-  //         rounded
-  //         source={{uri: this.props.logo_thumb}}
-  //         onPress={() => this.props.fetchEvents()}
-  //         activeOpacity={0.7}
-  //         />
-  //     )
-  //   }
-  // }
+
+  componentDidMount() {
+    // le composant est rerendered a interval regulier
+    console.log('in component did mount')
+    this.interval = setInterval(() => this.forceUpdate(), 1000);
+  }
+
+  componentWillUnmount() {
+    console.log('in componentWillUnmount')
+    console.log(this.interval)
+    clearInterval(this.interval);
+ }
+  renderTabBar(){
+    if (this.props.hasRun){
+      console.log('rendering tabbar')
+      return (
+        <TabBar />
+      )
+    }
+  }
+  renderAvatar(){
+    if (!this.props.isRunning && !this.props.hasRun){
+      return(
+        <Avatar
+          size="small"
+          rounded
+          source={{uri: this.props.logo_thumb}}
+          onPress={() => this.props.fetchEvents()}
+          activeOpacity={0.7}
+          />
+      )
+    }
+  }
+
+   getElapsedTime(baseTime, startedAt= new Date().getTime(), stoppedAt = new Date().getTime()) {
+     console.log('in getElapsedTime')
+      console.log(baseTime)
+      console.log(startedAt)
+      console.log(stoppedAt)
+      if (this.props.eventId && !startedAt) {
+          console.log('returning basetime')
+         return baseTime;
+       }
+       else if (!startedAt){
+         return 0
+       }
+       else {
+         return stoppedAt - startedAt + baseTime;
+      }
+
+    }
+
 
   renderButtons(){
-    console.log('render buttons')
-    console.log(this.props.isRunning)
-    console.log(this.props.onHold)
+    const { baseTime, startedAt, stoppedAt } = this.props;
+    const elapsed = this.getElapsedTime(baseTime, startedAt, stoppedAt);
     if (this.props.isRunning  && !this.props.onHold){
-      console.log('in isRunning')
-      console.log(this.props)
       return(
         <View style={styles.buttonWrapperStyle}>
-          <Button customStyle={styles.basicButtonStyle} onPress={() => this.stopChrono()}>Stop</Button>
+          <Button customStyle={styles.basicButtonStyle} onPress={() => this.props.stopTimer(elapsed)}>Stop</Button>
         </View>
       )
     }
-    else if ((this.props.isOnHold && !this.props.isRunning)){
-      console.log('in isonhold')
-      console.log(this.props)
+    else if ((this.props.isOnHold && !this.props.isRunning) || (this.props.isSaved)){
       return(
         <View style={styles.chronoButtonsWrapper}>
-          <ResumeChronoButton onPress={()=> this.startChrono()}/>
+          <ResumeChronoButton onPress={()=> this.props.startTimer(elapsed)}/>
           <SelectChronoButton onPress={()=> this.props.activateTab('time')}/>
           <Button customStyle={styles.saveButtonStyle} onPress={()=>this.saveEvent()}>Save</Button>
         </View>
@@ -77,58 +102,31 @@ class Starter extends Component {
   }
 
   saveEvent(){
+    const { baseTime, startedAt, stoppedAt } = this.props;
+    const elapsed = this.getElapsedTime(baseTime, startedAt, stoppedAt);
     if (this.props.eventId){
-      this.props.updateEvent('duration', this.state.timerValue, this.state.timerValue, 'automatic', this.props.eventId)
+      this.props.updateEvent('duration', elapsed, elapsed, 'automatic', this.props.eventId)
     }
     else {
-      this.props.createEvent('automatic', this.state.timerValue)
+      this.props.createEvent('automatic', elapsed)
     }
-  }
-
-  stopChrono(){
-    console.log('in stopChrono')
-    console.log(this.timerValue)
-    clearInterval(this.timerValue);
-    this.props.stopChrono(this.state.timerValue)
-    // this.props.stopChrono()
-  }
-
-
-  runTimeLoop() {
-    console.log('run timeloop')
-    this.timerValue = setInterval(() => {
-                      console.log(this.props.startDate)
-                      this.setState({
-                        timerValue: new Date() - this.props.startDate + this.props.timerValue
-                      })
-                    }, 30);
-  }
-  startChrono(){
-    store.dispatch({
-      type: SET_CHRONO_RUNNING,
-      payload: true
-    })
-    console.log('in startchrono')
-    console.log(this.props.timerValue)
-    this.runTimeLoop()
   }
 
   renderChrono(){
-
+   const { baseTime, startedAt, stoppedAt } = this.props;
+   const elapsed = this.getElapsedTime(baseTime, startedAt, stoppedAt);
+   console.log('in renderChrono')
+   console.log(elapsed)
     if (this.props.isRunning || this.props.isOnHold || (!this.props.isRunning && this.props.isSaved)) {
-      console.log('in renderChrono')
-      console.log(this.state)
-      let timerValue
-      timerValue = this.state ? this.state.timerValue : this.props.timerValue
 
       return(
         <View style={styles.chronoContainer}>
           <Text style={[styles.hoursStyle, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
-            {utilities.spitHours(timerValue)}
+            {utilities.spitHours(elapsed)}
           </Text>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
             <Text style={[styles.minutesStyle, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
-              {utilities.spitMinutes(timerValue)}
+              {utilities.spitMinutes(elapsed)}
             </Text>
             <Text style={[{fontSize: 40}, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
               MN
@@ -136,7 +134,7 @@ class Starter extends Component {
           </View>
           <View style={{flexDirection: 'row', justifyContent:'center', alignItems: 'center'}}>
             <Text style={[styles.secondsStyle, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
-              {utilities.spitSeconds(timerValue)}
+              {utilities.spitSeconds(elapsed)}
             </Text>
             <Text style={[{fontSize: 20}, {color: this.props.isRunning ? 'orange' : '#00AFFA'}]}>
               SEC
@@ -147,7 +145,7 @@ class Starter extends Component {
     }
     else {
       return (
-        <TouchableOpacity onPress={()=>this.startChrono()}>
+        <TouchableOpacity onPress={()=>this.props.startTimer(0)}>
           <Chrono style={styles.svgStyle} fill="#00AFFA"/>
         </TouchableOpacity>
       )
@@ -161,9 +159,9 @@ class Starter extends Component {
     else {
       return (
       <View style={styles.containerStyle}>
-
+        {this.renderTabBar()}
         <View style={styles.avatarWrapperStyle}>
-
+          {this.renderAvatar()}
         </View>
         <View style={styles.chronoWrapperStyle}>
           {this.renderChrono()}
@@ -251,8 +249,9 @@ const mapStateToProps = (state) => {
         isOnHold: state.chrono.isOnHold,
         isRunning: state.chrono.isRunning,
         hasRun: state.chrono.hasRun,
-        chronoStart: state.chrono.chronoStart,
-        timerValue: event.duration,
+        baseTime: state.chrono.baseTime,
+        startedAt: state.chrono.startedAt,
+        stoppedAt: state.chrono.stoppedAt,
         eventId: event.id,
         loading: state.loading
       }
@@ -278,10 +277,13 @@ const mapStateToProps = (state) => {
       chronoValue: state.chrono.chronoValue,
       isOnHold: state.chrono.isOnHold,
       timerValue: state.chrono.timerValue,
-      loading: state.loading
+      loading: state.loading,
+      baseTime: state.chrono.baseTime,
+      startedAt: state.chrono.startedAt,
+      stoppedAt: state.chrono.stoppedAt
     }
   }
 }
 
 
-export default connect(mapStateToProps, { createEvent, activateTab, stopChrono, setChronoRunning, fetchEvents, updateEvent })(Starter);
+export default connect(mapStateToProps, { createEvent, activateTab, stopChrono, setChronoRunning, fetchEvents, updateEvent, startTimer, stopTimer })(Starter);

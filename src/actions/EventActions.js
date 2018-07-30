@@ -14,7 +14,9 @@ import { CREATE_EVENT,
          DELETE_SELECTED_KANBAN,
          UNSET_CURRENT_TASK,
          SET_CURRENT_EVENT_TASK,
-         SET_EVENT_TO_DELETE
+         SET_EVENT_TO_DELETE,
+         RESET_CHRONO,
+         SET_CURRENT_CHRONO_BASETIME
        } from './types'
 import API from './Api';
 import { fetchClients, fetchClientsSuccess } from './ClientActions'
@@ -47,6 +49,10 @@ const createEventSuccess = (dispatch, data) => {
       type: SET_CURRENT_EVENT,
       payload: data.data.id
     });
+    dispatch({
+      type: RESET_CHRONO,
+      payload: true
+    })
     dispatch(fetchClients())
 }
 
@@ -87,7 +93,12 @@ const setCurrentEventSuccess = (dispatch, getState, eventId) => {
     type: SET_CURRENT_EVENT,
     payload: eventId
   });
+
   const currentEvent = getState().eventsData.events.find(event => event.id == eventId)
+  dispatch({
+    type: SET_CURRENT_CHRONO_BASETIME,
+    payload: currentEvent.duration
+  })
   if (currentEvent.project_id){
     dispatch(loadProjectKanbans(currentEvent.project_id))
   }
