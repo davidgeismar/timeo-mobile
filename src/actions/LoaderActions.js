@@ -1,7 +1,10 @@
 import { SET_LOADER, SET_ERROR, SET_BACKGROUND_IMAGE } from './types'
 import axios from 'axios';
+import { Actions } from 'react-native-router-flux';
 
 export const setLoaderState = (loaderState) => {
+  console.log('in setLoaderState')
+  console.log(loaderState)
   return {
           type: SET_LOADER,
           payload: loaderState
@@ -33,7 +36,11 @@ const fetchImageOfTheDaySuccess = (dispatch, data) => {
 
 export const onRequestErrorCallback = (dispatch, error) => {
   console.log('onRequestErrorCallback')
-  console.log(error)
   dispatch(setLoaderState(false))
+  if (error.response.status == 401){
+    dispatch(setErrorState('Please Login to continue'))
+    return Actions.login()
+  }
+
   // dispatch(setErrorState(error.message))
 };

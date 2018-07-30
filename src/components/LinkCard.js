@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback} from 'react-native'
+import { View, Text, TouchableOpacity} from 'react-native'
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux'
 
@@ -10,13 +10,11 @@ class LinkCard extends Component {
 
   render() {
     return (
-      <TouchableWithoutFeedback onPress={this.props.onPress} canBeActivated={this.props.canBeActivated} activationKey={this.props.activationKey}>
-        <View style={[styles.containerStyle, this.props.customStyle]}  backgroundColor={this.props.active ? '#8CCDF8' : 'white'}>
-          <Text style={[styles.textStyle, this.props.customTextStyle, {color: this.props.active ? 'white' : 'black'}]}>
-            {this.props.children}
-          </Text>
-        </View>
-      </TouchableWithoutFeedback>
+      <TouchableOpacity onPress={this.props.onPress} canBeActivated={this.props.canBeActivated} activationKey={this.props.activationKey} style={[styles.containerStyle, this.props.customStyle,{ backgroundColor: this.props.active ? '#8CCDF8' : 'white'} ]}>
+        <Text style={[styles.textStyle, this.props.customTextStyle, {color: this.props.active ? 'white' : 'black'}]}>
+          {this.props.children}
+        </Text>
+      </TouchableOpacity>
     )
   }
 }

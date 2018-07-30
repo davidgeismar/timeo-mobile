@@ -34,7 +34,7 @@ export const createEvent = ( measure_kind, duration=null) => {
     const data = {action: {duration: duration, measure_kind: measure_kind}}
     API.post('/internal/timeo/api/v0/actions', data)
       .then(response => createEventSuccess(dispatch, response))
-      .catch(error => onRequestErrorCallback(error));
+      .catch(error => onRequestErrorCallback(dispatch, error));
   }
 }
 
@@ -63,7 +63,7 @@ export const setCurrentEventTask = (cardId) => {
       dispatch(setLoaderState(true))
       API.get(`/internal/timeo/api/v0/kameo_cards/${cardId}`)
         .then(response => setCurrentEventTaskSuccess(dispatch, response))
-        .catch(error => onRequestErrorCallback(error));
+        .catch(error => onRequestErrorCallback(dispatch, error));
     }
     else {
       dispatch({
@@ -113,7 +113,7 @@ export const fetchEvents= () => {
     dispatch(setLoaderState(true))
     API.get('/internal/timeo/api/v0/actions')
       .then(response => fetchEventsSuccess(dispatch, response))
-      .catch(error => onRequestErrorCallback(error));
+      .catch(error => onRequestErrorCallback(dispatch, error));
   };
 }
 
@@ -161,16 +161,19 @@ export const updateEvent = (prop, value, duration, measure_kind, eventId, redire
                     }
     }
       if (loader){
+        console.log('before loader')
         dispatch(setLoaderState(true))
+        console.log('after loader')
       }
       API.patch(`/internal/timeo/api/v0/actions/${eventId}`, data)
         .then(response => updateEventSuccess(dispatch, response, prop, redirect))
-        .catch(error => onRequestErrorCallback(error));
+        .catch(error => onRequestErrorCallback(dispatch, error));
   }
 }
 
 
 const updateEventSuccess = (dispatch, data, prop, redirect) => {
+  console.log('in update event success')
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({
@@ -232,7 +235,7 @@ export const deleteEvent = (eventId) => {
     dispatch(setLoaderState(true))
     API.delete(`/internal/timeo/api/v0/actions/${eventId}`)
       .then(response => deleteEventSuccess(dispatch, eventId))
-      .catch(error => onRequestErrorCallback(error));
+      .catch(error => onRequestErrorCallback(dispatch, error));
   }
 }
 
@@ -260,7 +263,7 @@ export const sendFileToApi = (eventId, fileTitle, fileKind, file) =>{
     }
     API.post(`/internal/timeo/api/v0/actions/${eventId}/action-file`)
       .then(response => sendFileToApiSuccess(dispatch, eventId))
-      .catch(error => onRequestErrorCallback(error));
+      .catch(error => onRequestErrorCallback(dispatch, error));
   }
 }
 

@@ -65,7 +65,7 @@ export const getResources = () => {
   return (dispatch) => {
     API.get('/internal/obeya/api/v0/resources')
             .then(response => getRessourcesSuccess(dispatch, response))
-            .catch(error => onRequestErrorCallback(error));
+            .catch(error => onRequestErrorCallback(dispatch, error));
   }
 }
 
