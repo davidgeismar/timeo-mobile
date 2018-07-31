@@ -34,6 +34,8 @@ const fetchImageOfTheDaySuccess = (dispatch, data) => {
 
 export const onRequestErrorCallback = (dispatch, error) => {
   dispatch(setLoaderState(false))
+  console.log(error)
+  console.log(error.response)
   if (error.response.status == 401){
     dispatch(setErrorState('Please Login to continue'))
     return Actions.login()

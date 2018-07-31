@@ -75,7 +75,11 @@ class RouterComponent  extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log('mapStateToProps router')
+  console.log(API.defaults.headers.common['Authorization'])
   const initialPage = API.defaults.headers.common['Authorization'] ? state.tabs.activeTab : 'login'
+  console.log('initialPage')
+  console.log(initialPage)
   return {
     initialPage
   }

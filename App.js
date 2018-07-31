@@ -23,7 +23,7 @@ export default class App extends React.Component {
   componentWillMount(){
     this.checkStoredTokenValidity()
       .then(resp => this.checkAuthTokenValidity(resp))
-      .catch(error => console.log(error))
+      .catch(error => this.authTokenCheckError(error))
       .then(resp => this.authTokenCheckSuccess(resp))
       .catch(err => this.authTokenCheckError(err))
   }
@@ -42,7 +42,11 @@ export default class App extends React.Component {
       const data = await AsyncStorage.getItem('persist:root')
       return JSON.parse(data)
   }
+
   async checkAuthTokenValidity(resp){
+   console.log('checkAuthTokenValidity')
+   console.log('fuuuu')
+   console.log(resp)
    const token = JSON.parse(resp.authentication).token
    const config = {
      method: 'GET',
@@ -52,21 +56,27 @@ export default class App extends React.Component {
        Authorization: 'Bearer ' + token
      }
     }
-    return await axios(config)
+    const data = await axios(config)
+    return await { data: data, token: token }
   }
 
 
   authTokenCheckSuccess(resp, token){
-    // return new Promise((resolve, reject) => {
-       if (resp.data.message === 'pong'){
+      console.log('authTokenCheckSuccess')
+      console.log(resp)
+      // return new Promise((resolve, reject) => {
+      if (resp.data.data.message === 'pong'){
+        console.log('authTokenCheckSuccess valid token')
          API.defaults.headers.common['Accept'] = 'application/json'
-         API.defaults.headers.common['Authorization'] = 'Bearer ' + token
+         API.defaults.headers.common['Authorization'] = 'Bearer ' + resp.token
+         console.log(API.defaults.headers.common['Authorization'])
          this.setState({
            validToken: true
          })
          // return resolve(true)
        }
        else {
+         console.log('authTokenCheckSuccess invalid token')
          API.defaults.headers.common['Accept'] = 'application/json'
          API.defaults.headers.common['Authorization'] = null
          this.setState({
@@ -81,10 +91,13 @@ export default class App extends React.Component {
   }
 
   authTokenCheckError(err){
+    console.log('authTokenCheckError')
+    console.log(err)
      API.defaults.headers.common['Accept'] = 'application/json'
      API.defaults.headers.common['Authorization'] = null
      this.setState({
-       ready: true
+       ready: true,
+       validToken: false
      })
   }
   render() {

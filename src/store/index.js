@@ -23,5 +23,5 @@ export const store =  createStore(
                  )
                )
 
-
 export const persistor = persistStore(store);
+// persistor.purge()
