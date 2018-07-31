@@ -53,7 +53,7 @@ class TabBar extends Component {
           <Tab onPress={() => this.props.activateTab('time')} activationKey='time'>
             <Text style={[textStyle, {color: this.props.activeTime ? '#00AFFA' : '#BFBFBF' }]}>TIME</Text>
           </Tab>
-          <Tab onPress={() => this.props.fetchClients()} activationKey='client'>
+          <Tab onPress={() => this.props.activateTab('client')} activationKey='client'>
             <Text style={[textStyle, {color: this.props.activeClient ? '#00AFFA' : '#BFBFBF' }]}>CLIENT</Text>
           </Tab>
           <Tab onPress={()=> clientId ? this.props.loadClientProjects(clientId): null} activationKey='projects'>
@@ -66,7 +66,7 @@ class TabBar extends Component {
               size="small"
               rounded
               source={{uri: this.props.logo_thumb}}
-              onPress={() => this.props.fetchEvents()}
+              onPress={() => Actions.events()}
               activeOpacity={0.7}
               />
 

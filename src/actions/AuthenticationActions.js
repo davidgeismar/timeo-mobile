@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
-import { SET_RESOURCES, RESET_INFO, RESET_AUTH_TOKEN, AUTH_UPDATE, GET_USER_INFO, INITIALIZE_USER, SET_AUTH_TOKEN } from './types'
+import { SET_RESOURCES, RESET_INFO, RESET_AUTH_TOKEN, AUTH_UPDATE, GET_USER_INFO, INITIALIZE_USER, SET_AUTH_TOKEN, LOAD_EVENTS, LOAD_CLIENTS } from './types'
 import API from './Api';
 import { AsyncStorage } from 'react-native'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
@@ -76,6 +76,7 @@ const getUserInfoSuccess = (dispatch, data) => {
 
 
 const loadResources = () => {
+  console.log('loadResources')
   return (dispatch) => {
     dispatch(setLoaderState(true))
     // events
@@ -104,12 +105,13 @@ const initialFetchEvents= () => {
 }
 
 const initialFetchEventsSuccess = (dispatch, data) => {
+  console.log('initialFetchEventsSuccess')
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
-    dispatch({
-      type: LOAD_EVENTS,
-      payload: data.data
-    });
+  dispatch({
+    type: LOAD_EVENTS,
+    payload: data.data
+  });
 }
 
 const initialfetchClients = () => {
@@ -122,6 +124,7 @@ const initialfetchClients = () => {
 };
 
 const initialFetchClientsSuccess = (dispatch, data) => {
+  console.log('initialFetchClientsSuccess')
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({
@@ -138,6 +141,7 @@ export const getResources = () => {
 }
 
 const getRessourcesSuccess = (dispatch, data) => {
+  console.log('getRessourcesSuccess')
   dispatch({
     type: SET_RESOURCES,
     payload: data.data

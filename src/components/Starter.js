@@ -40,7 +40,7 @@ class Starter extends Component {
           size="small"
           rounded
           source={{uri: this.props.logo_thumb}}
-          onPress={() => this.props.fetchEvents()}
+          onPress={() => Actions.events()}
           activeOpacity={0.7}
           />
       )
@@ -221,6 +221,8 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
+  console.log('mapStateToProps starter')
+  console.log(state)
   const event = state.eventsData.currentEvent
   if (event){
     if (event.measure_kind == 'automatic'){

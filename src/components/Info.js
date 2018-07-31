@@ -48,7 +48,7 @@ class Info extends Component {
   renderClient(client){
     if (client){
       return (
-        <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.fetchClients()}>{client}</LinkCard>
+        <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => Actions.client()}>{client}</LinkCard>
       )
     }
   }
