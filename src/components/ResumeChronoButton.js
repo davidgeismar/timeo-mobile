@@ -4,13 +4,26 @@ import Pause from './assets/Pause';
 
 class ResumeChronoButton extends Component {
 
+    componentDidMount = () => {
+      this.interval = setInterval(() => {
+        this.setState((state, props) => {
+          return {
+            visible: !state.visible,
+          };
+        });
+      }, 1000);
+    };
+
+    componentWillUnmount = () => {
+      clearInterval(this.interval);
+    };
   componentWillMount(){
     // A setState used in this function is “free” and will not trigger a re-render.
     this.setState({visible: true})
   }
-  componentDidUpdate(){
-    setTimeout(() =>this.setState({visible: !this.state.visible}), 1000)
-  }
+  // componentDidUpdate(){
+  //   setTimeout(() =>this.setState({visible: !this.state.visible}), 1000)
+  // }
 
   // componentWillUnmount(){
   //   clearInterval(this.interval)
