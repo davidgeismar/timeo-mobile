@@ -67,11 +67,30 @@ const getUserInfoSuccess = (dispatch, data) => {
     type: INITIALIZE_USER,
     payload: data.data
   })
-
-  dispatch(getResources())
-  dispatch(initialFetchEvents())
-  dispatch(initialfetchClients())
+  dispatch(loadResources())
+  // dispatch(getResources())
+  // dispatch(initialFetchEvents())
+  // dispatch(initialfetchClients())
   Actions.chrono()
+}
+
+
+const loadResources = () => {
+  return (dispatch) => {
+    dispatch(setLoaderState(true))
+    // events
+    API.get('/internal/timeo/api/v0/actions')
+      .then(response => initialFetchEventsSuccess(dispatch, response))
+      .catch(error => onRequestErrorCallback(dispatch, error));
+    // clients
+    API.get('/internal/timeo/api/v0/clients')
+      .then(response => initialFetchClientsSuccess(dispatch, response))
+      .catch(error => onRequestErrorCallback(dispatch, error));
+    // resources
+    API.get('/internal/obeya/api/v0/resources')
+        .then(response => getRessourcesSuccess(dispatch, response))
+        .catch(error => onRequestErrorCallback(dispatch, error));
+  }
 }
 
 const initialFetchEvents= () => {
@@ -80,6 +99,7 @@ const initialFetchEvents= () => {
     API.get('/internal/timeo/api/v0/actions')
       .then(response => initialFetchEventsSuccess(dispatch, response))
       .catch(error => onRequestErrorCallback(dispatch, error));
+
   };
 }
 
