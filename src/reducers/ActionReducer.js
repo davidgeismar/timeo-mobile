@@ -13,3 +13,5 @@ export const ActionReducer = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
+
+// action et reducer ensemble

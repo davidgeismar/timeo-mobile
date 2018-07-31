@@ -222,8 +222,6 @@ const styles = {
 
 const mapStateToProps = (state) => {
   const event = state.eventsData.currentEvent
-  console.log(event)
-  console.log(state)
   if (event){
     if (event.measure_kind == 'automatic'){
       return {

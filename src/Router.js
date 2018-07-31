@@ -17,6 +17,8 @@ import { connect } from 'react-redux';
 import TaskList from './components/TaskList'
 import LoginForm from './components/LoginForm'
 import API from './actions/Api';
+import { checkAuthTokenValidity } from './actions';
+
 
 const TabIcon = ({selected, title}) => {
   return (
@@ -31,8 +33,7 @@ const ChronoIcon = () => {
 };
 
 class RouterComponent  extends Component {
-
-    render() {
+  render() {
     return (
       <Router>
         <Scene key='main'>
@@ -74,15 +75,10 @@ class RouterComponent  extends Component {
 }
 
 const mapStateToProps = (state) => {
-  let initialPage = 'login'
-  if (state._persist){
-    if (state._persist.rehydrated && state.authentication.token){
-      API.defaults.headers.common['Authorization'] = 'Bearer ' + state.authentication.token;
-      initialPage = state.tabs.activeTab
-    }
-  }
+  const initialPage = API.defaults.headers.common['Authorization'] ? state.tabs.activeTab : 'login'
+  console.log(initialPage)
   return {
-    initialPage: initialPage
+    initialPage
   }
 }
-export default connect(mapStateToProps, null)(RouterComponent)
+export default connect(mapStateToProps, {checkAuthTokenValidity})(RouterComponent)

@@ -21,6 +21,7 @@ class StylishInput extends Component {
         style={[this.props.style, {borderBottomColor: borderBottomColor, placeholderTextColor: placeholderTextColor}]}
         placeholder={this.props.placeholder}
         onChangeText={this.props.onChangeText}
+        secureTextEntry={this.props.secureTextEntry}
         onFocus={()=>this.activate(true)}
         onBlur={()=>this.activate(false)}
         value={this.props.value}

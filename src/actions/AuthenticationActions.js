@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
-import {SET_RESOURCES, RESET_INFO, RESET_AUTH_TOKEN, AUTH_UPDATE, GET_USER_INFO, INITIALIZE_USER, SET_AUTH_TOKEN } from './types'
+import { SET_RESOURCES, RESET_INFO, RESET_AUTH_TOKEN, AUTH_UPDATE, GET_USER_INFO, INITIALIZE_USER, SET_AUTH_TOKEN } from './types'
 import API from './Api';
 import { AsyncStorage } from 'react-native'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
@@ -12,6 +12,16 @@ export const authUpdate = ({ prop, value }) => {
   };
 };
 
+export const checkAuthTokenValidity = () => {
+  return (dispatch) => {
+    API.get('/api/v0/auth/ping')
+      .then(response => checkAuthTokenValiditySuccess(dispatch, response))
+      .catch(error => onRequestErrorCallback(dispatch, error));
+  };
+}
+const checkAuthTokenValiditySuccess = () => {
+
+}
 export const loginUser = (creds) => {
   return (dispatch) => {
     dispatch(setLoaderState(true))

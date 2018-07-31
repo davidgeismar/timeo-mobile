@@ -16,6 +16,7 @@ import Tired from './assets/Tired'
 
 class LoginForm extends Component {
   componentWillMount(){
+    console.log('in componentWillMount loginform')
     this.props.fetchImageOfTheDay()
   }
   loginUser(mood){
@@ -42,6 +43,7 @@ class LoginForm extends Component {
           />
           <StylishInput
             style={{height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', alignSelf: 'center', fontWeight: 'bold'}}
+            secureTextEntry={true}
             placeholder="Password"
             value={this.props.password}
             onChangeText={text => this.props.authUpdate({prop: 'password', value: text})}
@@ -60,6 +62,7 @@ class LoginForm extends Component {
         />
         <TextInput
           style={{height: 50, width: '60%', color: 'white', alignSelf: 'center', fontWeight: 'bold'}}
+          secureTextEntry={true}
           placeholder="Password"
           value={this.props.password}
           onChangeText={text => this.props.authUpdate({prop: 'password', value: text})}
@@ -74,7 +77,7 @@ class LoginForm extends Component {
     }
     else {
       return (
-        <ImageBackground style={styles.containerStyle} source={{uri: "http://www.bing.com/az/hprichbg/rb/StinkBugSmiley_FR-FR7711508774_1920x1080.jpg"}}>
+        <ImageBackground style={styles.containerStyle} source={{uri: this.props.backgroundImage ? this.props.backgroundImage : ""}}>
               {this.renderForm()}
               <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center', marginTop: 20}}>
                 <TouchableOpacity onPress={() => this.loginUser('great')}>
@@ -119,6 +122,7 @@ const styles = {
 const mapStateToProps = (state, ownProps) => {
   const { username, password } = state.authentication;
   const {error, loading, backgroundImage} = state
+  console.log(backgroundImage)
   return { username, password, error, loading, backgroundImage };
 };
 

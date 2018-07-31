@@ -6,11 +6,9 @@ class ResumeChronoButton extends Component {
 
   componentWillMount(){
     // A setState used in this function is “free” and will not trigger a re-render.
-    console.log('in componentWillMount')
     this.setState({visible: true})
   }
   componentDidUpdate(){
-    console.log('in componentDidUpdate')
     setTimeout(() =>this.setState({visible: !this.state.visible}), 1000)
   }
 
