@@ -70,6 +70,7 @@ const getUserInfoSuccess = (dispatch, data) => {
 
   dispatch(getResources())
   dispatch(initialFetchEvents())
+  dispatch(initialfetchClients())
   Actions.chrono()
 }
 
@@ -77,7 +78,7 @@ const initialFetchEvents= () => {
   return (dispatch) => {
     dispatch(setLoaderState(true))
     API.get('/internal/timeo/api/v0/actions')
-      .then(response => fetchEventsSuccess(dispatch, response))
+      .then(response => initialFetchEventsSuccess(dispatch, response))
       .catch(error => onRequestErrorCallback(dispatch, error));
   };
 }
@@ -89,6 +90,24 @@ const initialFetchEventsSuccess = (dispatch, data) => {
       type: LOAD_EVENTS,
       payload: data.data
     });
+}
+
+const initialfetchClients = () => {
+  return (dispatch) => {
+    dispatch(setLoaderState(true))
+    API.get('/internal/timeo/api/v0/clients')
+      .then(response => initialFetchClientsSuccess(dispatch, response))
+      .catch(error => onRequestErrorCallback(dispatch, error));
+    };
+};
+
+const initialFetchClientsSuccess = (dispatch, data) => {
+  dispatch(setLoaderState(false))
+  dispatch(setErrorState(false))
+  dispatch({
+    type: LOAD_CLIENTS,
+    payload: data.data
+  })
 }
 export const getResources = () => {
   return (dispatch) => {

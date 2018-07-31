@@ -20,6 +20,4 @@ const fetchClientsSuccess = (dispatch, data) => {
     payload: data.data
   })
   dispatch(activateTab('client'));
-
-
 }

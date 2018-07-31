@@ -56,6 +56,7 @@ const styles = {
 
 const mapStateToProps = (state) => {
   const event = state.eventsData.currentEvent
+  console.log(state.clients)
   return { events: state.eventsData.events,
            currentEventId: state.eventsData.currentEventId,
            clients: state.clients,
