@@ -130,6 +130,7 @@ const fetchEventsSuccess = (dispatch, data) => {
 }
 
 export const updateEvent = (prop, value, duration, measure_kind, eventId, redirect=true, loader=true) => {
+  var start = new Date();
   return (dispatch, getState) => {
     const event = getState().eventsData.events.find(event => event.id == eventId)
     let data
@@ -165,6 +166,9 @@ export const updateEvent = (prop, value, duration, measure_kind, eventId, redire
       if (loader){
         dispatch(setLoaderState(true))
       }
+      var end = new Date();
+      console.log('updateEvent takes :')
+      console.log(end - start)
       API.patch(`/internal/timeo/api/v0/actions/${eventId}`, data)
         .then(response => updateEventSuccess(dispatch, response, prop, redirect))
         .catch(error => onRequestErrorCallback(dispatch, error));
@@ -173,6 +177,7 @@ export const updateEvent = (prop, value, duration, measure_kind, eventId, redire
 
 
 const updateEventSuccess = (dispatch, data, prop, redirect) => {
+  var start = new Date();
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({
@@ -183,6 +188,9 @@ const updateEventSuccess = (dispatch, data, prop, redirect) => {
     switch(prop) {
     case 'client_id':
       unsetKanbanAndTask(dispatch)
+      var end = new Date();
+      console.log('updateEventSuccess takes :')
+      console.log(end - start)
       return dispatch(loadClientProjects(data.data.client_id));
     case 'project_id':
       unsetKanbanAndTask(dispatch)
