@@ -19,7 +19,6 @@ export const setErrorState = (errorMessage) => {
 
 export const fetchImageOfTheDay = () =>{
   return (dispatch) => {
-    console.log('in fetchImageOfTheDay')
     axios.get('http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1')
       .then(response => fetchImageOfTheDaySuccess(dispatch, response))
       .catch(error => console.log(error));
@@ -27,8 +26,6 @@ export const fetchImageOfTheDay = () =>{
 }
 
 const fetchImageOfTheDaySuccess = (dispatch, data) => {
-  console.log('in fetchImageOfTheDay success')
-  console.log(data)
   dispatch({
     type: SET_BACKGROUND_IMAGE,
     payload: data.data.images[0].url

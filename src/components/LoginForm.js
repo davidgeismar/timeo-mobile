@@ -16,7 +16,6 @@ import Tired from './assets/Tired'
 
 class LoginForm extends Component {
   componentWillMount(){
-    console.log('in componentWillMount loginform')
     this.props.fetchImageOfTheDay()
   }
   loginUser(mood){
@@ -122,7 +121,6 @@ const styles = {
 const mapStateToProps = (state, ownProps) => {
   const { username, password } = state.authentication;
   const {error, loading, backgroundImage} = state
-  console.log(backgroundImage)
   return { username, password, error, loading, backgroundImage };
 };
 

@@ -21,7 +21,6 @@ export default class App extends React.Component {
   }
 
   componentWillMount(){
-    console.log('in componentWillMount')
     this.checkStoredTokenValidity()
       .then(resp => this.checkAuthTokenValidity(resp))
       .catch(error => console.log(error))
@@ -41,12 +40,9 @@ export default class App extends React.Component {
 
   async checkStoredTokenValidity(){
       const data = await AsyncStorage.getItem('persist:root')
-      console.log('checkStoredTokenValidity')
-      console.log(data)
       return JSON.parse(data)
   }
   async checkAuthTokenValidity(resp){
-   console.log('in checkAuthTokenValidity')
    const token = JSON.parse(resp.authentication).token
    const config = {
      method: 'GET',
@@ -62,11 +58,7 @@ export default class App extends React.Component {
 
   authTokenCheckSuccess(resp, token){
     // return new Promise((resolve, reject) => {
-       console.log(resp)
-       console.log('authTokenCheckSuccess')
-       console.log(resp.data.message)
        if (resp.data.message === 'pong'){
-         console.log('token valid')
          API.defaults.headers.common['Accept'] = 'application/json'
          API.defaults.headers.common['Authorization'] = 'Bearer ' + token
          this.setState({
@@ -89,8 +81,6 @@ export default class App extends React.Component {
   }
 
   authTokenCheckError(err){
-     console.log('authTokenCheckError')
-     console.log(err)
      API.defaults.headers.common['Accept'] = 'application/json'
      API.defaults.headers.common['Authorization'] = null
      this.setState({
