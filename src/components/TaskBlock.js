@@ -29,10 +29,17 @@ class TaskBlock extends Component {
   }
 
   userThumbUrl(affected_to_id){
-    if (this.props.resources.resources.length > 0 ){
-      const affectedTo = this.props.resources.resources.find((resource) => resource.id == affected_to_id)
-      if (affectedTo){
-        return affectedTo.user_info.logo_thumb
+    if (this.props.resources){
+      if (this.props.resources.resources.length > 0 ){
+        const affectedTo = this.props.resources.resources.find((resource) => resource.id == affected_to_id)
+        if (affectedTo){
+          console.log('in affectedTo')
+          console.log(affectedTo)
+          return affectedTo.user_info.logo_thumb
+        }
+        else {
+          return ""
+        }
       }
       else {
         return ""
@@ -107,6 +114,8 @@ class TaskBlock extends Component {
 
 
 const mapStateToProps = (state) => {
+  console.log('mapStateToProps taskblock')
+  console.log(state)
   return {
     logo_thumb: state.user.user_info.logo_thumb,
     resources: state.resources

@@ -13,7 +13,7 @@ const _XHR = GLOBAL.originalXMLHttpRequest ?
     GLOBAL.XMLHttpRequest
 
 XMLHttpRequest = _XHR
-// 
+//
 const persistConfig = {
    key: 'root',
    storage: AsyncStorage,

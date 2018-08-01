@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity, ScrollView, Text, Platform} from 'react-native'
 import { connect } from 'react-redux';
-import { updateEvent, updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients, loadClientProjects, sendFileToApi } from '../actions';
+import { updateEvent, updateEventComment, loadProjectKanbans, activateTab, fetchActionKinds, fetchClients, sendFileToApi } from '../actions';
 import Button from './common/Button';
 import Spinner from './common/Spinner';
 import { Actions } from 'react-native-router-flux';
@@ -31,7 +31,7 @@ class Info extends Component {
                   customStyle={{margin: 5, padding:3,
                                 fontSize: 8, alignSelf: 'stretch',
                                 backgroundColor: '#8CCDF8'}}
-                  onPress={() => this.props.loadKanbanTasks(this.props.kanbanId)}
+                  onPress={() => Actions.taskList()}
                 />)
 
     }
@@ -40,7 +40,7 @@ class Info extends Component {
   renderProject(projectName){
     if (projectName){
       return (
-        <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.loadClientProjects(this.props.clientId)}>{projectName}</LinkCard>
+        <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.activateTab('projects')}>{projectName}</LinkCard>
       )
     }
   }
@@ -48,7 +48,7 @@ class Info extends Component {
   renderClient(client){
     if (client){
       return (
-        <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => Actions.client()}>{client}</LinkCard>
+        <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.activateTab('client')}>{client}</LinkCard>
       )
     }
   }
@@ -121,8 +121,8 @@ class Info extends Component {
         <View style={containerStyle}>
           <TabBar/>
           <View style={formWrapperStyle}>
-            {this.renderProject(projectName)}
             {this.renderClient(clientName)}
+            {this.renderProject(projectName)}
             <LinkCard customStyle={{margin: 5, padding:3}}  onPress={() => this.props.activateTab('time')}>{this.formatDuration(duration)}</LinkCard>
             <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.fetchActionKinds()}>{kindName}</LinkCard>
             <View style={{flexDirection: 'row', width: '100%'}}>
@@ -219,4 +219,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, { updateEvent,  updateEventComment, loadProjectKanbans, activateTab, loadKanbanTasks, fetchActionKinds, fetchClients, loadClientProjects, sendFileToApi})(Info);
+export default connect(mapStateToProps, { updateEvent,  updateEventComment, loadProjectKanbans, activateTab, fetchActionKinds, fetchClients, sendFileToApi})(Info);

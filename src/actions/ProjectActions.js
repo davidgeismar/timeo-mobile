@@ -23,6 +23,4 @@ const loadClientProjectsSuccess = (dispatch, data) => {
       type: LOAD_CLIENT_PROJECTS,
       payload: projects
     });
-    return dispatch(activateTab('projects'))
-    // projects.length > 0 ? dispatch(activateTab('projects')) : dispatch(activateTab('info'))
 }

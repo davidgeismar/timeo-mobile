@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-flux'
-import { activateTab, fetchEvents, fetchClients, loadClientProjects } from '../actions';
+import { activateTab, fetchEvents, fetchClients } from '../actions';
 import Chrono from './assets/Chrono';
 import Absent from './assets/Absent';
 import Tab from './Tab';
@@ -56,7 +56,7 @@ class TabBar extends Component {
           <Tab onPress={() => this.props.activateTab('client')} activationKey='client'>
             <Text style={[textStyle, {color: this.props.activeClient ? '#00AFFA' : '#BFBFBF' }]}>CLIENT</Text>
           </Tab>
-          <Tab onPress={()=> clientId ? this.props.loadClientProjects(clientId): null} activationKey='projects'>
+          <Tab onPress={()=> clientId ? this.props.activateTab('projects'): null} activationKey='projects'>
             <Text style={[textStyle, {color: this.props.activeProject ? '#00AFFA' : '#BFBFBF' }]}>PROJECT</Text>
           </Tab>
           <Tab onPress={()=> this.props.activateTab('info')} activationKey='info'>
@@ -127,4 +127,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { activateTab, fetchEvents, fetchClients,loadClientProjects })(TabBar)
+export default connect(mapStateToProps, { activateTab, fetchEvents, fetchClients })(TabBar)

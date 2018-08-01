@@ -11,7 +11,7 @@ import API from './Api';
 
  export const loadProjectKanbans= (projectId, dispatch) => {
    return (dispatch) => {
-     dispatch(setLoaderState(true))
+     // dispatch(setLoaderState(true))
      API.get(`/internal/timeo/api/v0/kameo_kanbans/by-project-id/${projectId}`)
        .then(response => loadProjectKanbansSuccess(dispatch, response))
        .catch(error => onRequestErrorCallback(dispatch, error));
@@ -20,7 +20,7 @@ import API from './Api';
 
  const loadProjectKanbansSuccess = (dispatch, data) => {
      const kanbans = data.data
-     dispatch(setLoaderState(false))
+     // dispatch(setLoaderState(false))
      dispatch({
        type: LOAD_PROJECT_KANBANS,
        payload: kanbans

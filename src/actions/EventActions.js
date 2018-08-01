@@ -55,7 +55,7 @@ const createEventSuccess = (dispatch, data) => {
       type: RESET_CHRONO,
       payload: true
     })
-    dispatch(fetchClients())
+    dispatch(activateTab('client'))
 }
 
 
@@ -76,6 +76,7 @@ export const setCurrentEventTask = (cardId) => {
   }
 }
 const setCurrentEventTaskSuccess = (dispatch, data) => {
+  console.log('setCurrentEventTaskSuccess')
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({
@@ -101,15 +102,23 @@ const setCurrentEventSuccess = (dispatch, getState, eventId) => {
     type: SET_CURRENT_CHRONO_BASETIME,
     payload: currentEvent.duration
   })
-  if (currentEvent.project_id){
-    dispatch(loadProjectKanbans(currentEvent.project_id))
-  }
-
-  dispatch(setCurrentEventTask(currentEvent.project_id))
-
   dispatch(activateTab('info'))
+  loadEventContext(dispatch, currentEvent)
 }
 
+const loadEventContext = (dispatch, currentEvent) => {
+    if (currentEvent.client_id){
+      dispatch(loadClientProjects(currentEvent.client_id))
+    }
+
+    if (currentEvent.project_id){
+      dispatch(loadProjectKanbans(currentEvent.project_id))
+    }
+
+    if (currentEvent.card_id){
+      dispatch(setCurrentEventTask(currentEvent.project_id))
+    }
+}
 export const fetchEvents= () => {
   return (dispatch) => {
     dispatch(setLoaderState(true))
@@ -166,6 +175,7 @@ export const updateEvent = (prop, value, duration, measure_kind, eventId, redire
       if (loader){
         dispatch(setLoaderState(true))
       }
+      console.log(data)
       var end = new Date();
       console.log('updateEvent takes :')
       console.log(end - start)
@@ -187,20 +197,20 @@ const updateEventSuccess = (dispatch, data, prop, redirect) => {
   if (redirect){
     switch(prop) {
     case 'client_id':
+      console.log('in client id')
+      dispatch(loadClientProjects(data.data.client_id));
       unsetKanbanAndTask(dispatch)
-      var end = new Date();
-      console.log('updateEventSuccess takes :')
-      console.log(end - start)
-      return dispatch(loadClientProjects(data.data.client_id));
+      return dispatch(activateTab('projects'))
     case 'project_id':
       unsetKanbanAndTask(dispatch)
-      return dispatch(activateTab('info'))
+      dispatch(loadProjectKanbans(data.data.project_id))
+      return  dispatch(activateTab('info'))
     case 'kanban_id':
       return dispatch(loadKanbanTasks(data.data.kanban_id))
     case 'card_id':
-      return dispatch(activateTab('info'))
-    case 'content':
-      return dispatch(fetchEvents())
+     console.log('in card_id')
+     dispatch(setCurrentEventTask(data.data.card_id))
+     return dispatch(activateTab('info'))
     case 'duration':
       return dispatch(activateTab('client'))
     case 'kind_id':

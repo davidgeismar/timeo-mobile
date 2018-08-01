@@ -21,12 +21,12 @@ const activateTabSuccess = (dispatch, getState,  tabLabel) => {
     case 'events':
       return Actions.events()
     case 'info':
-      const currentEvent = getState().eventsData.events.find(event => event.id == getState().eventsData.currentEventId)
-      if (currentEvent.project_id){
-        dispatch(loadProjectKanbans(currentEvent.project_id))
+      Actions.info()
+      const currentEvent = getState().eventsData.currentEvent
+      if (currentEvent.cardId){
+        dispatch(setCurrentEventTask(currentEvent.card_id))
       }
-      dispatch(setCurrentEventTask(currentEvent.card_id))
-      return Actions.info()
+
     }
 }
 
