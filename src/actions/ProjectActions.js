@@ -15,7 +15,6 @@ export const loadClientProjects = (clientId) => {
 }
 
 const loadClientProjectsSuccess = (dispatch, data) => {
-    console.log('loadClientProjectsSuccess')
     const projects = data.data
     dispatch(setLoaderState(false))
     dispatch(setErrorState(false))

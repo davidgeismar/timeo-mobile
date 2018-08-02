@@ -110,7 +110,7 @@ const loadEventContext = (dispatch, currentEvent) => {
       dispatch(loadProjectKanbans(currentEvent.project_id))
     }
     if (currentEvent.card_id){
-      dispatch(fetchCard(currentEvent.project_id))
+      dispatch(fetchCard(currentEvent.card_id))
     }
 }
 
@@ -137,19 +137,18 @@ const fetchEventsSuccess = (dispatch, data) => {
 
 // preparing Data to send to API for updating event/action
 const preparingData = (prop, value, duration, measureKind) => {
-  let data = {action: {
-                   [prop]: value,
-                   duration: duration,
-                   measure_kind: measureKind
-                 }
-               }
+  let data =  { [prop]: value,
+                duration: duration,
+                measure_kind: measureKind
+              }
+
   switch (prop){
     case 'client_id':
-      return Object.assign(data, {project_id: null, kanban_id: null, card_id: null})
+      return {action: Object.assign(data,  {project_id: null, kanban_id: null, card_id: null})}
     case 'project_id':
-      return Object.assign(data, {kanban_id: null, card_id: null})
+      return {action: Object.assign(data,{kanban_id: null, card_id: null})}
     default:
-      return data
+      return {action: data}
   }
 }
 
@@ -163,9 +162,11 @@ const preUpdateActions = (dispatch, prop, value, eventNeedsUpdate) => {
     case 'client_id':
       if (eventNeedsUpdate){
         dispatch(loadClientProjects(value));
+        unsetKanbanAndTask(dispatch)
       }
       return dispatch(activateTab('projects'))
     case 'project_id':
+      unsetKanbanAndTask(dispatch)
       return dispatch(activateTab('info'))
   }
 }
@@ -214,9 +215,10 @@ const updateEventSuccess = (dispatch, data, prop, redirect, eventNeedsUpdate) =>
   if (redirect){
     switch(prop) {
     case 'client_id':
-      unsetKanbanAndTask(dispatch)
+      // unsetKanbanAndTask(dispatch)
+      return true
     case 'project_id':
-      unsetKanbanAndTask(dispatch)
+      // unsetKanbanAndTask(dispatch)
       return  dispatch(loadProjectKanbans(data.data.project_id))
     case 'kanban_id':
       return dispatch(loadKanbanTasks(data.data.kanban_id))
