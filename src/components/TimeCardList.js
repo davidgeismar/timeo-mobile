@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, Alert} from 'react-native'
 import { connect } from 'react-redux';
-import { activateTab, updateEventDuration, createEvent, updateEvent } from '../actions';
+import { activateTab, updateEventDuration, createEvent, updateEvent, setErrorState } from '../actions';
 import { Actions } from 'react-native-router-flux';
 import TimeCard from './TimeCard';
 import Spinner from './common/Spinner';
@@ -80,7 +80,7 @@ class TimeCardList extends Component {
         'An Error occured',
          this.props.error,
         [
-          {text: 'Dismiss', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'Dismiss', onPress: () => this.props.setErrorState(null), style: 'cancel'},
         ],
         { cancelable: false }
       )
@@ -149,4 +149,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { activateTab, updateEventDuration, createEvent, updateEvent })(TimeCardList);
+export default connect(mapStateToProps, { activateTab, updateEventDuration, createEvent, updateEvent, setErrorState })(TimeCardList);

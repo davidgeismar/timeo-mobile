@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Alert} from 'react-native'
 import { connect } from 'react-redux';
-import {updateEvent} from '../actions';
+import {updateEvent, setErrorState} from '../actions';
 import Spinner from './common/Spinner';
 import LinkCard from './LinkCard';
 import TabBar from './TabBar';
@@ -24,7 +24,7 @@ class ClientList extends Component {
         'An Error occured',
          this.props.error,
         [
-          {text: 'Dismiss', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'Dismiss', onPress: () => this.props.setErrorState(null), style: 'cancel'},
         ],
         { cancelable: false }
       )
@@ -79,4 +79,4 @@ const mapStateToProps = (state) => {
 
 
 }
-export default connect(mapStateToProps, {updateEvent} )(ClientList);
+export default connect(mapStateToProps, {updateEvent, setErrorState} )(ClientList);

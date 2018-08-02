@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View} from 'react-native'
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux'
-import { updateEvent } from '../actions';
+import { updateEvent, setErrorState } from '../actions';
 import Button from './common/Button';
 import Spinner from './common/Spinner';
 import LinkCard from './LinkCard';
@@ -27,7 +27,7 @@ class ProjectList extends Component {
         'An Error occured',
          this.props.error,
         [
-          {text: 'Dismiss', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'Dismiss', onPress: () => this.props.setErrorState(null), style: 'cancel'},
         ],
         { cancelable: false }
       )
@@ -80,4 +80,4 @@ const mapStateToProps = (state) => {
            loading: state.loading
          }
 }
-export default connect(mapStateToProps, { updateEvent } )(ProjectList);
+export default connect(mapStateToProps, { updateEvent, setErrorState } )(ProjectList);

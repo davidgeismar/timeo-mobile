@@ -10,7 +10,8 @@ import { CREATE_EVENT,
          DELETE_SELECTED_KANBAN,
          SET_EVENT_TO_DELETE,
          DELETE_EVENT,
-         UPDATE_CURRENT_EVENT_COMMENT
+         UPDATE_CURRENT_EVENT_COMMENT,
+         SET_CURRENT_MANUAL_DURATION
        } from './types'
 import API from './Api';
 import { loadClientProjects, loadClientProjectsSuccess } from './ProjectActions'
@@ -84,6 +85,14 @@ const fetchCardSuccess = (dispatch, data) => {
   });
 }
 
+
+
+const spitHourMinute = (millis) => {
+  const time = new Date(millis)
+  const hours = time.getUTCHours() < 10 ? `0${time.getUTCHours()}` : time.getUTCHours();
+  const minutes = time.getUTCMinutes() < 10 ? `0${time.getUTCMinutes()}` : time.getUTCMinutes();
+  return {selectedHour: hours , selectedMinute: minutes }
+}
 export const setCurrentEvent = (eventId) => {
   return(dispatch, getState) => {
     dispatch({
@@ -92,11 +101,21 @@ export const setCurrentEvent = (eventId) => {
     });
 
     const currentEvent = getState().eventsData.events.find(event => event.id == eventId)
-    dispatch({
-      type: SET_CURRENT_CHRONO_BASETIME,
-      payload: currentEvent.duration
-    })
-      dispatch(activateTab('info'))
+    console.log('in setCurrentEvent')
+    if (currentEvent.measure_kind == 'automatic'){
+      dispatch({
+        type: SET_CURRENT_CHRONO_BASETIME,
+        payload: currentEvent.duration
+      })
+    }
+    else {
+      console.log('setting current manual duration')
+      dispatch({
+        type: SET_CURRENT_MANUAL_DURATION,
+        payload: spitHourMinute(currentEvent.duration)
+      })
+    }
+    dispatch(activateTab('info'))
     loadEventContext(dispatch, currentEvent)
   }
 }
@@ -168,9 +187,31 @@ const preUpdateActions = (dispatch, prop, value, eventNeedsUpdate) => {
     case 'project_id':
       unsetKanbanAndTask(dispatch)
       return dispatch(activateTab('info'))
+    case 'duration':
+      return dispatch(activateTab('info'))
+    case 'card_id':
+      return dispatch(activateTab('info'))
   }
 }
+
+
 // main function to update an action
+//
+//  * Summary. updates an action on API and updates redux state accordingly
+//  *
+//  * Description. this function is generic, it works for updating any param of action
+
+//  * @param {string}        prop            the prop to update.
+//  * @param {string, int}   value           the value of the prop to update
+//  * @param {int}           duration        duration checked in by user
+//  * @param {string}        measureKind     type of measurement for duration (auto or manual)
+//  * @param {int}           eventId         mongoid id of action to update
+//  * @param {bool}          [redirect=true] if there should be a redirection after updateEvent
+//  * @param {bool}          [loader=true]   if a loader should be displayed during updateEvent
+
+//  * @return {function}   (dispatch, getState)
+//  */
+
 export const updateEvent = (prop, value, duration, measureKind, eventId, redirect=true, loader=true) => {
   return (dispatch, getState) => {
     // fetching current event from store
@@ -187,24 +228,33 @@ export const updateEvent = (prop, value, duration, measureKind, eventId, redirec
     if (eventNeedsUpdate){
       API.patch(`/internal/timeo/api/v0/actions/${eventId}`, data)
         .then(response => updateEventSuccess(dispatch, response, prop, redirect, eventNeedsUpdate))
-        .catch(error => onRequestErrorCallbackUpdateEvent(dispatch, error, prop));
+        .catch(error => onRequestErrorCallbackUpdateEvent(dispatch, error, prop, measureKind));
     }
   }
 }
 
 // error callback gets you back to where you need with error popup
-const onRequestErrorCallbackUpdateEvent = (dispatch, error, prop) => {
+const onRequestErrorCallbackUpdateEvent = (dispatch, error, prop, measureKind) => {
   dispatch(setErrorState(error.message))
   switch (prop){
     case 'client_id':
-      dispatch(activateTab('client'))
+      return dispatch(activateTab('client'))
     case 'project_id':
-      dispatch(activateTab('projects'))
+      return dispatch(activateTab('projects'))
+    case 'duration':
+      if (measureKind == 'manual'){
+        return dispatch(activateTab('time'))
+      }
+      else {
+        return dispatch(activateTab('chrono'))
+      }
+    case 'card_id':
+      return Actions.taskList()
   }
 
 }
 
-
+//
 const updateEventSuccess = (dispatch, data, prop, redirect, eventNeedsUpdate) => {
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
@@ -223,10 +273,9 @@ const updateEventSuccess = (dispatch, data, prop, redirect, eventNeedsUpdate) =>
     case 'kanban_id':
       return dispatch(loadKanbanTasks(data.data.kanban_id))
     case 'card_id':
-     dispatch(fetchCard(data.data.card_id))
-     return dispatch(activateTab('info'))
+     return dispatch(fetchCard(data.data.card_id))
     case 'duration':
-      return dispatch(activateTab('client'))
+      return dispatch(activateTab('info'))
     case 'kind_id':
       return dispatch(activateTab('info'))
     case 'subject':

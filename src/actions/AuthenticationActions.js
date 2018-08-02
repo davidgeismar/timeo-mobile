@@ -39,7 +39,6 @@ export const loginUser = (creds) => {
 
 // on successfull login first I fetch the user info with API call
 const loginUserSuccess = (dispatch, data) => {
-  dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   API.defaults.headers.common['Accept'] = 'application/json'
   API.defaults.headers.common['Authorization'] = 'Bearer ' + data.data.access_token;
@@ -65,6 +64,7 @@ const getUserInfoSuccess = (dispatch, data) => {
     payload: data.data
   })
   dispatch(loadResources())
+  dispatch(setLoaderState(false))
   Actions.chrono()
 }
 

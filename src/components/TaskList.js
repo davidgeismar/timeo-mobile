@@ -1,9 +1,9 @@
 
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Switch} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Switch, Alert} from 'react-native';
 import { connect } from 'react-redux';
 import {Actions} from 'react-native-router-flux';
-import { removeSelectedTask, updateEvent, changeTaskListScope, searchTasks } from '../actions';
+import { removeSelectedTask, updateEvent, changeTaskListScope, searchTasks, setErrorState } from '../actions';
 import Button from './common/Button';
 import Footer from './common/Footer';
 import Header from './common/Header';
@@ -98,6 +98,20 @@ class TaskList extends Component {
       )
     }
   }
+
+  renderError(){
+    if (this.props.error){
+      Alert.alert(
+        'An Error occured',
+         this.props.error,
+        [
+          {text: 'Dismiss', onPress: () => this.props.setErrorState(null), style: 'cancel'},
+        ],
+        { cancelable: false }
+      )
+    }
+  }
+
   render() {
     const { containerStyle, footerButtonsWrapper, footerButtonStyle} = styles
     return (
@@ -105,6 +119,7 @@ class TaskList extends Component {
         {this.renderHeader()}
         {this.renderSelectedKanban(this.props.selectedKanban)}
         <ScrollView style={{marginBottom: 130}}>
+          {this.renderError()}
           {this.renderTasks()}
         </ScrollView>
         <Footer customStyle={{backgroundColor: '#E62B5A'}}>
@@ -160,4 +175,4 @@ const mapStateToProps = (state) => {
            searchPattern: state.tasks.searchPattern
          }
 }
-export default connect(mapStateToProps, { removeSelectedTask, updateEvent, changeTaskListScope, searchTasks })(TaskList);
+export default connect(mapStateToProps, { removeSelectedTask, updateEvent, changeTaskListScope, searchTasks, setErrorState })(TaskList);
