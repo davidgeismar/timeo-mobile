@@ -17,20 +17,6 @@ const INITIAL_STATE = { list: [],
                         searchPattern: ''
                       }
 
-const filterTaskListByScope = (tasks, scope, currentUserId) => {
-  var results = []
-  for(var i=0; i<tasks.length; i++) {
-    if (scope == 'all'){
-      return tasks
-    }
-    else if (scope == 'current_user'){
-      if (tasks[i]['userId'] == currentUserId){
-        results.push(tasks[i])
-      }
-    }
-  }
-  return results
-}
 export const TaskReducer = (state = INITIAL_STATE, action) => {
   let filteredTasks
   switch (action.type) {

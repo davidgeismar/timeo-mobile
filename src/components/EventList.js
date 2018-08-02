@@ -111,8 +111,6 @@ const styles = {
 // }}
 
 const mapStateToProps = (state) => {
-  console.log('in mapStateToProps')
-  console.log(state)
   // function createEventsBucket(events){
   //   // group by year
   //   var i = 0, val, groupedByYear = [];

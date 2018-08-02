@@ -1,5 +1,4 @@
 import { RESET_INFO,
-         STOP_CHRONO,
          RESET_CHRONO,
          START_TIMER,
          STOP_TIMER,

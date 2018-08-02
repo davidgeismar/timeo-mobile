@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View} from 'react-native'
+import { View, Alert} from 'react-native'
 import { connect } from 'react-redux';
 import {updateEvent} from '../actions';
 import Spinner from './common/Spinner';
@@ -18,6 +18,18 @@ class ClientList extends Component {
                           onPress={()=> this.selectClient(client)}> {client.name}</LinkCard>
     )
   }
+  renderError(){
+    if (this.props.error){
+      Alert.alert(
+        'An Error occured',
+         this.props.error,
+        [
+          {text: 'Dismiss', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        ],
+        { cancelable: false }
+      )
+    }
+  }
   render() {
     const {containerStyle, eventsWrapperStyle} = styles
     if (this.props.loading){
@@ -29,6 +41,7 @@ class ClientList extends Component {
           <TabBar/>
           <View style={containerStyle}>
             <View style={eventsWrapperStyle}>
+              {this.renderError()}
               {this.renderClients()}
             </View>
           </View>

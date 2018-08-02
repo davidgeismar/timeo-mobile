@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView} from 'react-native'
+import { View, ScrollView, Text, Alert} from 'react-native'
 import { connect } from 'react-redux';
 import { activateTab, updateEventDuration, createEvent, updateEvent } from '../actions';
 import { Actions } from 'react-native-router-flux';
@@ -74,6 +74,18 @@ class TimeCardList extends Component {
         this.props.updateEvent('duration', duration, duration, 'manual', this.props.eventId)
       }
     }
+  renderError(){
+    if (this.props.error){
+      Alert.alert(
+        'An Error occured',
+         this.props.error,
+        [
+          {text: 'Dismiss', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        ],
+        { cancelable: false }
+      )
+    }
+  }
   render() {
     const { containerStyle, buttonWrapperStyle } = styles
     if (this.props.loading) {
@@ -86,6 +98,7 @@ class TimeCardList extends Component {
           <View style={{flexDirection: 'column', flex: 1}}>
             <View style={{flexDirection: 'row', flex: 1}}>
                 <ScrollView style={containerStyle}>
+                  {this.renderError()}
                   {this.renderHours()}
                 </ScrollView>
                 <ScrollView style={containerStyle}>
@@ -131,7 +144,8 @@ const mapStateToProps = (state) => {
   return {
     eventId: state.eventsData.currentEventId,
     loading: state.loading,
-    timeSelection: timeSelection
+    timeSelection: timeSelection,
+    error: state.error
   }
 }
 

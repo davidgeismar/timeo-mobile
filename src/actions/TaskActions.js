@@ -69,15 +69,6 @@ const searchTasksSuccess = (dispatch, data) => {
   });
 }
 
-const removeSelectedTaskSuccess = (dispatch) => {
-  dispatch({
-    type: DELETE_SELECTED_TASK,
-    payload: true
-  });
-  Actions.info()
-}
-
-
 export const changeTaskListScope = (switchValue, searchPattern, kanbanId) => {
   const limitToMine = switchValue ? false : true
   return(dispatch) => {
@@ -101,37 +92,22 @@ export const changeTaskListScopeSuccess = (dispatch, data, limitToMine) => {
 
 export const removeSelectedTask = () => {
   return(dispatch) => {
-    removeSelectedTaskSuccess(dispatch)
+    dispatch({
+      type: DELETE_SELECTED_TASK,
+      payload: true
+    });
+    Actions.info()
   }
 }
 
 export const setCurrentTask = (task) => {
   return(dispatch) => {
-    setCurrentTaskSuccess(dispatch, task)
+    dispatch({
+      type: SET_CURRENT_TASK,
+      payload: task
+    });
   }
 }
-
-const setCurrentTaskSuccess = (dispatch, task) => {
-  dispatch({
-    type: SET_CURRENT_TASK,
-    payload: task
-  });
-}
-
-const saveTaskSuccess = (dispatch, eventId, task) => {
-  dispatch({
-    type: SAVE_TASK,
-    payload: {eventId: eventId, task: task}
-  });
-  Actions.info()
-}
-
-export const saveTask = (eventId, task) => {
-  return(dispatch) => {
-    saveTaskSuccess(dispatch,eventId, task)
-  }
-}
-
 
 export const updateSearchTaskStatus = (status) => {
   return {

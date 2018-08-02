@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity, ScrollView, Text, Platform} from 'react-native'
 import { connect } from 'react-redux';
-import { updateEvent, updateEventComment, loadProjectKanbans, activateTab, fetchActionKinds, fetchClients, sendFileToApi } from '../actions';
+import { updateEvent, updateEventComment, loadProjectKanbans, activateTab, fetchActionKinds, sendFileToApi } from '../actions';
 import Button from './common/Button';
 import Spinner from './common/Spinner';
 import { Actions } from 'react-native-router-flux';
@@ -219,4 +219,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, { updateEvent,  updateEventComment, loadProjectKanbans, activateTab, fetchActionKinds, fetchClients, sendFileToApi})(Info);
+export default connect(mapStateToProps, { updateEvent,  updateEventComment, loadProjectKanbans, activateTab, fetchActionKinds, sendFileToApi})(Info);

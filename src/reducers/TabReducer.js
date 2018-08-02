@@ -1,6 +1,7 @@
 import { SET_CURRENT_EVENT_TABBAR_STATE,
          ACTIVATE_TAB,
-         RESET_INFO, DISABLE_TABS } from '../actions/types';
+         RESET_INFO,
+         DISABLE_TABS } from '../actions/types';
 const INITIAL_STATE = {
   activeTab: null,
   disabledTabs: ['chrono', 'time', 'client', 'project', 'info']

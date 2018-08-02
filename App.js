@@ -29,7 +29,6 @@ export default class App extends React.Component {
   }
 
   componentDidMount(){
-    console.log('in component did mount app')
     if (!this.state.validToken){
       store.dispatch({
         type: RESET_INFO,
@@ -44,9 +43,6 @@ export default class App extends React.Component {
   }
 
   async checkAuthTokenValidity(resp){
-   console.log('checkAuthTokenValidity')
-   console.log('fuuuu')
-   console.log(resp)
    const token = JSON.parse(resp.authentication).token
    const config = {
      method: 'GET',
@@ -62,21 +58,14 @@ export default class App extends React.Component {
 
 
   authTokenCheckSuccess(resp, token){
-      console.log('authTokenCheckSuccess')
-      console.log(resp)
-      // return new Promise((resolve, reject) => {
       if (resp.data.data.message === 'pong'){
-        console.log('authTokenCheckSuccess valid token')
          API.defaults.headers.common['Accept'] = 'application/json'
          API.defaults.headers.common['Authorization'] = 'Bearer ' + resp.token
-         console.log(API.defaults.headers.common['Authorization'])
          this.setState({
            validToken: true
          })
-         // return resolve(true)
        }
        else {
-         console.log('authTokenCheckSuccess invalid token')
          API.defaults.headers.common['Accept'] = 'application/json'
          API.defaults.headers.common['Authorization'] = null
          this.setState({
@@ -91,8 +80,6 @@ export default class App extends React.Component {
   }
 
   authTokenCheckError(err){
-    console.log('authTokenCheckError')
-    console.log(err)
      API.defaults.headers.common['Accept'] = 'application/json'
      API.defaults.headers.common['Authorization'] = null
      this.setState({

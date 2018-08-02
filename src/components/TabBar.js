@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux';
 import Avatar from './Avatar';
 import {Actions} from 'react-native-router-flux'
-import { activateTab, fetchEvents, fetchClients } from '../actions';
+import { activateTab, fetchClients } from '../actions';
 import Chrono from './assets/Chrono';
 import Absent from './assets/Absent';
 import Tab from './Tab';
@@ -33,12 +33,6 @@ class TabBar extends Component {
     }
     else {
       return <Absent style={styles.svgStyle} fill='#BFBFBF'/>
-    }
-  }
-
-  redirectToInfoTab(){
-    if (this.props.kanbans.length > 0){
-      this.props.activateTab('info')
     }
   }
 
@@ -127,4 +121,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { activateTab, fetchEvents, fetchClients })(TabBar)
+export default connect(mapStateToProps, { activateTab, fetchClients })(TabBar)

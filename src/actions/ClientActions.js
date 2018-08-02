@@ -1,8 +1,10 @@
+// cleanup ok
 import { LOAD_CLIENTS, ACTIVATE_TAB } from './types'
 import API from './Api';
-import { activateTab } from './TabActions'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
 
+
+// fetches clients from API
 export const fetchClients = () => {
   return (dispatch) => {
     dispatch(setLoaderState(true))
@@ -12,6 +14,7 @@ export const fetchClients = () => {
     };
 };
 
+// updates redux store
 const fetchClientsSuccess = (dispatch, data) => {
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
@@ -19,5 +22,4 @@ const fetchClientsSuccess = (dispatch, data) => {
     type: LOAD_CLIENTS,
     payload: data.data
   })
-  dispatch(activateTab('client'));
 }

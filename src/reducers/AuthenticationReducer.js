@@ -1,4 +1,8 @@
-import {SET_AUTH_TOKEN, LOGIN_FAILURE, AUTH_UPDATE, RESET_AUTH_TOKEN} from '../actions/types';
+// ok
+import {  SET_AUTH_TOKEN,
+          LOGIN_FAILURE,
+          AUTH_UPDATE,
+          RESET_AUTH_TOKEN } from '../actions/types';
 
 const INITIAL_STATE = { username: '', password: '', token: ''};
 

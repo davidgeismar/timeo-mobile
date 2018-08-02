@@ -21,6 +21,18 @@ class ProjectList extends Component {
                             > {project.name}</LinkCard>
     )
   }
+  renderError(){
+    if (this.props.error){
+      Alert.alert(
+        'An Error occured',
+         this.props.error,
+        [
+          {text: 'Dismiss', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        ],
+        { cancelable: false }
+      )
+    }
+  }
   render() {
     const {containerStyle, projectsWrapperStyle} = styles
     if (this.props.loading) {
@@ -32,6 +44,7 @@ class ProjectList extends Component {
           <TabBar/>
           <View style={containerStyle}>
             <View style={projectsWrapperStyle}>
+              {this.renderError()}
               {this.renderProjects()}
             </View>
           </View>

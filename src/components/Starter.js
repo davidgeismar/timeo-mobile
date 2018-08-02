@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Keyboard, Animated  } from 'react-native'
 import { connect } from 'react-redux';
-import { createEvent, activateTab, stopChrono, setChronoRunning, fetchEvents, updateEvent, startTimer, stopTimer} from '../actions';
+import { createEvent, activateTab, stopChrono, setChronoRunning, updateEvent, startTimer, stopTimer} from '../actions';
 import { Actions } from 'react-native-router-flux';
 import Button from './common/Button'
 import Footer from './common/Footer'
@@ -221,8 +221,6 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps starter')
-  console.log(state)
   const event = state.eventsData.currentEvent
   if (event){
     if (event.measure_kind == 'automatic'){
@@ -266,4 +264,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, { createEvent, activateTab, stopChrono, setChronoRunning, fetchEvents, updateEvent, startTimer, stopTimer })(Starter);
+export default connect(mapStateToProps, { createEvent, activateTab, stopChrono, setChronoRunning, updateEvent, startTimer, stopTimer })(Starter);

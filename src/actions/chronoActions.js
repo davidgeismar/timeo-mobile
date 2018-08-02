@@ -1,66 +1,33 @@
+// clean up ok
+// actions related to my chrono timer
 import { START_TIMER,
          STOP_TIMER,
-         UPDATE_INTERVAL,
-         STOP_CHRONO,
         ACTIVATE_TAB,
-        UPDATE_TIMERVALUE} from './types'
+        } from './types'
 
-
-
-
+// starts timer
 export const startTimer = (baseTime = 0) => {
   return(dispatch) => {
       dispatch({
         type: ACTIVATE_TAB,
         payload: 'chrono'
       });
+      // basetime is the time with which the chrono is starting (for instance if the chrono has never run before it starts at 0)
+      // now is the timestamp when the chrono starts
       dispatch({
         type: START_TIMER,
         payload: {  baseTime: baseTime,
-                    now: new Date().getTime() }
+                    now: new Date().getTime()
+                  }
       })
   };
 }
+// stops timer
 export const stopTimer = (baseTime) => {
   return {
     type: STOP_TIMER,
-    payload: {now: new Date().getTime(), baseTime: baseTime}
+    payload: {  now: new Date().getTime(),
+                baseTime: baseTime
+              }
   };
 }
-
-// function resetTimer() {
-//   return {
-//     type: "RESET_TIMER",
-//     now: new Date().getTime()
-//   }
-// }
-
-
-// const setChronoRunningSuccess = (dispatch) => {
-//   dispatch({
-//     type: SET_CHRONO_RUNNING,
-//     payload: true
-//   });
-//   dispatch({
-//     type: ACTIVATE_TAB,
-//     payload: 'chrono'
-//   });
-// }
-// export const setChronoRunning = (dispatch) =>{
-//   return(dispatch) => {
-//     setChronoRunningSuccess(dispatch)
-//   }
-// }
-//
-// export const updateChronoTimerValue = (timerValue) => {
-//   return {
-//     type: UPDATE_TIMERVALUE,
-//     payload: timerValue
-//   }
-// }
-// export const stopChrono = (timerValue) => {
-//   return {
-//     type: STOP_CHRONO,
-//     payload: timerValue
-//   }
-// }

@@ -1,3 +1,4 @@
+// ok
 import { RESET_INFO,
          SELECT_ACTION } from '../actions/types';
 

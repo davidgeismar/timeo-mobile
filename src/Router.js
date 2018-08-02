@@ -17,7 +17,6 @@ import { connect } from 'react-redux';
 import TaskList from './components/TaskList'
 import LoginForm from './components/LoginForm'
 import API from './actions/Api';
-import { checkAuthTokenValidity } from './actions';
 
 
 const TabIcon = ({selected, title}) => {
@@ -75,13 +74,9 @@ class RouterComponent  extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps router')
-  console.log(API.defaults.headers.common['Authorization'])
   const initialPage = API.defaults.headers.common['Authorization'] ? state.tabs.activeTab : 'login'
-  console.log('initialPage')
-  console.log(initialPage)
   return {
-    initialPage
+    initialPage: 'login'
   }
 }
-export default connect(mapStateToProps, {checkAuthTokenValidity})(RouterComponent)
+export default connect(mapStateToProps, null)(RouterComponent)
