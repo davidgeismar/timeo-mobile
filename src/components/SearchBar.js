@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity} from 'react-native'
 import { connect } from 'react-redux';
-import { updateSearchTaskStatus } from '../actions';
+import { updateSearchCardStatus } from '../actions';
 import { Actions } from 'react-native-router-flux'
 import Close from './assets/Close.js'
 import Search from './assets/Search.js'
@@ -15,7 +15,7 @@ class SearchBar extends Component {
 
   updateExpansionStatus(expanded){
     this.setState({expanded: expanded})
-    this.props.updateSearchTaskStatus(expanded)
+    this.props.updateSearchCardStatus(expanded)
   }
 
  renderSearchBar(){
@@ -64,4 +64,4 @@ const styles = {
 
 
 
-export default connect(null, { updateSearchTaskStatus })(SearchBar);
+export default connect(null, { updateSearchCardStatus })(SearchBar);

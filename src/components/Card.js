@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux'
 
 // import * as actions from '../actions';
 
-class Task extends Component {
+class Card extends Component {
 
 
   setBackgroundColor(card_type){
@@ -45,8 +45,8 @@ const styles = {
 
 const mapStateToProps = (state, ownProps) => {
   let active;
-  if (state.tasks.selectedTask){
-     if (ownProps.canBeActivated && state.tasks.selectedTask.id == ownProps.activationKey){
+  if (state.cards.selectedCard){
+     if (ownProps.canBeActivated && state.cards.selectedCard.id == ownProps.activationKey){
         active = true
      }
    }
@@ -56,4 +56,4 @@ const mapStateToProps = (state, ownProps) => {
    return { active }
 };
 
-export default connect(mapStateToProps, null)(Task);
+export default connect(mapStateToProps, null)(Card);

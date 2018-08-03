@@ -11,25 +11,27 @@ import { DELETE_SELECTED_TASK,
 import API from './Api';
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
 
- export const loadKanbanTasks= (kanbanId) => {
+ export const loadKanbanCards= (kanbanId, loader=false) => {
    return (dispatch) => {
-     dispatch(setLoaderState(true))
+     if (loader) {
+       dispatch(setLoaderState(true))
+     }
      dispatch(updateSearchPattern(''))
      API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}?limit_to_mine=false`)
-       .then(response => loadKanbanTasksSuccess(dispatch, response))
+       .then(response => loadKanbanCardsSuccess(dispatch, response))
        .catch(error => onRequestErrorCallback(dispatch, error));
    };
  }
 
- const loadKanbanTasksSuccess = (dispatch, data) => {
-   const tasks = data.data
+ const loadKanbanCardsSuccess = (dispatch, data) => {
+   console.log('in loadKanbanCardsSuccess')
+   const cards = data.data
    dispatch(setLoaderState(false))
    dispatch(setErrorState(false))
    dispatch({
      type: LOAD_KANBAN_TASKS,
-     payload: tasks
+     payload: cards
    });
-   Actions.taskList()
  }
 
 const updateSearchPattern = (pattern) => {
@@ -41,11 +43,11 @@ const updateSearchPattern = (pattern) => {
 
 
 
-export const searchTasks= (kanbanId, pattern, limitToMine)=> {
+export const searchCards= (kanbanId, pattern, limitToMine)=> {
   if (pattern == ""){
     return (dispatch) => {
       dispatch(setLoaderState(true))
-      dispatch(loadKanbanTasks(kanbanId))
+      dispatch(loadKanbanCards(kanbanId))
     }
   }
   else {
@@ -53,44 +55,44 @@ export const searchTasks= (kanbanId, pattern, limitToMine)=> {
       dispatch(setLoaderState(true))
       dispatch(updateSearchPattern(pattern))
       API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}/pattern?pattern=${pattern}&limit_to_mine=${limitToMine}`)
-        .then(response => searchTasksSuccess(dispatch, response))
+        .then(response => searchCardsSuccess(dispatch, response))
         .catch(error => onRequestErrorCallback(dispatch, error));
     };
   }
 }
 
-const searchTasksSuccess = (dispatch, data) => {
-  const tasks = data.data
+const searchCardsSuccess = (dispatch, data) => {
+  const cards = data.data
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({
     type: SEARCH_TASK,
-    payload: tasks
+    payload: cards
   });
 }
 
-export const changeTaskListScope = (switchValue, searchPattern, kanbanId) => {
+export const changeCardListScope = (switchValue, searchPattern, kanbanId) => {
   const limitToMine = switchValue ? false : true
   return(dispatch) => {
     dispatch(setLoaderState(true))
     const url = searchPattern == '' ? `/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}?limit_to_mine=${limitToMine}` : `/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}/pattern?pattern=${pattern}&limit_to_mine=${limitToMine}`
 
     API.get(url)
-      .then(response => changeTaskListScopeSuccess(dispatch, response, limitToMine))
+      .then(response => changeCardListScopeSuccess(dispatch, response, limitToMine))
       .catch(error => onRequestErrorCallback(dispatch, error));
   }
 }
 
-export const changeTaskListScopeSuccess = (dispatch, data, limitToMine) => {
+export const changeCardListScopeSuccess = (dispatch, data, limitToMine) => {
   dispatch({
     type: CHANGE_TASKLIST_SCOPE,
     payload: { limitToMine: limitToMine,
-               tasks: data.data }
+               cards: data.data }
   })
 }
 
 
-export const removeSelectedTask = () => {
+export const removeSelectedCard = () => {
   return(dispatch) => {
     dispatch({
       type: DELETE_SELECTED_TASK,
@@ -100,16 +102,16 @@ export const removeSelectedTask = () => {
   }
 }
 
-export const setCurrentTask = (task) => {
+export const setCurrentCard = (card) => {
   return(dispatch) => {
     dispatch({
       type: SET_CURRENT_TASK,
-      payload: task
+      payload: card
     });
   }
 }
 
-export const updateSearchTaskStatus = (status) => {
+export const updateSearchCardStatus = (status) => {
   return {
     type: SEARCH_TASK_INIT,
     payload: status

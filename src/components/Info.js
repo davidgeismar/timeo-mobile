@@ -8,7 +8,7 @@ import { Actions } from 'react-native-router-flux';
 import Attachment from './assets/Attachment';
 import Kameo from './assets/Kameo';
 import LinkCard from './LinkCard';
-import SmallTaskCard from './SmallTaskCard'
+import SmallCard from './SmallCard'
 import * as utilities from '../lib/Utilities';
 import TimeFormatter from 'minutes-seconds-milliseconds';
 import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
@@ -25,13 +25,13 @@ class Info extends Component {
       return <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => Actions.kanbanList()}>{kanbanName}</LinkCard>
     }
   }
-  renderTaskInfo(task){
-    if (task) {
-        return (<SmallTaskCard
+  renderCardInfo(card){
+    if (card) {
+        return (<SmallCard
                   customStyle={{margin: 5, padding:3,
                                 fontSize: 8, alignSelf: 'stretch',
                                 backgroundColor: '#8CCDF8'}}
-                  onPress={() => Actions.taskList()}
+                  onPress={() => Actions.cardList()}
                 />)
 
     }
@@ -110,7 +110,7 @@ class Info extends Component {
     }
   }
   render() {
-    const {comment, hour, minute, kindName, clientName, projectName, projectId, timerKind, duration, eventId, kanbanName, task} = this.props
+    const {comment, hour, minute, kindName, clientName, projectName, projectId, timerKind, duration, eventId, kanbanName, card} = this.props
     const {containerStyle, formWrapperStyle, footerStyle, svgStyle} = styles
     if (this.props.loading) {
       return <Spinner size="large" />;
@@ -127,7 +127,7 @@ class Info extends Component {
             <LinkCard customStyle={{margin: 5, padding:3}} onPress={() => this.props.fetchActionKinds()}>{kindName}</LinkCard>
             <View style={{flexDirection: 'row', width: '100%'}}>
               {this.renderKanbanInfo(kanbanName)}
-              {this.renderTaskInfo(task)}
+              {this.renderCardInfo(card)}
             </View>
             {this.renderCommentInput()}
           </View>
@@ -202,7 +202,7 @@ const mapStateToProps = (state) => {
              eventId: event.id,
              kanbanName: event.kanban__name,
              kanbanId: event.kanban_id,
-             task: state.eventsData.currentEventTask,
+             card: state.eventsData.currentEventCard,
              kanbans: state.kanbans.list,
              loading: state.loading
           };

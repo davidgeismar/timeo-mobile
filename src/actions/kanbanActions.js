@@ -3,7 +3,7 @@ import { DELETE_SELECTED_KANBAN,
          SET_CURRENT_KANBAN,
          LOAD_PROJECT_KANBANS} from './types'
 import { activateTab, activateTabSuccess } from './TabActions'
-import { loadKanbanTasks } from './TaskActions'
+import { loadKanbanCards } from './CardActions'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
 import API from './Api';
 
@@ -38,7 +38,16 @@ import API from './Api';
    }
  }
 
+export const loadSelectedKanban = (kanbanId) => {
+  console.log('loadSelectedKanban')
+  return (dispatch) => {
+    API.get(`/internal/timeo/api/v0/kameo_kanbans/${kanbanId}`)
+    .then(response => dispatch(setCurrentKanban(response.data)))
+    .catch(error => onRequestErrorCallback(dispatch, error));
+  }
+}
 export const setCurrentKanban = (kanban) => {
+  console.log('in setCurrentKanban')
   return {
           type: SET_CURRENT_KANBAN,
           payload: kanban

@@ -14,7 +14,7 @@ import ProjectList from './components/ProjectList'
 import KanbanList from './components/KanbanList'
 import DeleteConfirmation from './components/DeleteConfirmation'
 import { connect } from 'react-redux';
-import TaskList from './components/TaskList'
+import CardList from './components/CardList'
 import LoginForm from './components/LoginForm'
 import API from './actions/Api';
 
@@ -48,8 +48,8 @@ class RouterComponent  extends Component {
               component={ActionList}
               />
             <Scene
-              key='taskList'
-              component={TaskList}
+              key='cardList'
+              component={CardList}
               hideNavBar
               />
 

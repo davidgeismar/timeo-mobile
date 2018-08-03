@@ -7,7 +7,7 @@ export * from './EventActions'
 export * from './KanbanActions';
 export * from './ProjectActions'
 export * from './ResetActions'
-export * from './TaskActions'
+export * from './CardActions'
 export * from './ClientActions'
 export * from './ActionKindActions';
 export * from './AuthenticationActions'

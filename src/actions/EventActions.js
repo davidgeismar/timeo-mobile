@@ -15,9 +15,9 @@ import { CREATE_EVENT,
        } from './types'
 import API from './Api';
 import { loadClientProjects, loadClientProjectsSuccess } from './ProjectActions'
-import { loadKanbanTasks } from './TaskActions'
+import { loadKanbanCards } from './CardActions'
 import { activateTab, activateTabSuccess } from './TabActions'
-import { loadProjectKanbans } from './KanbanActions'
+import { loadProjectKanbans, loadSelectedKanban } from './KanbanActions'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
 import * as RNFS from 'react-native-fs'
 import axios from 'axios';
@@ -56,7 +56,7 @@ const createEventSuccess = (dispatch, data) => {
   })
 }
 
-// fetching task of current event/action
+// fetching card of current event/action
 // event/action only stores card_id, so we need to go fetch the card info
 const fetchCard = (cardId) => {
   return(dispatch, getState) => {
@@ -121,12 +121,17 @@ export const setCurrentEvent = (eventId) => {
 }
 
 // loads projects, kanbans and card for current event/action
+// should be done concurrently
 const loadEventContext = (dispatch, currentEvent) => {
     if (currentEvent.client_id){
       dispatch(loadClientProjects(currentEvent.client_id))
     }
     if (currentEvent.project_id){
       dispatch(loadProjectKanbans(currentEvent.project_id))
+    }
+    if (currentEvent.kanban_id){
+      dispatch(loadSelectedKanban(currentEvent.kanban_id))
+      dispatch(loadKanbanCards(currentEvent.kanban_id))
     }
     if (currentEvent.card_id){
       dispatch(fetchCard(currentEvent.card_id))
@@ -166,6 +171,8 @@ const preparingData = (prop, value, duration, measureKind) => {
       return {action: Object.assign(data,  {project_id: null, kanban_id: null, card_id: null})}
     case 'project_id':
       return {action: Object.assign(data,{kanban_id: null, card_id: null})}
+    case 'kanban_id':
+      return {action: Object.assign(data, {card_id: null})}
     default:
       return {action: data}
   }
@@ -181,16 +188,20 @@ const preUpdateActions = (dispatch, prop, value, eventNeedsUpdate) => {
     case 'client_id':
       if (eventNeedsUpdate){
         dispatch(loadClientProjects(value));
-        unsetKanbanAndTask(dispatch)
+        unsetKanbanAndCard(dispatch)
       }
       return dispatch(activateTab('projects'))
     case 'project_id':
-      unsetKanbanAndTask(dispatch)
+      unsetKanbanAndCard(dispatch)
       return dispatch(activateTab('info'))
     case 'duration':
       return dispatch(activateTab('info'))
     case 'card_id':
       return dispatch(activateTab('info'))
+    case 'kanban_id':
+      dispatch(loadKanbanCards(value, true))
+      return Actions.cardList()
+
   }
 }
 
@@ -249,7 +260,7 @@ const onRequestErrorCallbackUpdateEvent = (dispatch, error, prop, measureKind) =
         return dispatch(activateTab('chrono'))
       }
     case 'card_id':
-      return Actions.taskList()
+      return Actions.cardList()
   }
 
 }
@@ -265,13 +276,11 @@ const updateEventSuccess = (dispatch, data, prop, redirect, eventNeedsUpdate) =>
   if (redirect){
     switch(prop) {
     case 'client_id':
-      // unsetKanbanAndTask(dispatch)
+      // unsetKanbanAndCard(dispatch)
       return true
     case 'project_id':
-      // unsetKanbanAndTask(dispatch)
+      // unsetKanbanAndCard(dispatch)
       return  dispatch(loadProjectKanbans(data.data.project_id))
-    case 'kanban_id':
-      return dispatch(loadKanbanTasks(data.data.kanban_id))
     case 'card_id':
      return dispatch(fetchCard(data.data.card_id))
     case 'duration':
@@ -280,12 +289,17 @@ const updateEventSuccess = (dispatch, data, prop, redirect, eventNeedsUpdate) =>
       return dispatch(activateTab('info'))
     case 'subject':
       return dispatch(activateTab('events'))
+    case 'kanban_id':
+      return   dispatch({
+                  type: SET_CURRENT_EVENT_TASK,
+                  payload: null
+                })
     }
   }
 }
 
-// unsets the kanban and task when for instance client or project is updated
-const unsetKanbanAndTask = (dispatch) => {
+// unsets the kanban and card when for instance client or project is updated
+const unsetKanbanAndCard = (dispatch) => {
   dispatch({
     type: DELETE_SELECTED_KANBAN,
     payload: true

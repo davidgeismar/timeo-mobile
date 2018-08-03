@@ -14,7 +14,7 @@ import { RESET_INFO,
 const INITIAL_STATE = { events: [],
                         currentEventId: null,
                         currentEventComment: null,
-                        currentEventTask: null,
+                        currentEventCard: null,
                         currentEvent: null,
                         eventToDelete: null
                       }
@@ -25,9 +25,9 @@ export const EventReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case SET_CURRENT_EVENT_TASK:
-      return {...state, currentEventTask: action.payload}
+      return {...state, currentEventCard: action.payload}
     case UNSET_CURRENT_TASK:
-        return {...state, currentEventTask: null}
+        return {...state, currentEventCard: null}
     case LOAD_EVENTS:
       return {...state, events: action.payload}
     case CREATE_EVENT:

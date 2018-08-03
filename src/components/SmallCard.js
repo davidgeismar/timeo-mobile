@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Avatar from './Avatar'
 // import * as actions from '../actions';
 
-class SmallTaskCard extends Component {
+class SmallCard extends Component {
 
   setBackgroundColor(card_type){
     switch(card_type) {
@@ -37,19 +37,19 @@ class SmallTaskCard extends Component {
     }
   }
   render() {
-    const { task } = this.props
+    const { card } = this.props
     return (
       <TouchableWithoutFeedback onPress={this.props.onPress} >
         <View style={[styles.containerStyle, this.props.customStyle]}
-              backgroundColor={this.setBackgroundColor(task.card_type)}>
+              backgroundColor={this.setBackgroundColor(card.card_type)}>
           <Avatar
               size="small"
               rounded
-              source={{uri: this.userThumbUrl(task.affected_to_id)}}
+              source={{uri: this.userThumbUrl(card.affected_to_id)}}
               activeOpacity={0.7}
               />
           <Text style= {{fontSize: 9, color: 'white'}}>
-            {task.client__name} {task.project__name} {"\n"} > {task.subject} {task.reference}
+            {card.client__name} {card.project__name} {"\n"} > {card.subject} {card.reference}
           </Text>
         </View>
       </TouchableWithoutFeedback>
@@ -70,9 +70,9 @@ const styles = {
 
 const mapStateToProps = (state) => {
   return {
-    task: state.eventsData.currentEventTask,
+    card: state.eventsData.currentEventCard,
     resources: state.resources.resources
   }
 }
 
-export default connect(mapStateToProps, null)(SmallTaskCard);
+export default connect(mapStateToProps, null)(SmallCard);

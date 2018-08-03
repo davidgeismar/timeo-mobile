@@ -1,3 +1,9 @@
+from https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/javascript/
+
+
+we follow http://usejsdoc.org/
+
+
 Summary: A brief, one line explanation of the purpose of the function. Use a period at the end.
 Description: A supplement to the summary, providing a more detailed description. Use a period at the end.
 @deprecated x.x.x: Only use for deprecated functions, and provide the version the function was deprecated which should always be 3-digit (e.g. @since 3.6.0), and the function to use instead.
@@ -16,3 +22,39 @@ Description: A supplement to the summary, providing a more detailed description.
 @global: Marks this function as a global function to be included in the global namespace.
 @param: Give a brief description of the variable; denote particulars (e.g. if the variable is optional, its default) with JSDoc @param syntax. Use a period at the end.
 @return: Note the period after the description.
+
+
+
+/**
+ * Summary. (use period)
+ *
+ * Description. (use period)
+ *
+ * @since      x.x.x
+ * @deprecated x.x.x Use new_function_name() instead.
+ * @access     private
+ *
+ * @class
+ * @augments parent
+ * @mixes    mixin
+ *
+ * @alias    realName
+ * @memberof namespace
+ *
+ * @see  Function/class relied on
+ * @link URL
+ * @global
+ *
+ * @fires   eventName
+ * @fires   className#eventName
+ * @listens event:eventName
+ * @listens className~event:eventName
+ *
+ * @param {type}   var           Description.
+ * @param {type}   [var]         Description of optional variable.
+ * @param {type}   [var=default] Description of optional variable with default variable.
+ * @param {Object} objectVar     Description.
+ * @param {type}   objectVar.key Description of a key in the objectVar parameter.
+ *
+ * @return {type} Description.
+ */
