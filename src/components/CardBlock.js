@@ -28,15 +28,54 @@ class CardBlock extends Component {
     })
   }
 
-  userThumbUrl(affected_to_id){
+  // userThumbUrl(affected_to_id){
+  //   if (this.props.resources){
+  //     if (this.props.resources.resources.length > 0 ){
+  //       const affectedTo = this.props.resources.resources.find((resource) => resource.id == affected_to_id)
+  //       console.log('userThumbUrl')
+  //       console.log(affectedTo)
+  //       if (affectedTo && affectedTo.user_info.logo_thumb){
+  //         return affectedTo.user_info.logo_thumb
+  //       }
+  //       else {
+  //         return ""
+  //       }
+  //     }
+  //     else {
+  //       return ""
+  //     }
+  //   }
+  //   else {
+  //     return ""
+  //   }
+  // }
+
+  renderAvatar(affected_to_id){
     if (this.props.resources){
       if (this.props.resources.resources.length > 0 ){
         const affectedTo = this.props.resources.resources.find((resource) => resource.id == affected_to_id)
-        if (affectedTo){
-          return affectedTo.user_info.logo_thumb
+        console.log('userThumbUrl')
+        console.log(affectedTo)
+        if (affectedTo && affectedTo.user_info.logo_thumb.length > 0 ){
+          return   <Avatar
+              size="small"
+              rounded
+              source={{uri: affectedTo.user_info.logo_thumb}}
+              onPress={() => Actions.events()}
+              activeOpacity={0.7}
+              />
+        }
+        else if (affectedTo){
+          console.log('future')
+          return <View style={{borderRadius:20, backgroundColor: 'grey', height: 40, width: 40}}>
+                    <Text style={{justifyContent: 'center', alignSelf: 'center'}}>
+                      {affectedTo.first_name[0]} {affectedTo.last_name[0]}
+                    </Text>
+                  </View>
         }
         else {
-          return ""
+          return <View style={{borderRadius:20, backgroundColor: 'grey', height: 40, width: 40}}>
+                  </View>
         }
       }
       else {
@@ -64,13 +103,7 @@ class CardBlock extends Component {
                             {card.subject}
                           </Text>
                           <View>
-                            <Avatar
-                              size="small"
-                              rounded
-                              source={{uri: this.userThumbUrl(card.affected_to_id)}}
-                              onPress={() => Actions.events()}
-                              activeOpacity={0.7}
-                              />
+                          {this.renderAvatar(card.affected_to_id)}
                           </View>
                         </View>
                         <Text style={{fontSize: 12, position: 'absolute', top: 3, right: 3, color: 'white'}}>

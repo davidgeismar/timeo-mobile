@@ -26,10 +26,10 @@ export const loginUser = (creds) => {
                   client_secret: '8463d7894c7531aee91e5dfbb80cffa40fd94fd319b2aa2407ae437ab309c5ce',
                   grant_type: 'password',
                 }
-    const creds = {
-      username: 'd.sylla@xair.fr',
-      password: 'whazaaz313'
-    }
+    // const creds = {
+    //   username: 'd.sylla@xair.fr',
+    //   password: 'whazaaz313'
+    // }
     const fullConf = {...creds, ...conf}
     API.post('/oauth/token', fullConf)
       .then(response => loginUserSuccess(dispatch, response))
@@ -38,6 +38,9 @@ export const loginUser = (creds) => {
 };
 
 // on successfull login first I fetch the user info with API call
+// need more explanation here
+// is dispatch making everything synchronous, in here id rathere keep async behavior
+//  what's the deal with dispatch then ?
 const loginUserSuccess = (dispatch, data) => {
   dispatch(setErrorState(false))
   API.defaults.headers.common['Accept'] = 'application/json'
@@ -57,7 +60,7 @@ export const onRequestErrorCallbackLogin = (dispatch, error) => {
   dispatch(setErrorState(error.message))
 };
 
-// after I successfully fetched user info I load all the resources linked to the user
+// after I successfully fetched user info I load concurrently all the resources linked to the user
 const getUserInfoSuccess = (dispatch, data) => {
   dispatch({
     type: INITIALIZE_USER,
@@ -87,6 +90,15 @@ const loadResources = () => {
   }
 }
 
+// we could refacto the next 3 success callbacks to that one
+const fetchSuccess = (dispatch, data, actionType) => {
+  dispatch(setLoaderState(false))
+  dispatch(setErrorState(false))
+  dispatch({
+    type: actionType,
+    payload: data.data
+  });
+}
 // on successfull fetch we dispatch data to the store
 const initialFetchEventsSuccess = (dispatch, data) => {
   dispatch(setLoaderState(false))

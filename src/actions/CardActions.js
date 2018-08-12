@@ -6,7 +6,8 @@ import { DELETE_SELECTED_TASK,
          LOAD_KANBAN_TASKS,
          CHANGE_TASKLIST_SCOPE,
          SEARCH_TASK,
-         UPDATE_SEARCH_PATTERN
+         UPDATE_SEARCH_PATTERN,
+         SET_CURRENT_EVENT_TASK
        } from './types'
 import API from './Api';
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
@@ -116,4 +117,37 @@ export const updateSearchCardStatus = (status) => {
     type: SEARCH_TASK_INIT,
     payload: status
   }
+}
+
+
+
+// fetching card of current event/action
+// event/action only stores card_id, so we need to go fetch the card info
+export const fetchCard = (cardId, loader=true) => {
+  return(dispatch, getState) => {
+    if (cardId){
+      if (loader){
+        dispatch(setLoaderState(true))
+      }
+      API.get(`/internal/timeo/api/v0/kameo_cards/${cardId}`)
+        .then(response => fetchCardSuccess(dispatch, response))
+        .catch(error => onRequestErrorCallback(dispatch, error));
+    }
+    else {
+      dispatch({
+        type: SET_CURRENT_EVENT_TASK,
+        payload: null
+      })
+    }
+  }
+}
+
+// updates current event card in redux store
+const fetchCardSuccess = (dispatch, data) => {
+  dispatch(setLoaderState(false))
+  dispatch(setErrorState(false))
+  dispatch({
+    type: SET_CURRENT_EVENT_TASK,
+    payload: data.data
+  });
 }

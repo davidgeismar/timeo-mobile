@@ -68,8 +68,14 @@ const styles = {
 
 const mapStateToProps = (state) => {
   const durations = state.eventsData.events.map((event)=>event.duration)
-  const reducer = (accumulator, currentValue) =>  accumulator + currentValue
-  const totalTimeSpent = durations.reduce(reducer)
+  let totalTimeSpent
+  if (state.eventsData.events.length > 0){
+    const reducer = (accumulator, currentValue) =>  accumulator + currentValue
+     totalTimeSpent = durations.reduce(reducer)
+  }
+  else {
+     totalTimeSpent = 0
+  }
 
   return {
     totalTimeSpent: totalTimeSpent,

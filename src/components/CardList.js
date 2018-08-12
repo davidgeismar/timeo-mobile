@@ -89,7 +89,8 @@ class CardList extends Component {
   }
 
   saveCard(){
-    this.props.updateEvent('card_id', this.props.selectedCard.id, this.props.duration, this.props.measureKind, this.props.eventId)
+    this.props.updateEvent('card_id', this.props.selectedCard.id, this.props.duration,
+                            this.props.measureKind, this.props.eventId, true, false, this.props.selectedCard)
     // this.props.saveCard(this.props.eventId, this.props.selectedCard)
   }
   renderSelectedKanban(){
@@ -181,7 +182,8 @@ const mapStateToProps = (state) => {
            measureKind: event ? event.measure_kind : null,
            disabled: disabled,
            searchPattern: state.cards.searchPattern,
-           loading: state.loading
+           loading: state.loading,
+           error: state.error
          }
 }
 export default connect(mapStateToProps, { removeSelectedCard, updateEvent, changeCardListScope, searchCards, setErrorState })(CardList);

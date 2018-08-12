@@ -5,6 +5,8 @@ import API from './Api';
 import { activateTab } from './TabActions'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
 
+
+// fetching action kinds on api
 export const fetchActionKinds = () => {
   return (dispatch) => {
     setLoaderState(dispatch, true)
@@ -14,6 +16,7 @@ export const fetchActionKinds = () => {
     };
 };
 
+// updating state accordingly
 const fetchActionKindsSuccess = (dispatch, data) => {
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))

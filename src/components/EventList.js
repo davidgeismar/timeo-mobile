@@ -12,9 +12,11 @@ import Header from './Header'
 class EventList extends Component {
 
   renderEvents(){
-    return this.props.events.map(
-      event => <Event key={event.id} event={event} onPress={()=> this.props.setCurrentEvent(event.id)}/>
-    )
+    if (this.props.events.length > 0){
+      return this.props.events.map(
+        event => <Event key={event.id} event={event} onPress={()=> this.props.setCurrentEvent(event.id)}/>
+      )
+    }
   }
 
   renderMonthlyStats(){

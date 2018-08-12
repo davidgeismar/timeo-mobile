@@ -11,11 +11,13 @@ import { CREATE_EVENT,
          SET_EVENT_TO_DELETE,
          DELETE_EVENT,
          UPDATE_CURRENT_EVENT_COMMENT,
-         SET_CURRENT_MANUAL_DURATION
+         SET_CURRENT_MANUAL_DURATION,
+         RESET_PROJECTS,
+         UPDATE_CARD_INFOS
        } from './types'
 import API from './Api';
 import { loadClientProjects, loadClientProjectsSuccess } from './ProjectActions'
-import { loadKanbanCards } from './CardActions'
+import { loadKanbanCards, fetchCard } from './CardActions'
 import { activateTab, activateTabSuccess } from './TabActions'
 import { loadProjectKanbans, loadSelectedKanban } from './KanbanActions'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
@@ -27,18 +29,23 @@ import axios from 'axios';
 export const createEvent = ( measure_kind, duration=null) => {
   return (dispatch) => {
     // dispatch(setLoaderState(true))
-    const data = {action: {duration: duration, measure_kind: measure_kind}}
+    const data = {action: {duration, measure_kind}}
     dispatch(activateTab('client'))
 
     API.post('/internal/timeo/api/v0/actions', data)
       .then(response => createEventSuccess(dispatch, response))
-      .catch(error => onRequestErrorCallbackCreation(dispatch, error));
+      .catch(error => onRequestErrorCallbackCreation(dispatch, error, measure_kind));
   }
 }
 
-const onRequestErrorCallbackCreation = (dispatch, error) => {
+const onRequestErrorCallbackCreation = (dispatch, error, measure_kind) => {
   dispatch(setErrorState(error.message))
-  dispatch(activateTab('time'))
+  if (measure_kind == 'manual'){
+    dispatch(activateTab('time'))
+  }
+  else {
+    dispatch(activateTab('chrono'))
+  }
 }
 // updates redux store
 const createEventSuccess = (dispatch, data) => {
@@ -56,34 +63,6 @@ const createEventSuccess = (dispatch, data) => {
   })
 }
 
-// fetching card of current event/action
-// event/action only stores card_id, so we need to go fetch the card info
-const fetchCard = (cardId) => {
-  return(dispatch, getState) => {
-    if (cardId){
-      dispatch(setLoaderState(true))
-      API.get(`/internal/timeo/api/v0/kameo_cards/${cardId}`)
-        .then(response => fetchCardSuccess(dispatch, response))
-        .catch(error => onRequestErrorCallback(dispatch, error));
-    }
-    else {
-      dispatch({
-        type: SET_CURRENT_EVENT_TASK,
-        payload: null
-      })
-    }
-  }
-}
-
-// updates current event card in redux store
-const fetchCardSuccess = (dispatch, data) => {
-  dispatch(setLoaderState(false))
-  dispatch(setErrorState(false))
-  dispatch({
-    type: SET_CURRENT_EVENT_TASK,
-    payload: data.data
-  });
-}
 
 
 
@@ -93,8 +72,10 @@ const spitHourMinute = (millis) => {
   const minutes = time.getUTCMinutes() < 10 ? `0${time.getUTCMinutes()}` : time.getUTCMinutes();
   return {selectedHour: hours , selectedMinute: minutes }
 }
+
 export const setCurrentEvent = (eventId) => {
   return(dispatch, getState) => {
+    // sets currentEvent in store
     dispatch({
       type: SET_CURRENT_EVENT,
       payload: eventId
@@ -122,6 +103,7 @@ export const setCurrentEvent = (eventId) => {
 
 // loads projects, kanbans and card for current event/action
 // should be done concurrently
+// just remove dispatch !!
 const loadEventContext = (dispatch, currentEvent) => {
     if (currentEvent.client_id){
       dispatch(loadClientProjects(currentEvent.client_id))
@@ -183,10 +165,14 @@ const valueHasChanged = (prop, value, event) => {
   return event[prop] != value
 }
 
-const preUpdateActions = (dispatch, prop, value, eventNeedsUpdate) => {
+const preUpdateActions = (dispatch, prop, value, eventNeedsUpdate, cardInfos=null) => {
   switch (prop){
     case 'client_id':
       if (eventNeedsUpdate){
+        dispatch({
+          type: RESET_PROJECTS,
+          payload: null
+        })
         dispatch(loadClientProjects(value));
         unsetKanbanAndCard(dispatch)
       }
@@ -197,11 +183,26 @@ const preUpdateActions = (dispatch, prop, value, eventNeedsUpdate) => {
     case 'duration':
       return dispatch(activateTab('info'))
     case 'card_id':
+      if (eventNeedsUpdate){
+        dispatch(updateCardInfos(cardInfos))
+      }
       return dispatch(activateTab('info'))
     case 'kanban_id':
-      dispatch(loadKanbanCards(value, true))
+      if (eventNeedsUpdate){
+        dispatch(loadKanbanCards(value, true))
+      }
       return Actions.cardList()
 
+  }
+}
+
+
+const updateCardInfos = (cardInfos) => {
+  console.log('in updateCardInfos')
+  console.log(cardInfos)
+  return {
+    type: SET_CURRENT_EVENT_TASK,
+    payload: cardInfos
   }
 }
 
@@ -223,7 +224,7 @@ const preUpdateActions = (dispatch, prop, value, eventNeedsUpdate) => {
 //  * @return {function}   (dispatch, getState)
 //  */
 
-export const updateEvent = (prop, value, duration, measureKind, eventId, redirect=true, loader=true) => {
+export const updateEvent = (prop, value, duration, measureKind, eventId, redirect=true, loader=true, cardInfos=null) => {
   return (dispatch, getState) => {
     // fetching current event from store
     const event = getState().eventsData.currentEvent
@@ -233,8 +234,9 @@ export const updateEvent = (prop, value, duration, measureKind, eventId, redirec
     if (eventNeedsUpdate) {
       data = preparingData(prop, value, duration, measureKind)
     }
+    console.log(cardInfos)
     // mainly activating tabs and fetching data if necessary
-    preUpdateActions(dispatch, prop, value, eventNeedsUpdate)
+    preUpdateActions(dispatch, prop, value, eventNeedsUpdate, cardInfos)
 
     if (eventNeedsUpdate){
       API.patch(`/internal/timeo/api/v0/actions/${eventId}`, data)
@@ -260,8 +262,11 @@ const onRequestErrorCallbackUpdateEvent = (dispatch, error, prop, measureKind) =
         return dispatch(activateTab('chrono'))
       }
     case 'card_id':
-      return Actions.cardList()
+       return Actions.cardList()
   }
+
+
+
 
 }
 
@@ -282,7 +287,7 @@ const updateEventSuccess = (dispatch, data, prop, redirect, eventNeedsUpdate) =>
       // unsetKanbanAndCard(dispatch)
       return  dispatch(loadProjectKanbans(data.data.project_id))
     case 'card_id':
-     return dispatch(fetchCard(data.data.card_id))
+     return dispatch(fetchCard(data.data.card_id, false))
     case 'duration':
       return dispatch(activateTab('info'))
     case 'kind_id':
