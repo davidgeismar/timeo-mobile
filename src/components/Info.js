@@ -61,7 +61,7 @@ class Info extends Component {
         // console.log(Object.getOwnPropertyNames(res))
         // console.log(res.fileName)
         // console.log(res.type, res.uri)
-        this.props.sendFileToApi(this.props.eventId, res.fileName, res.type, res.uri)
+        this.props.sendFileToApi(this.props.eventId, res)
         // this.props.sendFileToA
       });
   }

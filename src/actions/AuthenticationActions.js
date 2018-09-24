@@ -22,14 +22,15 @@ export const authUpdate = ({ prop, value }) => {
 export const loginUser = (creds) => {
   return (dispatch) => {
     dispatch(setLoaderState(true))
-    const conf = { client_id: 'c84b72377f22fda28d8912acf9feed92fb1178e15eb8709c9a14c16fa180e91f',
-                  client_secret: '8463d7894c7531aee91e5dfbb80cffa40fd94fd319b2aa2407ae437ab309c5ce',
-                  grant_type: 'password',
-                }
-    // const creds = {
-    //   username: 'd.sylla@xair.fr',
-    //   password: 'whazaaz313'
-    // }
+    // const conf = { client_id: 'c84b72377f22fda28d8912acf9feed92fb1178e15eb8709c9a14c16fa180e91f',
+    //               client_secret: '8463d7894c7531aee91e5dfbb80cffa40fd94fd319b2aa2407ae437ab309c5ce',
+    //               grant_type: 'password',
+    //             }
+    const conf = { grant_type: 'password' }
+    const creds = {
+      username: 'r.maury@xair.fr',
+      password: 'obeya'
+    }
     const fullConf = {...creds, ...conf}
     API.post('/oauth/token', fullConf)
       .then(response => loginUserSuccess(dispatch, response))

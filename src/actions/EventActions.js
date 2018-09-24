@@ -346,41 +346,57 @@ const deleteEventSuccess = (dispatch, eventId) => {
     Actions.events()
 }
 
-export const sendFileToApi = (eventId, fileTitle, fileKind, fileUrl) =>{
+export const sendFileToApi = (eventId, res) =>{
   return(dispatch, getState) => {
-    console.log('in sendFileToApi')
+    console.log('in sendFileToApi', res)
+    console.log('blurp')
+    //const { uri, type: mimeType, fileName } = res;
 
-    var doc = {
-      	uri: fileUrl,
-      	type: 'image/png',
-      	name: fileTitle,
-      };
-    console.log(doc)
-//
-    var fileData = new FormData();
-    fileData.append('file', doc)
-    console.log(fileData)
-    var data = {   'action_file': {
-                   'title': fileTitle,
-                   'kind': 'image/png',
-                    fileData
-                 }
-              }
-    console.log(data)
-    const uploadUrl = `http://staging.obeya.xair.cloud/internal/timeo/api/v0/actions/${eventId}/action-file`
-    const config = {
-      method: 'POST',
-      url: uploadUrl,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'multipart/form-data;',
-        Authorization: 'Bearer ' + getState().authentication.token
-      },
-      body: data
-    };
-    console.log(config)
-    axios(config)
+    fileConfig = {uri: res.uri.replace('content:', 'file:'), type: res.type, name: res.fileName}
+    console.log('bloup')
+    console.log('FileConfig', fileConfig);
+
+    var formData = new FormData();
+    formData.append('action_file[title]', res.fileName)
+    formData.append('action_file[kind]', 'file')
+    //formData.append('action_file[file]', { uri, type: mimeType, name: fileName })
+    formData.append('action_file[file]', fileConfig )
+
+
+    console.log("formData", formData)
+
+    //const uploadUrl = `https://staging.obeya.io/internal/timeo/api/v0/actions/${eventId}/action-file`
+    const uploadUrl = `http://dev.obeya.local:8080/internal/timeo/api/v0/actions/${eventId}/action-file`
+    // const config = {
+    //   method: 'POST',
+    //   url: uploadUrl,
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //     Authorization: 'Bearer ' + getState().authentication.token
+    //   },
+    //   data: formData
+    // };
+
+
+    //console.log("Config Object For request", config)
+
+    headersData = {
+      Accept: 'application/json',
+      //'Content-Type': undefined, //'multipart/form-data',
+      Authorization: 'Bearer ' + getState().authentication.token
+    }
+
+    // fetch(uploadUrl, {
+    //   headers: headersData,
+    //   method: 'post',
+    //   body: formData
+    // }).then(res => {
+    //   console.log(res)
+    // });
+
+    axios.post(uploadUrl, formData, {headers: headersData})
       .then(resp => console.log(resp))
+      .catch(error => console.log(error))
     // fetch(uploadUrl, config)
     //   .then(responseData => {
     //     console.log(responseData);
