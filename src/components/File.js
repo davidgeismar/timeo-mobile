@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback, TouchableOpacity, Alert} from 'react-native'
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity, Alert, Modal, TouchableHighlight, Image} from 'react-native'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { deleteActionFile } from '../actions';
@@ -10,6 +10,10 @@ import * as utilities from '../lib/Utilities';
 
 
 class File extends Component {
+  constructor(props) {
+   super(props);
+   this.state = {modalVisible: false};
+ }
   confirmDelete(fileId, eventId){
     Alert.alert(
     'Delete File',
@@ -21,18 +25,43 @@ class File extends Component {
     { cancelable: false }
   )
   }
-
+  setModalVisible(visible) {
+   this.setState({modalVisible: visible});
+  }
   render() {
     const { textWrapperStyle, svgStyle, containerStyle, textStyle } = styles
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <View style={[containerStyle, this.props.customStyle]}>
+      <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            alert('Modal has been closed.');
+          }}>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <View>
+                <Image
+                  style={{width: 200, height: 200}}
+                  source={{uri: "http://"+this.props.file.url }}
+                />
+
+              <TouchableOpacity
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableOpacity>
+              </View>
+          </View>
+        </Modal>
+        <TouchableOpacity style={[containerStyle, this.props.customStyle]} onPress={() => {this.setModalVisible(true);}}>
           <View style={textWrapperStyle}>
             <Text>
               {this.props.file.title}
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={()=>this.confirmDelete(this.props.file.id, this.props.eventId)}>
           <Close style={styles.svgStyle} fill='red'/>
         </TouchableOpacity>

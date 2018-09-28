@@ -91,9 +91,13 @@ class Info extends Component {
   }
 
   renderFiles(){
-    return this.props.files.map(
-      file => <File file={file} eventId={this.props.eventId}/>
-    )
+    if (this.props.files){
+      if (this.props.files.length > 0){
+        return this.props.files.map(
+          file => <File file={file} eventId={this.props.eventId}/>
+        )
+      }
+    }
   }
   renderCommentInput(){
     if (Platform.OS === 'ios'){
