@@ -3,6 +3,8 @@ package com.timeo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.fileopener.FileOpenerPackage;
 import com.rnfs.RNFSPackage;
 import com.reactnativedocumentpicker.ReactNativeDocumentPicker;
 import com.horcrux.svg.SvgPackage;
@@ -26,6 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFetchBlobPackage(),
+            new FileOpenerPackage(),
             new RNFSPackage(),
             new ReactNativeDocumentPicker(),
             new SvgPackage()

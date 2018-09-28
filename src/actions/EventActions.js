@@ -13,7 +13,8 @@ import { CREATE_EVENT,
          UPDATE_CURRENT_EVENT_COMMENT,
          SET_CURRENT_MANUAL_DURATION,
          RESET_PROJECTS,
-         UPDATE_CARD_INFOS
+         UPDATE_CARD_INFOS,
+         ADD_FILE_TO_CURRENT_EVENT
        } from './types'
 import API from './Api';
 import { loadClientProjects, loadClientProjectsSuccess } from './ProjectActions'
@@ -23,6 +24,7 @@ import { loadProjectKanbans, loadSelectedKanban } from './KanbanActions'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
 import * as RNFS from 'react-native-fs'
 import axios from 'axios';
+import RNFetchBlob from 'rn-fetch-blob';
 // import * as RNFS from 'react-native-fs'
 
 // creates an event with API call(called an "action" on API)
@@ -62,9 +64,6 @@ const createEventSuccess = (dispatch, data) => {
     payload: true
   })
 }
-
-
-
 
 const spitHourMinute = (millis) => {
   const time = new Date(millis)
@@ -125,6 +124,14 @@ export const fetchEvents= () => {
   return (dispatch) => {
     dispatch(setLoaderState(true))
     API.get('/internal/timeo/api/v0/actions')
+      .then(response => fetchEventsSuccess(dispatch, response))
+      .catch(error => onRequestErrorCallback(dispatch, error));
+  };
+}
+// fetch event from api
+export const fetchEvent= (eventId) => {
+  return (dispatch) => {
+    API.get(`/internal/timeo/api/v0/actions/${eventId}`)
       .then(response => fetchEventsSuccess(dispatch, response))
       .catch(error => onRequestErrorCallback(dispatch, error));
   };
@@ -264,16 +271,13 @@ const onRequestErrorCallbackUpdateEvent = (dispatch, error, prop, measureKind) =
     case 'card_id':
        return Actions.cardList()
   }
-
-
-
-
 }
 
 //
 const updateEventSuccess = (dispatch, data, prop, redirect, eventNeedsUpdate) => {
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
+  console.log(data.data)
   dispatch({
     type: UPDATE_EVENT,
     payload: data.data
@@ -325,6 +329,7 @@ export const setEventToDelete = (event) => {
   }
 }
 
+
 // deletes event on API
 export const deleteEvent = (eventId) => {
   return(dispatch) => {
@@ -346,67 +351,55 @@ const deleteEventSuccess = (dispatch, eventId) => {
     Actions.events()
 }
 
-export const sendFileToApi = (eventId, res) =>{
-  return(dispatch, getState) => {
-    console.log('in sendFileToApi', res)
-    console.log('blurp')
-    //const { uri, type: mimeType, fileName } = res;
-
-    fileConfig = {uri: res.uri.replace('content:', 'file:'), type: res.type, name: res.fileName}
-    console.log('bloup')
-    console.log('FileConfig', fileConfig);
-
-    var formData = new FormData();
-    formData.append('action_file[title]', res.fileName)
-    formData.append('action_file[kind]', 'file')
-    //formData.append('action_file[file]', { uri, type: mimeType, name: fileName })
-    formData.append('action_file[file]', fileConfig )
-
-
-    console.log("formData", formData)
-
-    //const uploadUrl = `https://staging.obeya.io/internal/timeo/api/v0/actions/${eventId}/action-file`
-    const uploadUrl = `http://dev.obeya.local:8080/internal/timeo/api/v0/actions/${eventId}/action-file`
-    // const config = {
-    //   method: 'POST',
-    //   url: uploadUrl,
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //     Authorization: 'Bearer ' + getState().authentication.token
-    //   },
-    //   data: formData
-    // };
-
-
-    //console.log("Config Object For request", config)
-
-    headersData = {
-      Accept: 'application/json',
-      //'Content-Type': undefined, //'multipart/form-data',
-      Authorization: 'Bearer ' + getState().authentication.token
-    }
-
-    // fetch(uploadUrl, {
-    //   headers: headersData,
-    //   method: 'post',
-    //   body: formData
-    // }).then(res => {
-    //   console.log(res)
-    // });
-
-    axios.post(uploadUrl, formData, {headers: headersData})
-      .then(resp => console.log(resp))
-      .catch(error => console.log(error))
-    // fetch(uploadUrl, config)
-    //   .then(responseData => {
-    //     console.log(responseData);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-    // }
+export const deleteActionFile = (eventId, fileId) => {
+  return(dispatch) => {
+    console.log("eventId", eventId)
+    console.log("fileId", fileId)
+    API.delete(`/internal/timeo/api/v0/actions/${eventId}/action-file/${fileId}`)
+      .then(response => deleteActionFileSuccess(dispatch, eventId))
+      .catch(error => onRequestErrorCallback(dispatch, error));
   }
 }
+// updates redux store
+const deleteActionFileSuccess = (dispatch, eventId) => {
+    API.get(`/internal/timeo/api/v0/actions/${eventId}`)
+      .then(response => updateEventSuccess(dispatch, response, null, false, false))
+      .catch(error => onRequestErrorCallback(dispatch, error));
+}
+
+export const sendFileToApi = (eventId, res) =>{
+  return(dispatch, getState) => {
+    console.log('---- sendFileToApi ----');
+    const uploadUrl = `https://staging.obeya.io/internal/timeo/api/v0/actions/${eventId}/action-file`
+    // const uploadUrl = `http://dev.obeya.local:3000/internal/timeo/api/v0/actions/${eventId}/action-file`
+    const filename = res.fileName
+    fileConfig = {uri: res.uri, type: res.type, name: res.fileName}
+    headersData = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + getState().authentication.token
+    }
+
+    const data = new FormData();
+    data.append('action_file[title]', res.fileName); // you can append anyone.
+    data.append('action_file[kind]', 'file');
+    data.append('action_file[file]', fileConfig);
+
+    fetch(uploadUrl, {
+      headers: headersData,
+      method: 'post',
+      body: data
+    }).then(res => {
+      API.get(`/internal/timeo/api/v0/actions/${eventId}`)
+        .then(response => updateEventSuccess(dispatch, response, null, false, false))
+        .catch(error => onRequestErrorCallback(dispatch, error));
+    }).catch(err => {
+        alert('error : ', err);
+      });
+
+  }
+}
+
+
 
 const sendFileToApiSuccess = (dispatch, eventId) => {
     // dispatch({

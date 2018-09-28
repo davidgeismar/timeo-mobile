@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity, ScrollView, Text, Platform} from 'react-native'
 import { connect } from 'react-redux';
+
 import { updateEvent, updateEventComment, loadProjectKanbans, activateTab, fetchActionKinds, sendFileToApi } from '../actions';
 import Button from './common/Button';
 import Spinner from './common/Spinner';
@@ -8,6 +9,7 @@ import { Actions } from 'react-native-router-flux';
 import Attachment from './assets/Attachment';
 import Kameo from './assets/Kameo';
 import LinkCard from './LinkCard';
+import File from './File';
 import SmallCard from './SmallCard'
 import * as utilities from '../lib/Utilities';
 import TimeFormatter from 'minutes-seconds-milliseconds';
@@ -87,6 +89,12 @@ class Info extends Component {
       }
     }
   }
+
+  renderFiles(){
+    return this.props.files.map(
+      file => <File file={file} eventId={this.props.eventId}/>
+    )
+  }
   renderCommentInput(){
     if (Platform.OS === 'ios'){
       return (
@@ -111,7 +119,7 @@ class Info extends Component {
   }
   render() {
     const {comment, hour, minute, kindName, clientName, projectName, projectId, timerKind, duration, eventId, kanbanName, card} = this.props
-    const {containerStyle, formWrapperStyle, footerStyle, svgStyle} = styles
+    const {containerStyle, formWrapperStyle, footerStyle, svgStyle, filesWrapperStyle} = styles
     if (this.props.loading) {
       return <Spinner size="large" />;
     }
@@ -130,6 +138,11 @@ class Info extends Component {
               {this.renderCardInfo(card)}
             </View>
             {this.renderCommentInput()}
+
+              <ScrollView style={{marginBottom: 30}}>
+                {this.renderFiles()}
+              </ScrollView>
+
           </View>
           <Footer>
             <View style={styles.footerButtonsWrapper}>
@@ -154,9 +167,13 @@ const styles = {
     alignItems: 'center',
     backgroundColor: 'white',
   },
+  filesWrapperStyle: {
+    marginBottom: 40
+  },
   formWrapperStyle: {
     padding: 30,
-    width: '100%'
+    width: '100%',
+    flex: 1,
   },
   footerButtonsWrapper: {
     flex: 1,
@@ -174,7 +191,9 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  const event = state.eventsData.currentEvent
+  console.log(event);
+  const event = state.eventsData.currentEvent;
+  console.log(event);
   if (event){
     let comment
     if (state.eventsData.currentEventComment == ""){
@@ -198,7 +217,8 @@ const mapStateToProps = (state) => {
              projectName: event.project__name,
              projectId: event.project_id,
              kindName: event.kind__name ? event.kind__name : "Actions",
-             comment: comment ,
+             files: event.action_files,
+             comment: comment,
              eventId: event.id,
              kanbanName: event.kanban__name,
              kanbanId: event.kanban_id,

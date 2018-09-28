@@ -12,7 +12,10 @@ import None from './assets/None'
 import Sad from './assets/Sad'
 import Stressed from './assets/Stressed'
 import Tired from './assets/Tired'
-
+import Sick from './assets/Sick'
+import Displeased from './assets/Displeased'
+import Angry from './assets/Angry'
+import Absent from './assets/Absent'
 
 class LoginForm extends Component {
   componentWillMount(){
@@ -98,6 +101,18 @@ class LoginForm extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => this.loginUser('tired')}>
                   <Tired style={{height: 50, width: 50}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.loginUser('tired')}>
+                  <Sick style={{height: 50, width: 50}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.loginUser('tired')}>
+                  <Displeased style={{height: 50, width: 50}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.loginUser('tired')}>
+                  <Angry style={{height: 50, width: 50}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.loginUser('tired')}>
+                  <Absent fill="#ef5350" style={{height: 50, width: 50}}/>
                 </TouchableOpacity>
               </View>
               {this.renderError()}

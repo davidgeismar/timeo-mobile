@@ -9,14 +9,16 @@ import { RESET_INFO,
          DELETE_EVENT,
          LOAD_EVENTS,
          SET_CURRENT_EVENT_TASK,
-         SET_EVENT_TO_DELETE
+         SET_EVENT_TO_DELETE,
+         ADD_FILE_TO_CURRENT_EVENT
        } from '../actions/types';
 const INITIAL_STATE = { events: [],
                         currentEventId: null,
                         currentEventComment: null,
                         currentEventCard: null,
                         currentEvent: null,
-                        eventToDelete: null
+                        eventToDelete: null,
+                        currentEventFiles: []
                       }
 
 
@@ -45,6 +47,8 @@ export const EventReducer = (state = INITIAL_STATE, action) => {
       return {...state, eventToDelete: action.payload}
     case UPDATE_CURRENT_EVENT_COMMENT:
       return {...state, currentEventComment: action.payload}
+    case ADD_FILE_TO_CURRENT_EVENT:
+      return {...state, currentEventFiles: [...state.currentEventFiles, action.payload]}
     case UPDATE_EVENT:
       events = [...state.events];
       index = events.findIndex(event => event.id === action.payload.id)
