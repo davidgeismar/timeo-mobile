@@ -250,6 +250,9 @@ export const updateEvent = (prop, value, duration, measureKind, eventId, redirec
         .then(response => updateEventSuccess(dispatch, response, prop, redirect, eventNeedsUpdate))
         .catch(error => onRequestErrorCallbackUpdateEvent(dispatch, error, prop, measureKind));
     }
+    else if (prop === 'subject'){
+      Actions.events();
+    }
   }
 }
 
@@ -297,6 +300,7 @@ const updateEventSuccess = (dispatch, data, prop, redirect, eventNeedsUpdate) =>
     case 'kind_id':
       return dispatch(activateTab('info'))
     case 'subject':
+      console.log('save button events')
       return dispatch(activateTab('events'))
     case 'kanban_id':
       return   dispatch({
