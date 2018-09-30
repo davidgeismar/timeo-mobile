@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback, TouchableOpacity, ImageBackground, Image, TextInput, Platform} from 'react-native'
+import { View, Text, TouchableWithoutFeedback, TouchableOpacity, ImageBackground, Image, TextInput, Platform, ScrollView} from 'react-native'
 import { connect } from 'react-redux';
 import { loginUser, authUpdate, fetchImageOfTheDay} from '../actions';
 import {Actions} from 'react-native-router-flux'
@@ -84,36 +84,38 @@ class LoginForm extends Component {
         <ImageBackground style={styles.containerStyle} source={{uri: this.props.backgroundImage ? this.props.backgroundImage : ""}}>
               {this.renderForm()}
               <View style={{flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center', marginTop: 20}}>
-                <TouchableOpacity onPress={() => this.loginUser('great')}>
-                  <Great style={{height: 50, width: 50}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.loginUser('happy')}>
-                  <Happy style={{height: 50, width: 50}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.loginUser('none')}>
-                  <None style={{height: 50, width: 50}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.loginUser('sad')}>
-                  <Sad style={{height: 50, width: 50}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.loginUser('stressed')}>
-                  <Stressed style={{height: 50, width: 50}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.loginUser('tired')}>
-                  <Tired style={{height: 50, width: 50}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.loginUser('tired')}>
-                  <Sick style={{height: 50, width: 50}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.loginUser('tired')}>
-                  <Displeased style={{height: 50, width: 50}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.loginUser('tired')}>
-                  <Angry style={{height: 50, width: 50}}/>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => this.loginUser('tired')}>
-                  <Absent fill="#ef5350" style={{height: 50, width: 50}}/>
-                </TouchableOpacity>
+                <ScrollView horizontal={true}>
+                  <TouchableOpacity onPress={() => this.loginUser('great')}>
+                    <Great style={{height: 50, width: 50}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.loginUser('happy')}>
+                    <Happy style={{height: 50, width: 50}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.loginUser('none')}>
+                    <None style={{height: 50, width: 50}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.loginUser('sad')}>
+                    <Sad style={{height: 50, width: 50}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.loginUser('stressed')}>
+                    <Stressed style={{height: 50, width: 50}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.loginUser('tired')}>
+                    <Tired style={{height: 50, width: 50}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.loginUser('tired')}>
+                    <Sick style={{height: 50, width: 50}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.loginUser('tired')}>
+                    <Displeased style={{height: 50, width: 50}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.loginUser('tired')}>
+                    <Angry style={{height: 50, width: 50}}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.loginUser('tired')}>
+                    <Absent fill="#ef5350" style={{height: 50, width: 50}}/>
+                  </TouchableOpacity>
+                </ScrollView>
               </View>
               {this.renderError()}
         </ImageBackground>

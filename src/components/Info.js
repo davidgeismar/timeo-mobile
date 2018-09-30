@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, TouchableOpacity, ScrollView, Text, Platform} from 'react-native'
+import { View, TextInput, TouchableOpacity, ScrollView, Text, Platform, FlatList} from 'react-native'
 import { connect } from 'react-redux';
 
 import { updateEvent, updateEventComment, loadProjectKanbans, activateTab, fetchActionKinds, sendFileToApi } from '../actions';
@@ -90,11 +90,16 @@ class Info extends Component {
     }
   }
 
+
   renderFiles(){
     if (this.props.files){
       if (this.props.files.length > 0){
-        return this.props.files.map(
-          file => <File file={file} eventId={this.props.eventId}/>
+        return (
+          <FlatList
+            data={this.props.files}
+            renderItem={({item}) => <File file={item} eventId={this.props.eventId}/>}
+            style={{flex: 1}}
+          />
         )
       }
     }
@@ -143,9 +148,7 @@ class Info extends Component {
             </View>
             {this.renderCommentInput()}
 
-              <ScrollView style={{marginBottom: 30}}>
-                {this.renderFiles()}
-              </ScrollView>
+            {this.renderFiles()}
 
           </View>
           <Footer>

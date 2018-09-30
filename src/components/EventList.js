@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, ScrollView, Text} from 'react-native'
+import { View, ScrollView, Text, FlatList} from 'react-native'
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux'
 import { setCurrentEvent, resetAppInfo, logoutUser } from '../actions';
@@ -8,45 +8,53 @@ import Button from './common/Button'
 import Footer from './common/Footer'
 import Event from './Event'
 import Header from './Header'
+import * as utilities from '../lib/Utilities';
 
 class EventList extends Component {
 
+
+  formatDuration(ms){
+    let time = new Date(ms);
+    let hours = time.getUTCHours() < 10 ? `0${time.getUTCHours()}` : time.getUTCHours();
+    let minutes = time.getUTCMinutes() < 10 ? `0${time.getUTCMinutes()}` : time.getUTCMinutes();
+    let seconds = time.getUTCSeconds() < 10 ? `0${time.getUTCSeconds()}` : time.getUTCSeconds();
+
+    return hours + ":" + minutes + ":" + seconds
+  }
   renderEvents(){
     if (this.props.events.length > 0){
-      return this.props.events.map(
-        event => <Event key={event.id} event={event} onPress={()=> this.props.setCurrentEvent(event.id)}/>
+      return (
+        <FlatList
+          data={this.props.events}
+          renderItem={({item}) => <Event key={item.id} event={item} onPress={()=> this.props.setCurrentEvent(item.id)}/>}
+          style={{flex: 1}}
+        />
       )
     }
   }
-
   renderMonthlyStats(){
-    return (
-      <View style={styles.monthlyStatsWrapper}>
-        <View style={styles.monthlyStatsLine}>
-          <Text>
-          2018
-          </Text>
-          <Text>
-          June
-          </Text>
-          <Text>
-            Actions: 2 Total: 10mn
-          </Text>
-        </View>
-        <View style={styles.monthlyStatsLine}>
-          <Text>
-          2018
-          </Text>
-          <Text>
-          June
-          </Text>
-          <Text>
-            Actions: 2 Total: 10mn
-          </Text>
-
-        </View>
-      </View>
-    )
+    var years = Object.keys(this.props.stats)
+    for ( i=0;i < years.length; i++){
+      var currentYear = years[i]
+      console.log(currentYear)
+      var months = Object.keys(this.props.stats[currentYear])
+      for (j=0; j<months.length; j++){
+        var currentMonth = months[j]
+        return (
+          <View style={styles.monthlyStatsLine}>
+            <Text>
+              {currentYear}{" "}
+            </Text>
+            <Text>
+              {currentMonth}{" "}
+            </Text>
+            <Text>
+               Actions: {this.props.stats[currentYear][currentMonth]["total"]} Total: {this.formatDuration(this.props.stats[currentYear][currentMonth]["duration"])}
+            </Text>
+          </View>
+        )
+      }
+    }
   }
   render() {
     const {containerStyle, eventsWrapperStyle, footerStyle} = styles
@@ -56,7 +64,9 @@ class EventList extends Component {
         <Header/>
         <ScrollView style={eventsWrapperStyle}>
           {this.renderEvents()}
-          {this.renderMonthlyStats()}
+          <View style={styles.monthlyStatsWrapper}>
+            {this.renderMonthlyStats()}
+          </View>
         </ScrollView>
         <Footer>
           <View style={styles.footerButtonsWrapper}>
@@ -72,6 +82,7 @@ class EventList extends Component {
 
 const styles = {
   monthlyStatsWrapper: {
+    marginBottom: 150,
     margin: 10,
     flexDirection: 'column'
   },
@@ -104,50 +115,12 @@ const styles = {
   }
 };
 
-// i should create actionBucket like
-// {year: {
-      // month: {
-      //   actionsCount:
-      //   total:
-      // }
-// }}
-
 const mapStateToProps = (state) => {
-  // function createEventsBucket(events){
-  //   // group by year
-  //   var i = 0, val, groupedByYear = [];
-  //   for ( ;i < events.length; i++){
-  //     val = new Date(events[i]['created_at']).getFullYear()
-  //     // si la date existe je push
-  //     if (result[val]){
-  //       console.log(index)
-  //       console.log(result)
-  //       groupedByYear[val].push(events[i])
-  //     }
-  //     // sinon je cree la clé puis je push
-  //     else {
-  //       groupedByYear[val] = []
-  //       groupedByYear[val].push(events[i])
-  //     }
-  //   }
-  //   var i = 0, val,
-  //         groupedByMonth = [];
-  //
-  //   for ( ;i < groupedByYear.length; i++){
-  //     for (j=0, j< groupedByYear[i].length; j++){
-  //       val = new Date(groupedByYear[i][j]['created_at'].getFullMonth())
-  //       if groupedByYear[i][j]
-  //     }
-  //   }
-  //
-  //   console.log('before result')
-  //   console.log(result)
-  //   return result
-  // }
-
-
-  // createEventsBucket(state.eventsData.events)
+  var groupedByYear = utilities.groupByYear(state.eventsData.events);
+  var groupedByMonth = utilities.groupByMonth(groupedByYear)
+  var stats = utilities.aggregateDurations(groupedByMonth)
   return { events: state.eventsData.events,
+           stats: stats,
            currentEventId: state.eventsData.currentEventId}
         }
 export default connect(mapStateToProps, { setCurrentEvent, resetAppInfo, logoutUser })(EventList);
