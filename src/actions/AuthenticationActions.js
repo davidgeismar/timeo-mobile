@@ -27,10 +27,10 @@ export const loginUser = (creds) => {
     //               grant_type: 'password',
     //             }
     const conf = { grant_type: 'password' }
-    const creds = {
-      username: 'r.maury@xair.fr',
-      password: 'obeya'
-    }
+    //const creds = {
+    //  username: 'r.maury@xair.fr',
+    //  password: 'obeya'
+    //}
     const fullConf = {...creds, ...conf}
     API.post('/oauth/token', fullConf)
       .then(response => loginUserSuccess(dispatch, response))
