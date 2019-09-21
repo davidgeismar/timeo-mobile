@@ -38,7 +38,7 @@ class Header extends Component {
           <Avatar
             size="small"
             rounded
-            source={{uri: this.props.logo_thumb}}
+            source={{uri: this.props.logo_thumb, initials: this.props.initials}}
             activeOpacity={0.7}
             />
           </View>
@@ -80,7 +80,8 @@ const mapStateToProps = (state) => {
   return {
     totalTimeSpent: totalTimeSpent,
     countEvents: state.eventsData.events.length,
-    logo_thumb: state.user.user_info.logo_thumb
+    logo_thumb: state.user.user_info.logo_thumb,
+    initials: state.user.user_info.initials
   }
 }
 

@@ -39,7 +39,7 @@ class Starter extends Component {
         <Avatar
           size="small"
           rounded
-          source={{uri: this.props.logo_thumb}}
+          source={{uri: this.props.logo_thumb, initials: this.props.initials}}
           onPress={() => Actions.events()}
           activeOpacity={0.7}
           />
@@ -226,6 +226,7 @@ const mapStateToProps = (state) => {
     if (event.measure_kind == 'automatic'){
       return {
         logo_thumb: state.user.user_info ? state.user.user_info.logo_thumb : null,
+        initials: state.user.user_info ? state.user.user_info.initials : null,
         isChrono: true,
         isSaved: true,
         isOnHold: state.chrono.isOnHold,
@@ -241,6 +242,7 @@ const mapStateToProps = (state) => {
     else {
       return {
         logo_thumb: state.user.user_info ? state.user.user_info.logo_thumb : null,
+        initials: state.user.user_info ? state.user.user_info.initials : null,
         isChrono: false,
         loading: state.loading
       }
@@ -249,6 +251,7 @@ const mapStateToProps = (state) => {
   else {
     return {
       logo_thumb: state.user.user_info ? state.user.user_info.logo_thumb : null,
+      initials: state.user.user_info ? state.user.user_info.initials : null,
       hasRun: state.chrono.hasRun,
       isRunning: state.chrono.isRunning,
       isSaved: state.chrono.isSaved,

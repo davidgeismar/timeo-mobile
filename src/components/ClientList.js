@@ -12,6 +12,8 @@ class ClientList extends Component {
     this.props.updateEvent('client_id', client.id, this.props.duration, this.props.measureKind, this.props.currentEventId)
   }
   renderClients(){
+    console.log("clients test")
+    console.log(this.props.clients)
     return this.props.clients.map(
       client => <LinkCard key={client.id} activationKey={client.id} canBeActivated={true}
                           client={client} customStyle={{width: '47%', height: 60, margin: 5}}
@@ -71,7 +73,7 @@ const mapStateToProps = (state) => {
   const event = state.eventsData.currentEvent
   return { events: state.eventsData.events,
            currentEventId: state.eventsData.currentEventId,
-           clients: state.clients,
+           clients: state.clients.clients,
            duration: event ? event.duration : null,
            measureKind: event ? event.measure_kind : null,
            loading: state.loading

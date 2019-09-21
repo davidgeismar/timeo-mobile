@@ -53,6 +53,9 @@ class CardBlock extends Component {
   renderAvatar(affected_to_id){
     if (this.props.resources){
       if (this.props.resources.resources.length > 0 ){
+        console.log("RESOURCES");
+        console.log(this.props.resources.resources);
+        console.log(affected_to_id);
         const affectedTo = this.props.resources.resources.find((resource) => resource.id == affected_to_id)
         console.log('userThumbUrl')
         console.log(affectedTo)
@@ -60,7 +63,7 @@ class CardBlock extends Component {
           return   <Avatar
               size="small"
               rounded
-              source={{uri: affectedTo.user_info.logo_thumb}}
+              source={{uri: affectedTo.user_info.logo_thumb, initials: affectedTo.user_info.initials}}
               onPress={() => Actions.events()}
               activeOpacity={0.7}
               />
@@ -87,6 +90,9 @@ class CardBlock extends Component {
     }
   }
   renderCards(cards){
+    // console.log("CARDS");
+    // console.log(cards);
+    // there is no more affected to Id
     return cards.map(
               card => <Card
                         customStyle={{width: 300, height: 80, margin: 5,}}

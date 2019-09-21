@@ -13,6 +13,8 @@ import Header from './Header';
 class KanbanList extends Component {
 
   renderKanbans(){
+    console.log("Kanbans");
+    console.log(this.props);
     return this.props.kanbans.map(
       kanban => <LinkCard
                           customStyle={{width: '47%', height: 60, margin: 5}}
@@ -93,6 +95,7 @@ const styles = {
 const mapStateToProps = (state) => {
   const event = state.eventsData.currentEvent
   const disabled = state.kanbans.selectedKanban ? false : true
+
   return { kanbans: state.kanbans.list,
            selectedKanban: state.kanbans.selectedKanban,
            eventId: state.eventsData.currentEventId,

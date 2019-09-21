@@ -27,10 +27,10 @@ export const loginUser = (creds) => {
     //               grant_type: 'password',
     //             }
     const conf = { grant_type: 'password' }
-    //const creds = {
-    //  username: 'r.maury@xair.fr',
-    //  password: 'obeya'
-    //}
+    const creds = {
+     username: 'admin@serenis-groupe.fr',
+     password: 'password'
+    }
     const fullConf = {...creds, ...conf}
     API.post('/oauth/token', fullConf)
       .then(response => loginUserSuccess(dispatch, response))
@@ -50,7 +50,7 @@ const loginUserSuccess = (dispatch, data) => {
     type: SET_AUTH_TOKEN,
     payload: {token: data.data.access_token}
   })
-  API.get('/internal/timeo/api/v0/me')
+  API.get('/internal/obeya/api/v0/me')
     .then(response => getUserInfoSuccess(dispatch, response))
     .catch(error => onRequestErrorCallback(dispatch, error));
 };
@@ -82,7 +82,7 @@ const loadResources = () => {
       .then(response => initialFetchEventsSuccess(dispatch, response))
       .catch(error => onRequestErrorCallback(dispatch, error));
     // clients
-    API.get('/internal/timeo/api/v0/clients')
+    API.get('/internal/obeya/api/v0/clients')
       .then(response => initialFetchClientsSuccess(dispatch, response))
       .catch(error => onRequestErrorCallback(dispatch, error));
     // resources

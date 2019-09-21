@@ -88,7 +88,7 @@ const Avatar = props => {
   };
 
   const renderContent = () => {
-    if (source) {
+    if (source.uri) {
       return (
         <Image
           style={[
@@ -100,9 +100,9 @@ const Avatar = props => {
           {...imageProps}
         />
       );
-    } else if (title) {
+    } else if (source.initials) {
       return (
-        <Text style={[styles.title, titleStyle && titleStyle]}>{title}</Text>
+        <Text style={[styles.title, titleStyle && titleStyle]}>{source.initials}</Text>
       );
     }
   };

@@ -85,6 +85,10 @@ export const changeCardListScope = (switchValue, searchPattern, kanbanId) => {
 }
 
 export const changeCardListScopeSuccess = (dispatch, data, limitToMine) => {
+  // console.log("changeCardListScopeSuccess")
+  // console.log(data)
+  dispatch(setLoaderState(false))
+  dispatch(setErrorState(false))
   dispatch({
     type: CHANGE_TASKLIST_SCOPE,
     payload: { limitToMine: limitToMine,

@@ -374,12 +374,13 @@ const deleteActionFileSuccess = (dispatch, eventId) => {
 export const sendFileToApi = (eventId, res) =>{
   return(dispatch, getState) => {
     console.log('---- sendFileToApi ----');
-    const uploadUrl = `https://staging.obeya.io/internal/timeo/api/v0/actions/${eventId}/action-file`
-    // const uploadUrl = `http://dev.obeya.local:3000/internal/timeo/api/v0/actions/${eventId}/action-file`
+    // const uploadUrl = `https://staging.obeya.io/internal/timeo/api/v0/actions/${eventId}/action-file`
+    const uploadUrl = `http://192.168.43.92:3000/internal/timeo/api/v0/actions/${eventId}/action-file`
     const filename = res.fileName
     fileConfig = {uri: res.uri, type: res.type, name: res.fileName}
+    console.log(fileConfig)
+    // -F "action_file[title]=som title" -F "action_file[kind]=file" -F "action_file[file]=@IMG_20190218_180358.jpg;type=image/jpeg"
     headersData = {
-      'Accept': 'application/json',
       'Authorization': 'Bearer ' + getState().authentication.token
     }
 
@@ -388,6 +389,8 @@ export const sendFileToApi = (eventId, res) =>{
     data.append('action_file[kind]', 'file');
     data.append('action_file[file]', fileConfig);
 
+    console.log("DATA")
+    console.log(data)
     fetch(uploadUrl, {
       headers: headersData,
       method: 'post',

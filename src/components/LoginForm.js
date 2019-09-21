@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, TouchableOpacity, ImageBackground, Image, TextInput, Platform, ScrollView} from 'react-native'
 import { connect } from 'react-redux';
 import { loginUser, authUpdate, fetchImageOfTheDay} from '../actions';
-import {Actions} from 'react-native-router-flux'
+import { Actions } from 'react-native-router-flux'
 import StylishInput from './common/StylishInput';
 import Spinner from './common/Spinner';
 import Great from './assets/Great'
@@ -19,6 +19,7 @@ import Absent from './assets/Absent'
 
 class LoginForm extends Component {
   componentWillMount(){
+    console.log("live reload is on babe yeeeaahh")
     this.props.fetchImageOfTheDay()
   }
   loginUser(mood){

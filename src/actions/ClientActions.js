@@ -8,7 +8,7 @@ import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderA
 export const fetchClients = () => {
   return (dispatch) => {
     dispatch(setLoaderState(true))
-    API.get('/internal/timeo/api/v0/clients')
+    API.get('/internal/obeya/api/v0/clients')
       .then(response => fetchClientsSuccess(dispatch, response))
       .catch(error => onRequestErrorCallback(dispatch, error));
     };
