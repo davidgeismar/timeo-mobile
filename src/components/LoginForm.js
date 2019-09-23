@@ -19,7 +19,6 @@ import Absent from './assets/Absent'
 
 class LoginForm extends Component {
   componentWillMount(){
-    console.log("live reload is on babe yeeeaahh")
     this.props.fetchImageOfTheDay()
   }
   loginUser(mood){

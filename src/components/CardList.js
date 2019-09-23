@@ -170,7 +170,6 @@ const styles = {
 const mapStateToProps = (state) => {
   const disabled = state.cards.selectedCard ? false : true
   const event = state.eventsData.currentEvent
-  console.log(state)
   return { cards: state.cards.list,
            selectedKanban: state.kanbans.selectedKanban,
            selectedKanbanName: event ? event.kanban__name : null,

@@ -1,14 +1,8 @@
   import 'babel-polyfill';
   import axios from 'axios';
-
-
-  if (__DEV__) {
-    const baseUrl = 'http://192.168.43.92:3000';
-  }
-  else {
-    const baseUrl = 'https://staging.obeya.io';
-  }
+  // import env from 'react-native-config'
 
   export default axios.create({
+    // baseURL: env.API_HOST
     baseURL: 'http://192.168.43.92:3000'
   });

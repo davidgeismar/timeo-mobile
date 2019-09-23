@@ -57,7 +57,6 @@ const loginUserSuccess = (dispatch, data) => {
 
 // callback for error during login
 export const onRequestErrorCallbackLogin = (dispatch, error) => {
-  console.log(error);
   dispatch(setLoaderState(false))
   dispatch(setErrorState(error.message))
 };

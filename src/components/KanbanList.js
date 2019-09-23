@@ -13,8 +13,6 @@ import Header from './Header';
 class KanbanList extends Component {
 
   renderKanbans(){
-    console.log("Kanbans");
-    console.log(this.props);
     return this.props.kanbans.map(
       kanban => <LinkCard
                           customStyle={{width: '47%', height: 60, margin: 5}}

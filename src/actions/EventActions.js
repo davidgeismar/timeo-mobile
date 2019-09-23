@@ -81,7 +81,6 @@ export const setCurrentEvent = (eventId) => {
     });
 
     const currentEvent = getState().eventsData.events.find(event => event.id == eventId)
-    console.log('in setCurrentEvent')
     if (currentEvent.measure_kind == 'automatic'){
       dispatch({
         type: SET_CURRENT_CHRONO_BASETIME,
@@ -89,7 +88,6 @@ export const setCurrentEvent = (eventId) => {
       })
     }
     else {
-      console.log('setting current manual duration')
       dispatch({
         type: SET_CURRENT_MANUAL_DURATION,
         payload: spitHourMinute(currentEvent.duration)
@@ -205,8 +203,6 @@ const preUpdateActions = (dispatch, prop, value, eventNeedsUpdate, cardInfos=nul
 
 
 const updateCardInfos = (cardInfos) => {
-  console.log('in updateCardInfos')
-  console.log(cardInfos)
   return {
     type: SET_CURRENT_EVENT_TASK,
     payload: cardInfos
@@ -241,7 +237,6 @@ export const updateEvent = (prop, value, duration, measureKind, eventId, redirec
     if (eventNeedsUpdate) {
       data = preparingData(prop, value, duration, measureKind)
     }
-    console.log(cardInfos)
     // mainly activating tabs and fetching data if necessary
     preUpdateActions(dispatch, prop, value, eventNeedsUpdate, cardInfos)
 
@@ -280,7 +275,6 @@ const onRequestErrorCallbackUpdateEvent = (dispatch, error, prop, measureKind) =
 const updateEventSuccess = (dispatch, data, prop, redirect, eventNeedsUpdate) => {
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
-  console.log(data.data)
   dispatch({
     type: UPDATE_EVENT,
     payload: data.data
@@ -300,7 +294,6 @@ const updateEventSuccess = (dispatch, data, prop, redirect, eventNeedsUpdate) =>
     case 'kind_id':
       return dispatch(activateTab('info'))
     case 'subject':
-      console.log('save button events')
       return dispatch(activateTab('events'))
     case 'kanban_id':
       return   dispatch({
@@ -357,8 +350,6 @@ const deleteEventSuccess = (dispatch, eventId) => {
 
 export const deleteActionFile = (eventId, fileId) => {
   return(dispatch) => {
-    console.log("eventId", eventId)
-    console.log("fileId", fileId)
     API.delete(`/internal/timeo/api/v0/actions/${eventId}/action-file/${fileId}`)
       .then(response => deleteActionFileSuccess(dispatch, eventId))
       .catch(error => onRequestErrorCallback(dispatch, error));
@@ -373,12 +364,10 @@ const deleteActionFileSuccess = (dispatch, eventId) => {
 
 export const sendFileToApi = (eventId, res) =>{
   return(dispatch, getState) => {
-    console.log('---- sendFileToApi ----');
     // const uploadUrl = `https://staging.obeya.io/internal/timeo/api/v0/actions/${eventId}/action-file`
     const uploadUrl = `http://192.168.43.92:3000/internal/timeo/api/v0/actions/${eventId}/action-file`
     const filename = res.fileName
     fileConfig = {uri: res.uri, type: res.type, name: res.fileName}
-    console.log(fileConfig)
     // -F "action_file[title]=som title" -F "action_file[kind]=file" -F "action_file[file]=@IMG_20190218_180358.jpg;type=image/jpeg"
     headersData = {
       'Authorization': 'Bearer ' + getState().authentication.token
@@ -389,8 +378,6 @@ export const sendFileToApi = (eventId, res) =>{
     data.append('action_file[kind]', 'file');
     data.append('action_file[file]', fileConfig);
 
-    console.log("DATA")
-    console.log(data)
     fetch(uploadUrl, {
       headers: headersData,
       method: 'post',

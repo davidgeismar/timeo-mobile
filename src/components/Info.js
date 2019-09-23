@@ -59,12 +59,7 @@ class Info extends Component {
     DocumentPicker.show({
         filetype: [DocumentPickerUtil.images()],
       },(error,res) => {
-        // console.log('in picker')
-        // console.log(Object.getOwnPropertyNames(res))
-        // console.log(res.fileName)
-        // console.log(res.type, res.uri)
         this.props.sendFileToApi(this.props.eventId, res)
-        // this.props.sendFileToA
       });
   }
 
@@ -198,9 +193,7 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-  console.log(event);
   const event = state.eventsData.currentEvent;
-  console.log(event);
   if (event){
     let comment
     if (state.eventsData.currentEventComment == ""){

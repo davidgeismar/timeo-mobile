@@ -25,7 +25,6 @@ import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderA
  }
 
  const loadKanbanCardsSuccess = (dispatch, data) => {
-   console.log('in loadKanbanCardsSuccess')
    const cards = data.data
    dispatch(setLoaderState(false))
    dispatch(setErrorState(false))
@@ -85,8 +84,6 @@ export const changeCardListScope = (switchValue, searchPattern, kanbanId) => {
 }
 
 export const changeCardListScopeSuccess = (dispatch, data, limitToMine) => {
-  // console.log("changeCardListScopeSuccess")
-  // console.log(data)
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
   dispatch({

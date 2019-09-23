@@ -39,7 +39,6 @@ import API from './Api';
  }
 
 export const loadSelectedKanban = (kanbanId) => {
-  console.log('loadSelectedKanban')
   return (dispatch) => {
     API.get(`/internal/timeo/api/v0/kameo_kanbans/${kanbanId}`)
     .then(response => dispatch(setCurrentKanban(response.data)))
@@ -47,7 +46,6 @@ export const loadSelectedKanban = (kanbanId) => {
   }
 }
 export const setCurrentKanban = (kanban) => {
-  console.log('in setCurrentKanban')
   return {
           type: SET_CURRENT_KANBAN,
           payload: kanban

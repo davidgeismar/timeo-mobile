@@ -36,7 +36,6 @@ class EventList extends Component {
     var years = Object.keys(this.props.stats)
     for ( i=0;i < years.length; i++){
       var currentYear = years[i]
-      console.log(currentYear)
       var months = Object.keys(this.props.stats[currentYear])
       for (j=0; j<months.length; j++){
         var currentMonth = months[j]

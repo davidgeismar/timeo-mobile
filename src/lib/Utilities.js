@@ -67,7 +67,6 @@ export const groupByYear = (events) => {
       groupedByYear[val].push(events[i])
     }
   }
-  // console.log(groupedByYear)
   return groupedByYear
 }
 
@@ -83,7 +82,6 @@ export const groupByMonth = (groupedByYear) => {
     var currentYear = years[i]
     groupedByMonth[currentYear] = {};
     for (j=0; j< groupedByYear[currentYear].length; j++){
-      console.log(groupedByYear[currentYear][j]['created_at'])
       var date = new Date(groupedByYear[currentYear][j]['created_at'])
       val = monthNames[date.getMonth()];
       if (groupedByMonth[currentYear][val]){
