@@ -57,8 +57,7 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: '#FCFCFC',
-    fontFamily: "lato"
+    backgroundColor: '#FCFCFC'
   },
   svgStyle: {
     height: 30,
