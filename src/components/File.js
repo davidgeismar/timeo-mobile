@@ -7,6 +7,7 @@ import { deleteActionFile } from '../actions';
 import Close from './assets/Close'
 import TimeFormatter from 'minutes-seconds-milliseconds'
 import * as utilities from '../lib/Utilities';
+import env from 'react-native-config';
 
 
 class File extends Component {
@@ -30,6 +31,7 @@ class File extends Component {
   }
   render() {
     const { textWrapperStyle, svgStyle, containerStyle, textStyle } = styles
+    console.log("FILE URL", env.S3_PREFIX + this.props.file.url.replace(/.*(?=paperclip_assets)/i, ""))
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
       <Modal
@@ -43,7 +45,7 @@ class File extends Component {
             <View>
                 <Image
                   style={{width: 200, height: 200}}
-                  source={{uri: "http://"+this.props.file.url }}
+                  source={{uri: env.S3_PREFIX + this.props.file.url.replace(/.*(?=paperclip_assets)/i, "")}}
                 />
 
               <TouchableOpacity
