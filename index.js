@@ -2,7 +2,6 @@ import { AppRegistry } from 'react-native';
 import App from './App';
 
 if (__DEV__) {
-  console.log('test');
     global.XMLHttpRequest = global.originalXMLHttpRequest ?
         global.originalXMLHttpRequest :
         global.XMLHttpRequest;
