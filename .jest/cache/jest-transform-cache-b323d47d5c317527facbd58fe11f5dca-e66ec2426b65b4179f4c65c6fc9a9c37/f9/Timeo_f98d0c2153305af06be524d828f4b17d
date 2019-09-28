@@ -1,0 +1,50 @@
+0bb8d0b9e16d5c9cce77b0f47b73c4fb
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/assets/Timeo.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _reactNativeSvg2 = babelHelpers.interopRequireDefault(require('react-native-svg'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Timeo = function (_Component) {babelHelpers.inherits(Timeo, _Component);function Timeo() {babelHelpers.classCallCheck(this, Timeo);return babelHelpers.possibleConstructorReturn(this, (Timeo.__proto__ || Object.getPrototypeOf(Timeo)).apply(this, arguments));}babelHelpers.createClass(Timeo, [{ key: 'render', value: function render()
+    {
+      return (
+        _react2.default.createElement(_reactNativeSvg2.default, {
+            viewBox: '0 0 21.71 33.32',
+            style: this.props.style, __source: { fileName: _jsxFileName, lineNumber: 24 } },
+
+          _react2.default.createElement(require('react-native-svg').G, { id: 'Calque_2', 'data-name': 'Calque 2', __source: { fileName: _jsxFileName, lineNumber: 28 } },
+            _react2.default.createElement(require('react-native-svg').G, { id: 'Calque_1-2', 'data-name': 'Calque 1', __source: { fileName: _jsxFileName, lineNumber: 29 } },
+              _react2.default.createElement(require('react-native-svg').Path, { 'class': 'timeo-1',
+                d: 'M0,22.57V10.75A10.46,10.46,0,0,1,2.9,3.12a10.64,10.64,0,0,1,8-3.12,10.65,10.65,0,0,1,8,3.12,10.41,10.41,0,0,1,2.9,7.63V22.57a10.47,10.47,0,0,1-2.9,7.63,10.65,10.65,0,0,1-8,3.12A10.64,10.64,0,0,1,2.9,30.2,10.47,10.47,0,0,1,0,22.57Zm4.3,0a6.81,6.81,0,0,0,1.55,4.66,6.27,6.27,0,0,0,5,2.22,6.28,6.28,0,0,0,5-2.22,6.86,6.86,0,0,0,1.55-4.66V10.75a6.89,6.89,0,0,0-1.55-4.67,6.3,6.3,0,0,0-5-2.21,6.3,6.3,0,0,0-5,2.21A6.84,6.84,0,0,0,4.3,10.75Z',
+                fill: '#d9d9d9', __source: { fileName: _jsxFileName, lineNumber: 30 } }),
+
+              _react2.default.createElement(require('react-native-svg').Polygon, { 'class': 'timeo-2',
+                points: '15.6 20.41 11.37 16.17 11.37 10.18 8.68 10.18 8.68 17.28 8.68 17.28 13.7 22.31 15.6 20.41',
+                fill: '#9c9b9b', __source: { fileName: _jsxFileName, lineNumber: 34 } }),
+
+              _react2.default.createElement(require('react-native-svg').Path, { 'class': 'timeo-3',
+                d: 'M15.86,27.23a6.28,6.28,0,0,1-5,2.22,6.27,6.27,0,0,1-5-2.22A6.81,6.81,0,0,1,4.3,22.57V10.75A6.84,6.84,0,0,1,5.85,6.08a6.13,6.13,0,0,1,4-2.14V0A10.37,10.37,0,0,0,2.9,3.12,10.46,10.46,0,0,0,0,10.75V22.57A10.47,10.47,0,0,0,2.9,30.2a10.64,10.64,0,0,0,8,3.12,10.65,10.65,0,0,0,8-3.12,9.58,9.58,0,0,0,1.52-2l-3.28-3.08A6,6,0,0,1,15.86,27.23Z',
+                fill: '#f29100', __source: { fileName: _jsxFileName, lineNumber: 38 } })))));
+
+
+
+
+
+    } }]);return Timeo;}(require('react').Component);exports.default =
+
+
+Timeo;

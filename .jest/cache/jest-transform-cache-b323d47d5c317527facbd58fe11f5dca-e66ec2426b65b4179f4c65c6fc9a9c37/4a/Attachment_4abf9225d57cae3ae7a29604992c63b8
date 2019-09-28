@@ -1,0 +1,35 @@
+5cb2170a5e2c95b1149b99f5f7dc319a
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/assets/Attachment.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _reactNativeSvg2 = babelHelpers.interopRequireDefault(require('react-native-svg'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Attachment = function (_Component) {babelHelpers.inherits(Attachment, _Component);function Attachment() {babelHelpers.classCallCheck(this, Attachment);return babelHelpers.possibleConstructorReturn(this, (Attachment.__proto__ || Object.getPrototypeOf(Attachment)).apply(this, arguments));}babelHelpers.createClass(Attachment, [{ key: 'render', value: function render()
+        {
+            return (
+                _react2.default.createElement(_reactNativeSvg2.default, {
+                        style: this.props.style,
+                        viewBox: '0 0 11 22', __source: { fileName: _jsxFileName, lineNumber: 22 } },
+
+                    _react2.default.createElement(require('react-native-svg').Path, {
+                        fill: this.props.fill,
+                        d: 'M9.5,5 L9.5,16.5 C9.5,18.71 7.71,20.5 5.5,20.5 C3.29,20.5 1.5,18.71 1.5,16.5 L1.5,4 C1.5,2.62 2.62,1.5 4,1.5 C5.38,1.5 6.5,2.62 6.5,4 L6.5,14.5 C6.5,15.05 6.05,15.5 5.5,15.5 C4.95,15.5 4.5,15.05 4.5,14.5 L4.5,5 L3,5 L3,14.5 C3,15.88 4.12,17 5.5,17 C6.88,17 8,15.88 8,14.5 L8,4 C8,1.79 6.21,0 4,0 C1.79,0 0,1.79 0,4 L0,16.5 C0,19.54 2.46,22 5.5,22 C8.54,22 11,19.54 11,16.5 L11,5 L9.5,5 Z', __source: { fileName: _jsxFileName, lineNumber: 26 } })));
+
+
+        } }]);return Attachment;}(require('react').Component);exports.default =
+
+
+Attachment;

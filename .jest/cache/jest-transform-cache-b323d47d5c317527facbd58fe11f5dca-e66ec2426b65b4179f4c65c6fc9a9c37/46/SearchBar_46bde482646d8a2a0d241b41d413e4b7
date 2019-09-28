@@ -1,0 +1,68 @@
+d653bc77307509ef12119a3a6a9f037b
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/SearchBar.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Close2 = babelHelpers.interopRequireDefault(require('./assets/Close.js'));var _Search2 = babelHelpers.interopRequireDefault(require('./assets/Search.js'));var
+
+
+
+
+
+
+
+SearchBar = function (_Component) {babelHelpers.inherits(SearchBar, _Component);function SearchBar() {babelHelpers.classCallCheck(this, SearchBar);return babelHelpers.possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).apply(this, arguments));}babelHelpers.createClass(SearchBar, [{ key: 'componentWillMount', value: function componentWillMount()
+    {
+      this.setState({
+        expanded: false });
+
+    } }, { key: 'updateExpansionStatus', value: function updateExpansionStatus(
+
+    expanded) {
+      this.setState({ expanded: expanded });
+      this.props.updateSearchCardStatus(expanded);
+    } }, { key: 'renderSearchBar', value: function renderSearchBar()
+
+    {var _this2 = this;var
+      containerStyle = styles.containerStyle;
+      if (this.state.expanded) {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 25 } },
+            _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this2.updateExpansionStatus(false);}, __source: { fileName: _jsxFileName, lineNumber: 26 } },
+              _react2.default.createElement(_Close2.default, { style: { height: 15, width: 15 }, __source: { fileName: _jsxFileName, lineNumber: 27 } })),
+
+            _react2.default.createElement(require('react-native').TextInput, {
+              style: { height: 40, width: '100%', borderBottomColor: 'grey', borderBottomWidth: 1 },
+              placeholder: 'Search',
+              value: this.props.value,
+              onChangeText: this.props.onChangeText, __source: { fileName: _jsxFileName, lineNumber: 29 } })));
+
+
+
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').TouchableOpacity, { style: this.props.customStyle, onPress: function onPress() {return _this2.updateExpansionStatus(true);}, __source: { fileName: _jsxFileName, lineNumber: 40 } },
+            _react2.default.createElement(_Search2.default, { style: { height: 24, width: 24 }, __source: { fileName: _jsxFileName, lineNumber: 41 } })));
+
+
+      }
+    } }, { key: 'render', value: function render()
+    {
+      return (
+        _react2.default.createElement(require('react-native').View, { style: { flex: 1, alignSelf: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 48 } },
+          this.renderSearchBar()));
+
+
+    } }]);return SearchBar;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center' } };exports.default =
+
+
+
+
+
+
+
+(0, require('react-redux').connect)(null, { updateSearchCardStatus: require('../actions').updateSearchCardStatus })(SearchBar);

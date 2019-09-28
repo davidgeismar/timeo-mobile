@@ -1,0 +1,14 @@
+501bc8912d795fd40668c359df8dd184
+Object.defineProperty(exports, "__esModule", { value: true });exports.ClientReducer = undefined;
+
+
+var INITIAL_STATE = [];
+
+var ClientReducer = exports.ClientReducer = function ClientReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+  switch (action.type) {
+    case require('../actions/types').LOAD_CLIENTS:
+      return action.payload;
+    default:
+      return state;}
+
+};

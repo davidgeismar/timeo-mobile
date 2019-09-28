@@ -1,0 +1,79 @@
+7070ae0cdeabd80d03ad80a00991b739
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/SmallCard.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Avatar2 = babelHelpers.interopRequireDefault(require('./Avatar'));var
+
+
+
+
+
+
+SmallCard = function (_Component) {babelHelpers.inherits(SmallCard, _Component);function SmallCard() {babelHelpers.classCallCheck(this, SmallCard);return babelHelpers.possibleConstructorReturn(this, (SmallCard.__proto__ || Object.getPrototypeOf(SmallCard)).apply(this, arguments));}babelHelpers.createClass(SmallCard, [{ key: 'setBackgroundColor', value: function setBackgroundColor(
+
+    card_type) {
+      switch (card_type) {
+        case 'task':
+          return '#51B8F3';
+        case 'support':
+          return '#E66C72';
+        case 'issue':
+          return '#F8C67A';
+        case 'improvement':
+          return '#9AD5E2';
+        case 'ticket_support':
+          return '#E66C72';}
+
+    } }, { key: 'userThumbUrl', value: function userThumbUrl(
+
+    affected_to_id) {
+      if (this.props.resources.length > 0) {
+        var affectedTo = this.props.resources.find(function (resource) {return resource.id == affected_to_id;});
+        if (affectedTo) {
+          return affectedTo.user_info.logo_thumb;
+        } else
+        {
+          return "";
+        }
+      } else
+      {
+        return "";
+      }
+    } }, { key: 'render', value: function render()
+    {var
+      card = this.props.card;
+      return (
+        _react2.default.createElement(require('react-native').TouchableWithoutFeedback, { onPress: this.props.onPress, __source: { fileName: _jsxFileName, lineNumber: 42 } },
+          _react2.default.createElement(require('react-native').View, { style: [styles.containerStyle, this.props.customStyle],
+              backgroundColor: this.setBackgroundColor(card.card_type), __source: { fileName: _jsxFileName, lineNumber: 43 } },
+            _react2.default.createElement(_Avatar2.default, {
+              size: 'small',
+              rounded: true,
+              source: { uri: this.userThumbUrl(card.affected_to_id) },
+              activeOpacity: 0.7, __source: { fileName: _jsxFileName, lineNumber: 45 } }),
+
+            _react2.default.createElement(require('react-native').Text, { style: { fontSize: 9, color: 'white' }, __source: { fileName: _jsxFileName, lineNumber: 51 } },
+              card.client__name, ' ', card.project__name, ' ', "\n", ' > ', card.subject, ' ', card.reference))));
+
+
+
+
+    } }]);return SmallCard;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    borderColor: '#8CCDF8',
+    borderWidth: 2,
+    alignItems: 'center' } };
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    card: state.eventsData.currentEventCard,
+    resources: state.resources.resources };
+
+};exports.default =
+
+(0, require('react-redux').connect)(mapStateToProps, null)(SmallCard);

@@ -1,0 +1,5 @@
+537a225a8caec6ca86dec55d298cb3f3
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = function (opacity) {
+    var value = +opacity;
+    return typeof value !== "number" || isNaN(value) ? 1 : value;
+};

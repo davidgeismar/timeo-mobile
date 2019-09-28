@@ -1,0 +1,31 @@
+316300ffe8935d5d8a8c5bd02e1082b3
+
+
+
+
+
+
+
+
+
+'use strict';
+
+
+
+
+function StyleSheetPropType(
+shape)
+{
+  var shapePropType = require('createStrictShapeTypeChecker')(shape);
+  return function (props, propName, componentName, location) {
+    var newProps = props;
+    if (props[propName]) {
+
+      newProps = {};
+      newProps[propName] = require('flattenStyle')(props[propName]);
+    }for (var _len = arguments.length, rest = Array(_len > 4 ? _len - 4 : 0), _key = 4; _key < _len; _key++) {rest[_key - 4] = arguments[_key];}
+    return shapePropType.apply(undefined, [newProps, propName, componentName, location].concat(rest));
+  };
+}
+
+module.exports = StyleSheetPropType;

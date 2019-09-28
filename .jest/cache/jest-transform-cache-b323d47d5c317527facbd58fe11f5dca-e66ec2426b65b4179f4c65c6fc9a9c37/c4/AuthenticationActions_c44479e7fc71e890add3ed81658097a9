@@ -1,0 +1,147 @@
+0dd6147600601bbeae4875ce7959a8e6
+Object.defineProperty(exports, "__esModule", { value: true });exports.logoutUser = exports.onRequestErrorCallbackLogin = exports.loginUser = exports.authUpdate = undefined;var _Api2 = babelHelpers.interopRequireDefault(require('./Api'));
+
+
+
+
+
+
+
+
+
+
+
+
+var authUpdate = exports.authUpdate = function authUpdate(_ref) {var prop = _ref.prop,value = _ref.value;
+  return {
+    type: require('./types').AUTH_UPDATE,
+    payload: { prop: prop, value: value } };
+
+};
+
+
+var loginUser = exports.loginUser = function loginUser(creds) {
+  return function (dispatch) {
+    dispatch((0, require('./LoaderActions').setLoaderState)(true));
+
+
+
+
+    var conf = { grant_type: 'password' };
+    var creds = {
+      username: 'admin@serenis-groupe.fr',
+      password: 'password' };
+
+    var fullConf = babelHelpers.extends({}, creds, conf);
+    _Api2.default.post('/oauth/token', fullConf).
+    then(function (response) {return loginUserSuccess(dispatch, response);}).
+    catch(function (error) {return onRequestErrorCallbackLogin(dispatch, error);});
+  };
+};
+
+
+
+
+
+var loginUserSuccess = function loginUserSuccess(dispatch, data) {
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  _Api2.default.defaults.headers.common['Accept'] = 'application/json';
+  _Api2.default.defaults.headers.common['Authorization'] = 'Bearer ' + data.data.access_token;
+  dispatch({
+    type: require('./types').SET_AUTH_TOKEN,
+    payload: { token: data.data.access_token } });
+
+  _Api2.default.get('/internal/obeya/api/v0/me').
+  then(function (response) {return getUserInfoSuccess(dispatch, response);}).
+  catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+};
+
+
+var onRequestErrorCallbackLogin = exports.onRequestErrorCallbackLogin = function onRequestErrorCallbackLogin(dispatch, error) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(error.message));
+};
+
+
+var getUserInfoSuccess = function getUserInfoSuccess(dispatch, data) {
+  dispatch({
+    type: require('./types').INITIALIZE_USER,
+    payload: data.data });
+
+  dispatch(loadResources());
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  require('react-native-router-flux').Actions.chrono();
+};
+
+
+var loadResources = function loadResources() {
+  return function (dispatch) {
+    dispatch((0, require('./LoaderActions').setLoaderState)(true));
+
+    _Api2.default.get('/internal/timeo/api/v0/actions').
+    then(function (response) {return initialFetchEventsSuccess(dispatch, response);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+
+    _Api2.default.get('/internal/obeya/api/v0/clients').
+    then(function (response) {return initialFetchClientsSuccess(dispatch, response);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+
+    _Api2.default.get('/internal/obeya/api/v0/resources').
+    then(function (response) {return getRessourcesSuccess(dispatch, response);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+
+var fetchSuccess = function fetchSuccess(dispatch, data, actionType) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: actionType,
+    payload: data.data });
+
+};
+
+var initialFetchEventsSuccess = function initialFetchEventsSuccess(dispatch, data) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').LOAD_EVENTS,
+    payload: data.data });
+
+};
+
+
+var initialFetchClientsSuccess = function initialFetchClientsSuccess(dispatch, data) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').LOAD_CLIENTS,
+    payload: data.data });
+
+};
+
+
+var getRessourcesSuccess = function getRessourcesSuccess(dispatch, data) {
+  dispatch({
+    type: require('./types').SET_RESOURCES,
+    payload: data.data });
+
+};
+
+
+var logoutUser = exports.logoutUser = function logoutUser() {
+  return function (dispatch) {
+    _Api2.default.defaults.headers.common['Authorization'] = '';
+    logoutUserSuccess(dispatch);
+  };
+};
+
+
+var logoutUserSuccess = function logoutUserSuccess(dispatch) {
+  dispatch({
+    type: require('./types').RESET_INFO,
+    payload: true });
+
+  require('react-native-router-flux').Actions.login();
+};

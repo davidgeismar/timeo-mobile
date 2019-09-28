@@ -1,0 +1,13 @@
+da82f065bde1d4ba8e6c7373c0612ab9
+Object.defineProperty(exports, "__esModule", { value: true });exports.resetAppInfo = undefined;
+
+
+var resetAppInfo = exports.resetAppInfo = function resetAppInfo() {
+  return function (dispatch) {
+    dispatch({
+      type: require('./types').RESET_INFO,
+      payload: null });
+
+    require('react-native-router-flux').Actions.chrono();
+  };
+};

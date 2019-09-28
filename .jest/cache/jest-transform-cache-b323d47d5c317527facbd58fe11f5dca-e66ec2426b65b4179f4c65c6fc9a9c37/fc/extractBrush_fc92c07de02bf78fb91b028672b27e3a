@@ -1,0 +1,27 @@
+387950261f00abed2ce04031109259e0
+Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+
+
+function (colorOrBrush) {
+    if (colorOrBrush === "none" || !colorOrBrush) {
+        return null;
+    }
+
+    try {
+        var matched = colorOrBrush.match(_patternReg2.default);
+
+        if (matched) {
+            return [1, matched[1]];
+
+        } else {var _Color$rgb$array =
+
+            (0, _color2.default)(colorOrBrush).
+            rgb().
+            array(),_Color$rgb$array2 = babelHelpers.slicedToArray(_Color$rgb$array, 4),r = _Color$rgb$array2[0],g = _Color$rgb$array2[1],b = _Color$rgb$array2[2],_Color$rgb$array2$ = _Color$rgb$array2[3],a = _Color$rgb$array2$ === undefined ? 1 : _Color$rgb$array2$;
+            return [0, r / 255, g / 255, b / 255, a];
+        }
+    } catch (err) {
+        console.warn("\"" + colorOrBrush + "\" is not a valid color or brush");
+        return null;
+    }
+};var _color2 = babelHelpers.interopRequireDefault(require("color"));var _patternReg2 = babelHelpers.interopRequireDefault(require("./patternReg"));

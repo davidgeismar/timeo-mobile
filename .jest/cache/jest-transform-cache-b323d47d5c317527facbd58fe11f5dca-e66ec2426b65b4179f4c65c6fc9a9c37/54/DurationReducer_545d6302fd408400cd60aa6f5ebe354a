@@ -1,0 +1,30 @@
+a4db9d200a0a6e01ed34410231f4a3a3
+Object.defineProperty(exports, "__esModule", { value: true });exports.DurationReducer = undefined;
+
+
+
+
+
+
+var INITIAL_STATE = {
+  selectedHour: null,
+  selectedMinute: null,
+  chrono: false };
+
+
+var DurationReducer = exports.DurationReducer = function DurationReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+  switch (action.type) {
+    case require('../actions/types').SELECT_HOUR:
+      return babelHelpers.extends({}, state, { selectedHour: action.payload });
+    case require('../actions/types').SELECT_MINUTE:
+      return babelHelpers.extends({}, state, { selectedMinute: action.payload });
+
+
+    case require('../actions/types').SET_CURRENT_MANUAL_DURATION:
+      return { state: state, selectedHour: action.payload.selectedHour, selectedMinute: action.payload.selectedMinute };
+    case require('../actions/types').RESET_INFO:
+      return INITIAL_STATE;
+    default:
+      return state;}
+
+};

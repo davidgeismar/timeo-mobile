@@ -1,0 +1,22 @@
+9e077641c076e1f1622bc487e4d26df3
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/Empty.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Avatar2 = babelHelpers.interopRequireDefault(require('./Avatar'));var _Absent2 = babelHelpers.interopRequireDefault(require('./assets/Absent'));var _Tab2 = babelHelpers.interopRequireDefault(require('./Tab'));var
+
+
+
+
+
+
+Empty = function (_Component) {babelHelpers.inherits(Empty, _Component);function Empty() {babelHelpers.classCallCheck(this, Empty);return babelHelpers.possibleConstructorReturn(this, (Empty.__proto__ || Object.getPrototypeOf(Empty)).apply(this, arguments));}babelHelpers.createClass(Empty, [{ key: 'render', value: function render()
+
+    {
+      return (
+        _react2.default.createElement(require('react-native').View, { __source: { fileName: _jsxFileName, lineNumber: 12 } }));
+
+
+
+
+    } }]);return Empty;}(require('react').Component);exports.default =
+
+
+
+Empty;

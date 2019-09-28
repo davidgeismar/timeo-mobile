@@ -1,0 +1,19 @@
+44d1fbad3570c2141d043c9f6aa2b594
+Object.defineProperty(exports, "__esModule", { value: true });exports.UserReducer = undefined;
+
+
+var INITIAL_STATE = {};
+
+
+var UserReducer = exports.UserReducer = function UserReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+  switch (action.type) {
+    case require('../actions/types').INITIALIZE_USER:
+      return action.payload;
+    case require('../actions/types').LOGIN_USER:
+      return state;
+    case require('../actions/types').LOGOUT_USER:
+      return {};
+    default:
+      return state;}
+
+};

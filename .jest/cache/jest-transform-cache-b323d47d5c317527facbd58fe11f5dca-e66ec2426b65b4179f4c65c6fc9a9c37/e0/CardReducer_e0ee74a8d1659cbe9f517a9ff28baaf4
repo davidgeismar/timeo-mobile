@@ -1,0 +1,50 @@
+a9ef79b9275d9f0735be148fcd90f25a
+Object.defineProperty(exports, "__esModule", { value: true });exports.CardReducer = undefined;
+
+
+
+
+
+
+
+
+
+
+
+var INITIAL_STATE = { list: [],
+    selectedCard: null,
+    searchInit: false,
+    limitToMine: false,
+    searchPattern: '' };
+
+
+var CardReducer = exports.CardReducer = function CardReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+    var filteredCards = void 0;
+    switch (action.type) {
+        case require('../actions/types').LOAD_KANBAN_TASKS:
+            return babelHelpers.extends({}, state, { list: action.payload });
+        case require('../actions/types').UPDATE_SEARCH_PATTERN:
+            return babelHelpers.extends({}, state, { searchPattern: action.payload });
+        case require('../actions/types').SET_CURRENT_TASK:
+            return babelHelpers.extends({}, state, { selectedCard: action.payload });
+        case require('../actions/types').UNSET_CURRENT_TASK:
+            return babelHelpers.extends({}, state, { selectedCard: null });
+        case require('../actions/types').SEARCH_TASK_INIT:
+            return babelHelpers.extends({}, state, { searchInit: action.payload });
+        case require('../actions/types').DELETE_SELECTED_TASK:
+            return babelHelpers.extends({}, state, { selectedCard: null });
+        case require('../actions/types').CHANGE_TASKLIST_SCOPE:
+            return babelHelpers.extends({}, state, {
+                list: action.payload.cards,
+                limitToMine: action.payload.limitToMine });
+        case require('../actions/types').SEARCH_TASK:
+            return babelHelpers.extends({}, state, {
+                list: action.payload });
+
+            return INITIAL_STATE;
+        case require('../actions/types').RESET_INFO:
+            return INITIAL_STATE;
+        default:
+            return state;}
+
+};

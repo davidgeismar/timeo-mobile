@@ -1,0 +1,35 @@
+4e93f0beb9307b918bbe7fe25b490c2c
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/assets/Happy.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _reactNativeSvg2 = babelHelpers.interopRequireDefault(require('react-native-svg'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Happy = function (_Component) {babelHelpers.inherits(Happy, _Component);function Happy() {babelHelpers.classCallCheck(this, Happy);return babelHelpers.possibleConstructorReturn(this, (Happy.__proto__ || Object.getPrototypeOf(Happy)).apply(this, arguments));}babelHelpers.createClass(Happy, [{ key: 'render', value: function render()
+        {
+            return (
+                _react2.default.createElement(_reactNativeSvg2.default, { style: this.props.style, viewBox: '0 0 64 64', 'enable-background': 'new 0 0 64 64', __source: { fileName: _jsxFileName, lineNumber: 24 } },
+                    _react2.default.createElement(require('react-native-svg').Circle, { cx: '32', cy: '32', r: '30', fill: '#ffdd67', __source: { fileName: _jsxFileName, lineNumber: 25 } }),
+                    _react2.default.createElement(require('react-native-svg').G, { fill: '#664e27', __source: { fileName: _jsxFileName, lineNumber: 26 } }, _react2.default.createElement(require('react-native-svg').Circle, { cx: '20.5', cy: '26.6', r: '5', __source: { fileName: _jsxFileName, lineNumber: 26 } }),
+                        _react2.default.createElement(require('react-native-svg').Circle, { cx: '43.5', cy: '26.6', r: '5', __source: { fileName: _jsxFileName, lineNumber: 27 } }),
+                        _react2.default.createElement(require('react-native-svg').Path, { d: 'm44.6 40.3c-8.1 5.7-17.1 5.6-25.2 0-1-.7-1.8.5-1.2 1.6 2.5 4 7.4 7.7 13.8 7.7s11.3-3.6 13.8-7.7c.6-1.1-.2-2.3-1.2-1.6', __source: { fileName: _jsxFileName, lineNumber: 28 } }))));
+
+
+        } }]);return Happy;}(require('react').Component);exports.default =
+
+
+Happy;

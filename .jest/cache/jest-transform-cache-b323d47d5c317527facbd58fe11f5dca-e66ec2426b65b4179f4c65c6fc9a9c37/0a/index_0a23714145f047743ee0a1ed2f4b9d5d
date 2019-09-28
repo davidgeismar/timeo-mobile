@@ -1,0 +1,36 @@
+efda7f001d5a6afba3500dd8eaed9269
+Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(0, require('redux').combineReducers)({
+  selectedDuration: require('./DurationReducer').DurationReducer,
+  selectedAction: require('./ActionReducer').ActionReducer,
+  eventsData: require('./EventReducer').EventReducer,
+  clients: require('./ClientReducer').ClientReducer,
+  chrono: require('./ChronoReducer').ChronoReducer,
+  projects: require('./ProjectReducer').ProjectReducer,
+  kanbans: require('./KanbanReducer').KanbanReducer,
+  cards: require('./CardReducer').CardReducer,
+  user: require('./UserReducer').UserReducer,
+  tabs: require('./TabReducer').TabReducer,
+  authentication: require('./AuthenticationReducer').AuthenticationReducer,
+  actionKinds: require('./ActionKindsReducer').ActionKindsReducer,
+  error: require('./ErrorReducer').ErrorReducer,
+  loading: require('./LoaderReducer').LoaderReducer,
+  backgroundImage: require('./BackgroundImageReducer').BackgroundImageReducer,
+  resources: require('./ResourceReducer').ResourceReducer });

@@ -1,0 +1,59 @@
+fa5f27dbc4e7d176b89ecc3a6fc2d606
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/ResumeChronoButton.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Pause2 = babelHelpers.interopRequireDefault(require('./assets/Pause'));var
+
+
+
+ResumeChronoButton = function (_Component) {babelHelpers.inherits(ResumeChronoButton, _Component);function ResumeChronoButton() {var _ref;var _temp, _this, _ret;babelHelpers.classCallCheck(this, ResumeChronoButton);for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {args[_key] = arguments[_key];}return _ret = (_temp = (_this = babelHelpers.possibleConstructorReturn(this, (_ref = ResumeChronoButton.__proto__ || Object.getPrototypeOf(ResumeChronoButton)).call.apply(_ref, [this].concat(args))), _this), _this.
+
+    componentDidMount = function () {
+      _this.interval = setInterval(function () {
+        _this.setState(function (state, props) {
+          return {
+            visible: !state.visible };
+
+        });
+      }, 1000);
+    }, _this.
+
+    componentWillUnmount = function () {
+      clearInterval(_this.interval);
+    }, _temp), babelHelpers.possibleConstructorReturn(_this, _ret);}babelHelpers.createClass(ResumeChronoButton, [{ key: 'componentWillMount', value: function componentWillMount()
+    {
+
+      this.setState({ visible: true });
+    } }, { key: 'render', value: function render()
+
+
+
+
+
+
+
+    {var
+      textStyle = styles.textStyle;
+      if (this.state.visible) {
+        return (
+          _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: this.props.onPress, __source: { fileName: _jsxFileName, lineNumber: 35 } },
+            _react2.default.createElement(_Pause2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 36 } })));
+
+
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 42 } }));
+
+
+      }
+    } }]);return ResumeChronoButton;}(require('react').Component);
+;
+
+var styles = {
+  textStyle: {
+    alignSelf: 'center',
+    color: '#8CCDF8',
+    fontSize: 16,
+    fontWeight: '600' } };exports.default =
+
+
+
+ResumeChronoButton;

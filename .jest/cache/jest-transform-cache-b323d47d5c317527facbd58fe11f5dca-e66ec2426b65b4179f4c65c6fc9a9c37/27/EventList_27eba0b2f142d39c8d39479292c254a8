@@ -1,0 +1,126 @@
+cb4954e092340555e678aa86e79e444e
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/EventList.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Button2 = babelHelpers.interopRequireDefault(require('./common/Button'));var _Footer2 = babelHelpers.interopRequireDefault(require('./common/Footer'));var _Event2 = babelHelpers.interopRequireDefault(require('./Event'));var _Header2 = babelHelpers.interopRequireDefault(require('./Header'));var
+
+
+
+
+
+
+
+
+
+utilities = babelHelpers.interopRequireWildcard(require('../lib/Utilities'));var
+
+EventList = function (_Component) {babelHelpers.inherits(EventList, _Component);function EventList() {babelHelpers.classCallCheck(this, EventList);return babelHelpers.possibleConstructorReturn(this, (EventList.__proto__ || Object.getPrototypeOf(EventList)).apply(this, arguments));}babelHelpers.createClass(EventList, [{ key: 'formatDuration', value: function formatDuration(
+
+
+    ms) {
+      var time = new Date(ms);
+      var hours = time.getUTCHours() < 10 ? '0' + time.getUTCHours() : time.getUTCHours();
+      var minutes = time.getUTCMinutes() < 10 ? '0' + time.getUTCMinutes() : time.getUTCMinutes();
+      var seconds = time.getUTCSeconds() < 10 ? '0' + time.getUTCSeconds() : time.getUTCSeconds();
+
+      return hours + ":" + minutes + ":" + seconds;
+    } }, { key: 'renderEvents', value: function renderEvents()
+    {var _this2 = this;
+      if (this.props.events.length > 0) {
+        return (
+          _react2.default.createElement(require('react-native').FlatList, {
+            data: this.props.events,
+            renderItem: function renderItem(_ref) {var item = _ref.item;return _react2.default.createElement(_Event2.default, { key: item.id, event: item, onPress: function onPress() {return _this2.props.setCurrentEvent(item.id);}, __source: { fileName: _jsxFileName, lineNumber: 29 } });},
+            style: { flex: 1 }, __source: { fileName: _jsxFileName, lineNumber: 27 } }));
+
+
+      }
+    } }, { key: 'renderMonthlyStats', value: function renderMonthlyStats()
+    {
+      var years = Object.keys(this.props.stats);
+      for (i = 0; i < years.length; i++) {
+        var currentYear = years[i];
+        var months = Object.keys(this.props.stats[currentYear]);
+        for (j = 0; j < months.length; j++) {
+          var currentMonth = months[j];
+          return (
+            _react2.default.createElement(require('react-native').View, { style: styles.monthlyStatsLine, __source: { fileName: _jsxFileName, lineNumber: 43 } },
+              _react2.default.createElement(require('react-native').Text, { __source: { fileName: _jsxFileName, lineNumber: 44 } },
+                currentYear, " "),
+
+              _react2.default.createElement(require('react-native').Text, { __source: { fileName: _jsxFileName, lineNumber: 47 } },
+                currentMonth, " "),
+
+              _react2.default.createElement(require('react-native').Text, { __source: { fileName: _jsxFileName, lineNumber: 50 } }, 'Actions: ',
+                this.props.stats[currentYear][currentMonth]["total"], ' Total: ', this.formatDuration(this.props.stats[currentYear][currentMonth]["duration"]))));
+
+
+
+        }
+      }
+    } }, { key: 'render', value: function render()
+    {var _this3 = this;var
+      containerStyle = styles.containerStyle,eventsWrapperStyle = styles.eventsWrapperStyle,footerStyle = styles.footerStyle;
+      return (
+
+        _react2.default.createElement(require('react-native').View, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 62 } },
+          _react2.default.createElement(_Header2.default, { __source: { fileName: _jsxFileName, lineNumber: 63 } }),
+          _react2.default.createElement(require('react-native').ScrollView, { style: eventsWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 64 } },
+            this.renderEvents(),
+            _react2.default.createElement(require('react-native').View, { style: styles.monthlyStatsWrapper, __source: { fileName: _jsxFileName, lineNumber: 66 } },
+              this.renderMonthlyStats())),
+
+
+          _react2.default.createElement(_Footer2.default, { __source: { fileName: _jsxFileName, lineNumber: 70 } },
+            _react2.default.createElement(require('react-native').View, { style: styles.footerButtonsWrapper, __source: { fileName: _jsxFileName, lineNumber: 71 } },
+              _react2.default.createElement(_Button2.default, { customStyle: styles.footerButtonStyle, onPress: function onPress() {return _this3.props.resetAppInfo();}, __source: { fileName: _jsxFileName, lineNumber: 72 } }, 'NEW'),
+              _react2.default.createElement(_Button2.default, { customStyle: styles.footerButtonStyle, onPress: function onPress() {return _this3.props.logoutUser();}, __source: { fileName: _jsxFileName, lineNumber: 73 } }, 'SIGN OUT')))));
+
+
+
+
+
+    } }]);return EventList;}(require('react').Component);
+
+
+var styles = {
+  monthlyStatsWrapper: {
+    marginBottom: 150,
+    margin: 10,
+    flexDirection: 'column' },
+
+  monthlyStatsLine: {
+    width: '85%',
+    alignItems: 'center',
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between' },
+
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center' },
+
+  footerButtonsWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center' },
+
+  footerButtonStyle: {
+    width: 170 },
+
+  eventsWrapperStyle: {
+    marginTop: 50,
+    padding: 30,
+    flex: 1,
+    marginBottom: 40 } };
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var groupedByYear = utilities.groupByYear(state.eventsData.events);
+  var groupedByMonth = utilities.groupByMonth(groupedByYear);
+  var stats = utilities.aggregateDurations(groupedByMonth);
+  return { events: state.eventsData.events,
+    stats: stats,
+    currentEventId: state.eventsData.currentEventId };
+};exports.default =
+(0, require('react-redux').connect)(mapStateToProps, { setCurrentEvent: require('../actions').setCurrentEvent, resetAppInfo: require('../actions').resetAppInfo, logoutUser: require('../actions').logoutUser })(EventList);

@@ -1,0 +1,34 @@
+4c86cad5f55e5c767301cfd2915bd7ff
+Object.defineProperty(exports, "__esModule", { value: true });exports.stopTimer = exports.startTimer = undefined;
+
+
+
+
+
+
+
+var startTimer = exports.startTimer = function startTimer() {var baseTime = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+  return function (dispatch) {
+    dispatch({
+      type: require('./types').ACTIVATE_TAB,
+      payload: 'chrono' });
+
+
+
+    dispatch({
+      type: require('./types').START_TIMER,
+      payload: { baseTime: baseTime,
+        now: new Date().getTime() } });
+
+
+  };
+};
+
+var stopTimer = exports.stopTimer = function stopTimer(baseTime) {
+  return {
+    type: require('./types').STOP_TIMER,
+    payload: { now: new Date().getTime(),
+      baseTime: baseTime } };
+
+
+};

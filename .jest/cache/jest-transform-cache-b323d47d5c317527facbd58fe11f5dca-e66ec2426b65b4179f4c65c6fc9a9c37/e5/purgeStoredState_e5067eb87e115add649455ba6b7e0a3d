@@ -1,0 +1,19 @@
+e8a38f86e9ea1b29893380438335fa38
+'use strict';
+
+exports.__esModule = true;
+exports.default = purgeStoredState;
+
+
+
+function purgeStoredState(config) {
+  var storage = config.storage;
+  var storageKey = '' + (config.keyPrefix !== undefined ? config.keyPrefix : require('./constants').KEY_PREFIX) + config.key;
+  return storage.removeItem(storageKey, warnIfRemoveError);
+}
+
+function warnIfRemoveError(err) {
+  if (err && process.env.NODE_ENV !== 'production') {
+    console.error('redux-persist/purgeStoredState: Error purging data stored state', err);
+  }
+}

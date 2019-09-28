@@ -1,0 +1,88 @@
+9ee0216e7de629ecb64dee6bbd3f0d78
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/Header.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Avatar2 = babelHelpers.interopRequireDefault(require('./Avatar'));var _Chrono2 = babelHelpers.interopRequireDefault(require('./assets/Chrono'));var
+
+
+
+
+
+
+
+
+
+Header = function (_Component) {babelHelpers.inherits(Header, _Component);function Header() {babelHelpers.classCallCheck(this, Header);return babelHelpers.possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));}babelHelpers.createClass(Header, [{ key: 'getCurrentMonth', value: function getCurrentMonth()
+    {
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var now = new Date();
+      var monthIndex = now.getMonth();
+      var monthName = months[monthIndex];
+
+      return monthName;
+    } }, { key: 'formatDuration', value: function formatDuration(
+    ms) {
+      var time = new Date(ms);
+      var hours = time.getUTCHours() < 10 ? '0' + time.getUTCHours() : time.getUTCHours();
+      var minutes = time.getUTCMinutes() < 10 ? '0' + time.getUTCMinutes() : time.getUTCMinutes();
+      var seconds = time.getUTCSeconds() < 10 ? '0' + time.getUTCSeconds() : time.getUTCSeconds();
+      return hours + ":" + minutes + ":" + seconds;
+    } }, { key: 'render', value: function render()
+    {var _this2 = this;
+      return (
+        _react2.default.createElement(require('react-native').View, { style: styles.containerStyle, __source: { fileName: _jsxFileName, lineNumber: 29 } },
+          _react2.default.createElement(require('react-native').View, { style: { flex: 1, flexDirection: 'row', width: '100%', height: '100%', justifyContent: 'space-between', alignItems: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 30 } },
+            _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this2.props.resetAppInfo();}, __source: { fileName: _jsxFileName, lineNumber: 31 } },
+              _react2.default.createElement(_Chrono2.default, { style: styles.svgStyle, fill: '#8CCDF8', __source: { fileName: _jsxFileName, lineNumber: 32 } })),
+
+            _react2.default.createElement(require('react-native').Text, { __source: { fileName: _jsxFileName, lineNumber: 34 } }, this.getCurrentMonth()),
+            _react2.default.createElement(require('react-native').Text, { __source: { fileName: _jsxFileName, lineNumber: 35 } }, 'ACTIONS: ', this.props.countEvents),
+            _react2.default.createElement(require('react-native').Text, { __source: { fileName: _jsxFileName, lineNumber: 36 } }, 'TOTAL: ', this.formatDuration(this.props.totalTimeSpent), ' '),
+
+            _react2.default.createElement(_Avatar2.default, {
+              size: 'small',
+              rounded: true,
+              source: { uri: this.props.logo_thumb, initials: this.props.initials },
+              activeOpacity: 0.7, __source: { fileName: _jsxFileName, lineNumber: 38 } }))));
+
+
+
+
+
+    } }]);return Header;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: 70,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#FCFCFC' },
+
+  svgStyle: {
+    height: 30,
+    width: 30 } };
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var durations = state.eventsData.events.map(function (event) {return event.duration;});
+  var totalTimeSpent = void 0;
+  if (state.eventsData.events.length > 0) {
+    var reducer = function reducer(accumulator, currentValue) {return accumulator + currentValue;};
+    totalTimeSpent = durations.reduce(reducer);
+  } else
+  {
+    totalTimeSpent = 0;
+  }
+
+  return {
+    totalTimeSpent: totalTimeSpent,
+    countEvents: state.eventsData.events.length,
+    logo_thumb: state.user.user_info.logo_thumb,
+    initials: state.user.user_info.initials };
+
+};exports.default =
+
+(0, require('react-redux').connect)(mapStateToProps, { resetAppInfo: require('../actions').resetAppInfo })(Header);

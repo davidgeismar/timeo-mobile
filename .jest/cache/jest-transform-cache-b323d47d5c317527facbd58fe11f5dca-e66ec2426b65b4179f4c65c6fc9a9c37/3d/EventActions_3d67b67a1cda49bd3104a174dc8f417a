@@ -1,0 +1,412 @@
+1857175ac1d3b05f8d81624b0a70ac73
+Object.defineProperty(exports, "__esModule", { value: true });exports.updateEventComment = exports.sendFileToApi = exports.deleteActionFile = exports.deleteEvent = exports.setEventToDelete = exports.updateEvent = exports.fetchEvent = exports.fetchEvents = exports.setCurrentEvent = exports.createEvent = undefined;var _Api2 = babelHelpers.interopRequireDefault(require('./Api'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RNFS = babelHelpers.interopRequireWildcard(require('react-native-fs'));var _axios2 = babelHelpers.interopRequireDefault(require('axios'));var _rnFetchBlob2 = babelHelpers.interopRequireDefault(require('rn-fetch-blob'));
+
+
+
+
+
+var createEvent = exports.createEvent = function createEvent(measure_kind) {var duration = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  return function (dispatch) {
+
+    var data = { action: { duration: duration, measure_kind: measure_kind } };
+    dispatch((0, require('./TabActions').activateTab)('client'));
+
+    _Api2.default.post('/internal/timeo/api/v0/actions', data).
+    then(function (response) {return createEventSuccess(dispatch, response);}).
+    catch(function (error) {return onRequestErrorCallbackCreation(dispatch, error, measure_kind);});
+  };
+};
+
+var onRequestErrorCallbackCreation = function onRequestErrorCallbackCreation(dispatch, error, measure_kind) {
+  dispatch((0, require('./LoaderActions').setErrorState)(error.message));
+  if (measure_kind == 'manual') {
+    dispatch((0, require('./TabActions').activateTab)('time'));
+  } else
+  {
+    dispatch((0, require('./TabActions').activateTab)('chrono'));
+  }
+};
+
+var createEventSuccess = function createEventSuccess(dispatch, data) {
+
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+
+  dispatch({
+    type: require('./types').CREATE_EVENT,
+    payload: data.data });
+
+
+  dispatch({
+    type: require('./types').RESET_CHRONO,
+    payload: true });
+
+};
+
+var spitHourMinute = function spitHourMinute(millis) {
+  var time = new Date(millis);
+  var hours = time.getUTCHours() < 10 ? '0' + time.getUTCHours() : time.getUTCHours();
+  var minutes = time.getUTCMinutes() < 10 ? '0' + time.getUTCMinutes() : time.getUTCMinutes();
+  return { selectedHour: hours, selectedMinute: minutes };
+};
+
+var setCurrentEvent = exports.setCurrentEvent = function setCurrentEvent(eventId) {
+  return function (dispatch, getState) {
+
+    dispatch({
+      type: require('./types').SET_CURRENT_EVENT,
+      payload: eventId });
+
+
+    var currentEvent = getState().eventsData.events.find(function (event) {return event.id == eventId;});
+    if (currentEvent.measure_kind == 'automatic') {
+      dispatch({
+        type: require('./types').SET_CURRENT_CHRONO_BASETIME,
+        payload: currentEvent.duration });
+
+    } else
+    {
+      dispatch({
+        type: require('./types').SET_CURRENT_MANUAL_DURATION,
+        payload: spitHourMinute(currentEvent.duration) });
+
+    }
+    dispatch((0, require('./TabActions').activateTab)('info'));
+    loadEventContext(dispatch, currentEvent);
+  };
+};
+
+
+
+
+var loadEventContext = function loadEventContext(dispatch, currentEvent) {
+  if (currentEvent.client_id) {
+    dispatch((0, require('./ProjectActions').loadClientProjects)(currentEvent.client_id));
+  }
+  if (currentEvent.project_id) {
+    dispatch((0, require('./KanbanActions').loadProjectKanbans)(currentEvent.project_id));
+  }
+  if (currentEvent.kanban_id) {
+    dispatch((0, require('./KanbanActions').loadSelectedKanban)(currentEvent.kanban_id));
+    dispatch((0, require('./CardActions').loadKanbanCards)(currentEvent.kanban_id));
+  }
+  if (currentEvent.card_id) {
+    dispatch((0, require('./CardActions').fetchCard)(currentEvent.card_id));
+  }
+};
+
+
+var fetchEvents = exports.fetchEvents = function fetchEvents() {
+  return function (dispatch) {
+    dispatch((0, require('./LoaderActions').setLoaderState)(true));
+    _Api2.default.get('/internal/timeo/api/v0/actions').
+    then(function (response) {return fetchEventsSuccess(dispatch, response);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+var fetchEvent = exports.fetchEvent = function fetchEvent(eventId) {
+  return function (dispatch) {
+    _Api2.default.get('/internal/timeo/api/v0/actions/' + eventId).
+    then(function (response) {return fetchEventsSuccess(dispatch, response);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+
+var fetchEventsSuccess = function fetchEventsSuccess(dispatch, data) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').LOAD_EVENTS,
+    payload: data.data });
+
+};
+
+
+
+var preparingData = function preparingData(prop, value, duration, measureKind) {var _data;
+  var data = (_data = {}, babelHelpers.defineProperty(_data, prop, value), babelHelpers.defineProperty(_data, 'duration',
+  duration), babelHelpers.defineProperty(_data, 'measure_kind',
+  measureKind), _data);
+
+
+  switch (prop) {
+    case 'client_id':
+      return { action: babelHelpers.extends(data, { project_id: null, kanban_id: null, card_id: null }) };
+    case 'project_id':
+      return { action: babelHelpers.extends(data, { kanban_id: null, card_id: null }) };
+    case 'kanban_id':
+      return { action: babelHelpers.extends(data, { card_id: null }) };
+    default:
+      return { action: data };}
+
+};
+
+
+var valueHasChanged = function valueHasChanged(prop, value, event) {
+  return event[prop] != value;
+};
+
+var preUpdateActions = function preUpdateActions(dispatch, prop, value, eventNeedsUpdate) {var cardInfos = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+  switch (prop) {
+    case 'client_id':
+      if (eventNeedsUpdate) {
+        dispatch({
+          type: require('./types').RESET_PROJECTS,
+          payload: null });
+
+        dispatch((0, require('./ProjectActions').loadClientProjects)(value));
+        unsetKanbanAndCard(dispatch);
+      }
+      return dispatch((0, require('./TabActions').activateTab)('projects'));
+    case 'project_id':
+      unsetKanbanAndCard(dispatch);
+      return dispatch((0, require('./TabActions').activateTab)('info'));
+    case 'duration':
+      return dispatch((0, require('./TabActions').activateTab)('info'));
+    case 'card_id':
+      if (eventNeedsUpdate) {
+        dispatch(updateCardInfos(cardInfos));
+      }
+      return dispatch((0, require('./TabActions').activateTab)('info'));
+    case 'kanban_id':
+      if (eventNeedsUpdate) {
+        dispatch((0, require('./CardActions').loadKanbanCards)(value, true));
+      }
+      return require('react-native-router-flux').Actions.cardList();}
+
+
+};
+
+
+var updateCardInfos = function updateCardInfos(cardInfos) {
+  return {
+    type: require('./types').SET_CURRENT_EVENT_TASK,
+    payload: cardInfos };
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var updateEvent = exports.updateEvent = function updateEvent(prop, value, duration, measureKind, eventId) {var redirect = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : true;var loader = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : true;var cardInfos = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : null;
+  return function (dispatch, getState) {
+
+    var event = getState().eventsData.currentEvent;
+    var eventNeedsUpdate = valueHasChanged(prop, value, event);
+    var data = void 0;
+
+    if (eventNeedsUpdate) {
+      data = preparingData(prop, value, duration, measureKind);
+    }
+
+    preUpdateActions(dispatch, prop, value, eventNeedsUpdate, cardInfos);
+
+    if (eventNeedsUpdate) {
+      _Api2.default.patch('/internal/timeo/api/v0/actions/' + eventId, data).
+      then(function (response) {return updateEventSuccess(dispatch, response, prop, redirect, eventNeedsUpdate);}).
+      catch(function (error) {return onRequestErrorCallbackUpdateEvent(dispatch, error, prop, measureKind);});
+    } else
+    if (prop === 'subject') {
+      require('react-native-router-flux').Actions.events();
+    }
+  };
+};
+
+
+var onRequestErrorCallbackUpdateEvent = function onRequestErrorCallbackUpdateEvent(dispatch, error, prop, measureKind) {
+  dispatch((0, require('./LoaderActions').setErrorState)(error.message));
+  switch (prop) {
+    case 'client_id':
+      return dispatch((0, require('./TabActions').activateTab)('client'));
+    case 'project_id':
+      return dispatch((0, require('./TabActions').activateTab)('projects'));
+    case 'duration':
+      if (measureKind == 'manual') {
+        return dispatch((0, require('./TabActions').activateTab)('time'));
+      } else
+      {
+        return dispatch((0, require('./TabActions').activateTab)('chrono'));
+      }
+    case 'card_id':
+      return require('react-native-router-flux').Actions.cardList();}
+
+};
+
+
+var updateEventSuccess = function updateEventSuccess(dispatch, data, prop, redirect, eventNeedsUpdate) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').UPDATE_EVENT,
+    payload: data.data });
+
+  if (redirect) {
+    switch (prop) {
+      case 'client_id':
+
+        return true;
+      case 'project_id':
+
+        return dispatch((0, require('./KanbanActions').loadProjectKanbans)(data.data.project_id));
+      case 'card_id':
+        return dispatch((0, require('./CardActions').fetchCard)(data.data.card_id, false));
+      case 'duration':
+        return dispatch((0, require('./TabActions').activateTab)('info'));
+      case 'kind_id':
+        return dispatch((0, require('./TabActions').activateTab)('info'));
+      case 'subject':
+        return dispatch((0, require('./TabActions').activateTab)('events'));
+      case 'kanban_id':
+        return dispatch({
+          type: require('./types').SET_CURRENT_EVENT_TASK,
+          payload: null });}
+
+
+  }
+};
+
+
+var unsetKanbanAndCard = function unsetKanbanAndCard(dispatch) {
+  dispatch({
+    type: require('./types').DELETE_SELECTED_KANBAN,
+    payload: true });
+
+  dispatch({
+    type: require('./types').UNSET_CURRENT_TASK,
+    payload: true });
+
+};
+
+var setEventToDelete = exports.setEventToDelete = function setEventToDelete(event) {
+  return function (dispatch) {
+    dispatch({
+      type: require('./types').SET_EVENT_TO_DELETE,
+      payload: event });
+
+    require('react-native-router-flux').Actions.deleteEvent();
+  };
+};
+
+
+
+var deleteEvent = exports.deleteEvent = function deleteEvent(eventId) {
+  return function (dispatch) {
+    dispatch((0, require('./LoaderActions').setLoaderState)(true));
+    _Api2.default.delete('/internal/timeo/api/v0/actions/' + eventId).
+    then(function (response) {return deleteEventSuccess(dispatch, eventId);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+
+var deleteEventSuccess = function deleteEventSuccess(dispatch, eventId) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').DELETE_EVENT,
+    payload: eventId });
+
+  require('react-native-router-flux').Actions.events();
+};
+
+var deleteActionFile = exports.deleteActionFile = function deleteActionFile(eventId, fileId) {
+  return function (dispatch) {
+    _Api2.default.delete('/internal/timeo/api/v0/actions/' + eventId + '/action-file/' + fileId).
+    then(function (response) {return deleteActionFileSuccess(dispatch, eventId);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+var deleteActionFileSuccess = function deleteActionFileSuccess(dispatch, eventId) {
+  _Api2.default.get('/internal/timeo/api/v0/actions/' + eventId).
+  then(function (response) {return updateEventSuccess(dispatch, response, null, false, false);}).
+  catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+};
+
+var sendFileToApi = exports.sendFileToApi = function sendFileToApi(eventId, res) {
+  return function (dispatch, getState) {
+
+    var uploadUrl = 'http://192.168.43.92:3000/internal/timeo/api/v0/actions/' + eventId + '/action-file';
+    var filename = res.fileName;
+    fileConfig = { uri: res.uri, type: res.type, name: res.fileName };
+
+    headersData = {
+      'Authorization': 'Bearer ' + getState().authentication.token };
+
+
+    var data = new FormData();
+    data.append('action_file[title]', res.fileName);
+    data.append('action_file[kind]', 'file');
+    data.append('action_file[file]', fileConfig);
+
+    fetch(uploadUrl, {
+      headers: headersData,
+      method: 'post',
+      body: data }).
+    then(function (res) {
+      _Api2.default.get('/internal/timeo/api/v0/actions/' + eventId).
+      then(function (response) {return updateEventSuccess(dispatch, response, null, false, false);}).
+      catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+    }).catch(function (err) {
+      alert('error : ', err);
+    });
+
+  };
+};
+
+
+
+var sendFileToApiSuccess = function sendFileToApiSuccess(dispatch, eventId) {
+
+
+
+
+
+};
+
+var updateEventComment = exports.updateEventComment = function updateEventComment(comment) {
+  return {
+    type: require('./types').UPDATE_CURRENT_EVENT_COMMENT,
+    payload: comment };
+
+};

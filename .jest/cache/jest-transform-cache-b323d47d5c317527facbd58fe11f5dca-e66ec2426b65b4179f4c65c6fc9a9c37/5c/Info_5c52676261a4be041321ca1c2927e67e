@@ -1,0 +1,243 @@
+dd05090dddfb0fb9520fe432a461bd1e
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/Info.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Button2 = babelHelpers.interopRequireDefault(require('./common/Button'));var _Spinner2 = babelHelpers.interopRequireDefault(require('./common/Spinner'));var _Attachment2 = babelHelpers.interopRequireDefault(require('./assets/Attachment'));var _Kameo2 = babelHelpers.interopRequireDefault(require('./assets/Kameo'));var _LinkCard2 = babelHelpers.interopRequireDefault(require('./LinkCard'));var _File2 = babelHelpers.interopRequireDefault(require('./File'));var _SmallCard2 = babelHelpers.interopRequireDefault(require('./SmallCard'));var
+
+
+
+
+
+
+
+
+
+
+
+
+utilities = babelHelpers.interopRequireWildcard(require('../lib/Utilities'));var _minutesSecondsMilliseconds2 = babelHelpers.interopRequireDefault(require('minutes-seconds-milliseconds'));var _Footer2 = babelHelpers.interopRequireDefault(require('./common/Footer'));var _StylishInput2 = babelHelpers.interopRequireDefault(require('./common/StylishInput'));var _TabBar2 = babelHelpers.interopRequireDefault(require('./TabBar'));var
+
+
+
+
+
+
+
+
+
+Info = function (_Component) {babelHelpers.inherits(Info, _Component);function Info() {babelHelpers.classCallCheck(this, Info);return babelHelpers.possibleConstructorReturn(this, (Info.__proto__ || Object.getPrototypeOf(Info)).apply(this, arguments));}babelHelpers.createClass(Info, [{ key: 'renderKanbanInfo', value: function renderKanbanInfo(
+    kanbanName) {
+      if (kanbanName) {
+        return _react2.default.createElement(_LinkCard2.default, { customStyle: { margin: 5, padding: 3 }, onPress: function onPress() {return require('react-native-router-flux').Actions.kanbanList();}, __source: { fileName: _jsxFileName, lineNumber: 27 } }, kanbanName);
+      }
+    } }, { key: 'renderCardInfo', value: function renderCardInfo(
+    card) {
+      if (card) {
+        return _react2.default.createElement(_SmallCard2.default, {
+          customStyle: { margin: 5, padding: 3,
+            fontSize: 8, alignSelf: 'stretch',
+            backgroundColor: '#8CCDF8' },
+          onPress: function onPress() {return require('react-native-router-flux').Actions.cardList();}, __source: { fileName: _jsxFileName, lineNumber: 32 } });
+
+
+      }
+    } }, { key: 'renderProject', value: function renderProject(
+
+    projectName) {var _this2 = this;
+      if (projectName) {
+        return (
+          _react2.default.createElement(_LinkCard2.default, { customStyle: { margin: 5, padding: 3 }, onPress: function onPress() {return _this2.props.activateTab('projects');}, __source: { fileName: _jsxFileName, lineNumber: 45 } }, projectName));
+
+      }
+    } }, { key: 'renderClient', value: function renderClient(
+
+    client) {var _this3 = this;
+      if (client) {
+        return (
+          _react2.default.createElement(_LinkCard2.default, { customStyle: { margin: 5, padding: 3 }, onPress: function onPress() {return _this3.props.activateTab('client');}, __source: { fileName: _jsxFileName, lineNumber: 53 } }, client));
+
+      }
+    } }, { key: 'showDocumentPicker', value: function showDocumentPicker()
+
+    {var _this4 = this;
+      require('react-native-document-picker').DocumentPicker.show({
+        filetype: [require('react-native-document-picker').DocumentPickerUtil.images()] },
+      function (error, res) {
+        _this4.props.sendFileToApi(_this4.props.eventId, res);
+      });
+    } }, { key: 'formatDuration', value: function formatDuration(
+
+
+    ms) {
+      var time = new Date(ms);
+      var hours = time.getUTCHours() < 10 ? '0' + time.getUTCHours() : time.getUTCHours();
+      var minutes = time.getUTCMinutes() < 10 ? '0' + time.getUTCMinutes() : time.getUTCMinutes();
+      var seconds = time.getUTCSeconds() < 10 ? '0' + time.getUTCSeconds() : time.getUTCSeconds();
+      return hours + ":" + minutes + ":" + seconds;
+    } }, { key: 'renderKameoButton', value: function renderKameoButton()
+
+    {var
+      svgStyle = styles.svgStyle;
+      if (this.props.kanbans) {
+        if (this.props.kanbans.length > 0) {
+          return (
+            _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return require('react-native-router-flux').Actions.kanbanList();}, __source: { fileName: _jsxFileName, lineNumber: 80 } },
+              _react2.default.createElement(_Kameo2.default, { style: svgStyle, fill: 'red', __source: { fileName: _jsxFileName, lineNumber: 81 } })));
+
+
+        }
+      }
+    } }, { key: 'renderFiles', value: function renderFiles()
+
+
+    {var _this5 = this;
+      if (this.props.files) {
+        if (this.props.files.length > 0) {
+          return (
+            _react2.default.createElement(require('react-native').FlatList, {
+              data: this.props.files,
+              renderItem: function renderItem(_ref) {var item = _ref.item;return _react2.default.createElement(_File2.default, { file: item, eventId: _this5.props.eventId, __source: { fileName: _jsxFileName, lineNumber: 95 } });},
+              style: { flex: 1 }, __source: { fileName: _jsxFileName, lineNumber: 93 } }));
+
+
+        }
+      }
+    } }, { key: 'renderCommentInput', value: function renderCommentInput()
+    {var _this6 = this;
+      if (require('react-native').Platform.OS === 'ios') {
+        return (
+          _react2.default.createElement(_StylishInput2.default, {
+            style: { height: 40, width: '100%', borderBottomColor: 'grey', borderBottomWidth: 1 },
+            placeholder: 'Comments',
+            onChangeText: function onChangeText(comment) {return _this6.props.updateEventComment(comment);},
+            value: this.props.comment, __source: { fileName: _jsxFileName, lineNumber: 105 } }));
+
+
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').TextInput, {
+            style: { height: 40, width: '100%' },
+            placeholder: 'Comments',
+            onChangeText: function onChangeText(comment) {return _this6.props.updateEventComment(comment);},
+            value: this.props.comment, __source: { fileName: _jsxFileName, lineNumber: 115 } }));
+
+
+      }
+    } }, { key: 'render', value: function render()
+    {var _this7 = this;var _props =
+      this.props,comment = _props.comment,hour = _props.hour,minute = _props.minute,kindName = _props.kindName,clientName = _props.clientName,projectName = _props.projectName,projectId = _props.projectId,timerKind = _props.timerKind,duration = _props.duration,eventId = _props.eventId,kanbanName = _props.kanbanName,card = _props.card;var
+      containerStyle = styles.containerStyle,formWrapperStyle = styles.formWrapperStyle,footerStyle = styles.footerStyle,svgStyle = styles.svgStyle,filesWrapperStyle = styles.filesWrapperStyle;
+      if (this.props.loading) {
+        return _react2.default.createElement(_Spinner2.default, { size: 'large', __source: { fileName: _jsxFileName, lineNumber: 128 } });
+      } else
+      {
+        return (
+
+          _react2.default.createElement(require('react-native').View, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 133 } },
+            _react2.default.createElement(_TabBar2.default, { __source: { fileName: _jsxFileName, lineNumber: 134 } }),
+            _react2.default.createElement(require('react-native').View, { style: formWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 135 } },
+              this.renderClient(clientName),
+              this.renderProject(projectName),
+              _react2.default.createElement(_LinkCard2.default, { customStyle: { margin: 5, padding: 3 }, onPress: function onPress() {return _this7.props.activateTab('time');}, __source: { fileName: _jsxFileName, lineNumber: 138 } }, this.formatDuration(duration)),
+              _react2.default.createElement(_LinkCard2.default, { customStyle: { margin: 5, padding: 3 }, onPress: function onPress() {return _this7.props.fetchActionKinds();}, __source: { fileName: _jsxFileName, lineNumber: 139 } }, kindName),
+              _react2.default.createElement(require('react-native').View, { style: { flexDirection: 'row', width: '100%' }, __source: { fileName: _jsxFileName, lineNumber: 140 } },
+                this.renderKanbanInfo(kanbanName),
+                this.renderCardInfo(card)),
+
+              this.renderCommentInput(),
+
+              this.renderFiles()),
+
+
+            _react2.default.createElement(_Footer2.default, { __source: { fileName: _jsxFileName, lineNumber: 149 } },
+              _react2.default.createElement(require('react-native').View, { style: styles.footerButtonsWrapper, __source: { fileName: _jsxFileName, lineNumber: 150 } },
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {_this7.showDocumentPicker();}, __source: { fileName: _jsxFileName, lineNumber: 151 } },
+                  _react2.default.createElement(_Attachment2.default, { style: svgStyle, fill: '#8CCDF8', __source: { fileName: _jsxFileName, lineNumber: 152 } })),
+
+                this.renderKameoButton(),
+                _react2.default.createElement(_Button2.default, { customStyle: styles.footerButtonStyle, onPress: function onPress() {return _this7.props.updateEvent('subject', comment, duration, timerKind, eventId);}, __source: { fileName: _jsxFileName, lineNumber: 155 } }, 'SAVE')))));
+
+
+
+
+
+      }
+    } }]);return Info;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white' },
+
+  filesWrapperStyle: {
+    marginBottom: 40 },
+
+  formWrapperStyle: {
+    padding: 30,
+    width: '100%',
+    flex: 1 },
+
+  footerButtonsWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around' },
+
+  footerButtonStyle: {
+    width: 150 },
+
+  svgStyle: {
+    height: 60,
+    width: 60 } };
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var event = state.eventsData.currentEvent;
+  if (event) {
+    var comment = void 0;
+    if (state.eventsData.currentEventComment == "") {
+      comment = "";
+    } else
+    if (state.eventsData.currentEventComment == null && event.subject == null) {
+      comment = "";
+    } else
+    if (state.eventsData.currentEventComment) {
+      comment = state.eventsData.currentEventComment;
+    } else
+    {
+      comment = event.subject;
+    }
+    return { hour: event.duration.selectedHour,
+      minute: event.duration.selectedMinute,
+      duration: event.duration,
+      timerKind: event.measure_kind,
+      clientId: event.client_id,
+      clientName: event.client__name ? event.client__name : 'client',
+      projectName: event.project__name,
+      projectId: event.project_id,
+      kindName: event.kind__name ? event.kind__name : "Actions",
+      files: event.action_files,
+      comment: comment,
+      eventId: event.id,
+      kanbanName: event.kanban__name,
+      kanbanId: event.kanban_id,
+      card: state.eventsData.currentEventCard,
+      kanbans: state.kanbans.list,
+      loading: state.loading };
+
+  } else
+  {
+    return { hour: '',
+      minute: '',
+      action: "Actions",
+      comment: state.eventsData.currentEventComment,
+      loading: state.loading };
+
+  }
+};exports.default =
+
+
+
+(0, require('react-redux').connect)(mapStateToProps, { updateEvent: require('../actions').updateEvent, updateEventComment: require('../actions').updateEventComment, loadProjectKanbans: require('../actions').loadProjectKanbans, activateTab: require('../actions').activateTab, fetchActionKinds: require('../actions').fetchActionKinds, sendFileToApi: require('../actions').sendFileToApi })(Info);

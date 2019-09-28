@@ -1,0 +1,61 @@
+37a5a5d499a1882f820771fed38e037c
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/ActionList.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _LinkCard2 = babelHelpers.interopRequireDefault(require('./LinkCard'));var
+
+
+
+
+
+
+
+
+
+
+
+ActionList = function (_Component) {babelHelpers.inherits(ActionList, _Component);function ActionList() {babelHelpers.classCallCheck(this, ActionList);return babelHelpers.possibleConstructorReturn(this, (ActionList.__proto__ || Object.getPrototypeOf(ActionList)).apply(this, arguments));}babelHelpers.createClass(ActionList, [{ key: 'renderActionKinds', value: function renderActionKinds()
+
+    {var _this2 = this;var
+      cardStyle = styles.cardStyle;
+      return this.props.actionKinds.map(
+      function (actionKind) {return _react2.default.createElement(_LinkCard2.default, { onPress: function onPress() {return _this2.props.updateEvent('kind_id', actionKind.id, _this2.props.duration, _this2.props.measureKind, _this2.props.currentEventId);}, canBeActivated: true, activationKey: actionKind.name, customStyle: cardStyle, __source: { fileName: _jsxFileName, lineNumber: 18 } }, actionKind.name);});
+
+
+    } }, { key: 'render', value: function render()
+    {var
+      currentEventId = this.props.currentEventId;var
+      containerStyle = styles.containerStyle;
+      return (
+        _react2.default.createElement(require('react-native').View, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 26 } },
+          this.renderActionKinds()));
+
+
+
+    } }]);return ActionList;}(require('react').Component);
+
+var styles = {
+  containerStyle: {
+    paddingTop: 50,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center' },
+
+  cardStyle: {
+    width: '40%',
+    padding: 20,
+    margin: 10,
+    backgroundColor: 'white' } };
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var event = state.eventsData.currentEvent;
+  return { selectedAction: state.selectedAction,
+    actionKinds: state.actionKinds,
+    currentEventId: state.eventsData.currentEventId,
+    duration: event ? event.duration : null,
+    measureKind: event ? event.measure_kind : null };
+
+
+
+};exports.default =
+
+(0, require('react-redux').connect)(mapStateToProps, { updateEvent: require('../actions').updateEvent })(ActionList);

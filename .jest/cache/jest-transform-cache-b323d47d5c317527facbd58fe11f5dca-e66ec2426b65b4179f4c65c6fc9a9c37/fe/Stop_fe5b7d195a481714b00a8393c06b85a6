@@ -1,0 +1,20 @@
+60ec30bea9db0191b2cf35bc5b5b70ca
+Object.defineProperty(exports, "__esModule", { value: true });var _propTypes2 = babelHelpers.interopRequireDefault(require("prop-types"));var _class = function (_Component) {babelHelpers.inherits(_class, _Component);function _class() {babelHelpers.classCallCheck(this, _class);return babelHelpers.possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));}babelHelpers.createClass(_class, [{ key: "render", value: function render()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {
+            return null;
+        } }]);return _class;}(require("react").Component);_class.displayName = "Stop";_class.propTypes = { stopColor: _propTypes2.default.string, stopOpacity: require("../lib/props").numberProp };_class.defaultProps = { stopColor: "#000", stopOpacity: 1 };exports.default = _class;

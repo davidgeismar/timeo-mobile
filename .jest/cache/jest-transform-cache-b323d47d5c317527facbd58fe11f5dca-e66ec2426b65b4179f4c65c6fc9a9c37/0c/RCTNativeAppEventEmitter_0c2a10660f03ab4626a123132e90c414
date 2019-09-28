@@ -1,0 +1,20 @@
+b6331cd272734e743aa0984e5099b37c
+
+
+
+
+
+
+
+
+
+'use strict';
+
+
+
+
+
+
+
+var RCTNativeAppEventEmitter = require('RCTDeviceEventEmitter');
+module.exports = RCTNativeAppEventEmitter;

@@ -1,0 +1,16 @@
+f10ea788375abe5c2cb5855bb8b3ee19
+var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/__tests__/App.test.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _App2 = babelHelpers.interopRequireDefault(require('../../../App.js'));var _Router2 = babelHelpers.interopRequireDefault(require('../Router'));
+
+
+
+
+
+
+
+
+it('shows a login form', function () {
+  var wrapped = (0, require('enzyme').shallow)(_react2.default.createElement(_App2.default, { __source: { fileName: _jsxFileName, lineNumber: 11 } }));
+  expect(wrapped.find(_Router2.default).length).toEqual(1);
+  expect(wrapped.find(require('react-redux').Provider).length).toEqual(1);
+  expect(wrapped.find(require('redux-persist/lib/integration/react').PersistGate).length).toEqual(1);
+});

@@ -1,0 +1,37 @@
+35492026d5e7eb9ce98f2ac3c888054b
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/assets/Great.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _reactNativeSvg2 = babelHelpers.interopRequireDefault(require('react-native-svg'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Great = function (_Component) {babelHelpers.inherits(Great, _Component);function Great() {babelHelpers.classCallCheck(this, Great);return babelHelpers.possibleConstructorReturn(this, (Great.__proto__ || Object.getPrototypeOf(Great)).apply(this, arguments));}babelHelpers.createClass(Great, [{ key: 'render', value: function render()
+        {
+            return (
+                _react2.default.createElement(_reactNativeSvg2.default, { style: this.props.style, viewBox: '0 0 64 64', 'enable-background': 'new 0 0 64 64', __source: { fileName: _jsxFileName, lineNumber: 24 } },
+                    _react2.default.createElement(require('react-native-svg').Circle, { cx: '32', cy: '32', r: '30', fill: '#ffdd67', __source: { fileName: _jsxFileName, lineNumber: 25 } }),
+                    _react2.default.createElement(require('react-native-svg').Path, { d: 'm49.7 34.4c-.4-.5-1.1-.4-1.9-.4-15.8 0-15.8 0-31.6 0-.8 0-1.5-.1-1.9.4-3.9 5 .7 19.6 17.7 19.6 17 0 21.6-14.6 17.7-19.6', fill: '#664e27', __source: { fileName: _jsxFileName, lineNumber: 26 } }),
+                    _react2.default.createElement(require('react-native-svg').Path, { d: 'm33.8 41.7c-.6 0-1.5.5-1.1 2 .2.7 1.2 1.6 1.2 2.8 0 2.4-3.8 2.4-3.8 0 0-1.2 1-2 1.2-2.8.3-1.4-.6-2-1.1-2-1.6 0-4.1 1.7-4.1 4.6 0 3.2 2.7 5.8 6 5.8 3.3 0 6-2.6 6-5.8-.1-2.8-2.7-4.5-4.3-4.6', fill: '#4c3526', __source: { fileName: _jsxFileName, lineNumber: 27 } }),
+                    _react2.default.createElement(require('react-native-svg').Path, { d: 'm24.3 50.7c2.2 1 4.8 1.5 7.7 1.5 2.9 0 5.5-.6 7.7-1.5-2.1-1.1-4.7-1.7-7.7-1.7s-5.6.6-7.7 1.7', fill: '#ff717f', __source: { fileName: _jsxFileName, lineNumber: 28 } }),
+                    _react2.default.createElement(require('react-native-svg').Path, { d: 'm47 36c-15 0-15 0-29.9 0-2.1 0-2.1 4-.1 4 10.4 0 19.6 0 30 0 2 0 2-4 0-4', fill: '#fff', __source: { fileName: _jsxFileName, lineNumber: 29 } }),
+                    _react2.default.createElement(require('react-native-svg').G, { fill: '#664e27', __source: { fileName: _jsxFileName, lineNumber: 30 } },
+                        _react2.default.createElement(require('react-native-svg').Circle, { cx: '20.5', cy: '23', r: '5', __source: { fileName: _jsxFileName, lineNumber: 31 } }), _react2.default.createElement(require('react-native-svg').Circle, { cx: '43.5', cy: '23', r: '5', __source: { fileName: _jsxFileName, lineNumber: 31 } }))));
+
+        } }]);return Great;}(require('react').Component);exports.default =
+
+
+Great;

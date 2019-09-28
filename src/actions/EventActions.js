@@ -22,10 +22,8 @@ import { loadKanbanCards, fetchCard } from './CardActions'
 import { activateTab, activateTabSuccess } from './TabActions'
 import { loadProjectKanbans, loadSelectedKanban } from './KanbanActions'
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
-import * as RNFS from 'react-native-fs'
 import axios from 'axios';
-import RNFetchBlob from 'rn-fetch-blob';
-// import * as RNFS from 'react-native-fs'
+
 
 // creates an event with API call(called an "action" on API)
 export const createEvent = ( measure_kind, duration=null) => {

@@ -1,0 +1,11 @@
+8dc9b94f0863f7cc39e6d42ec03f3296
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/Root.js';exports.default =
+
+
+function (props) {
+  return (
+    React.createElement(require('react-redux').Provider, { store: require('./src/store').store, __source: { fileName: _jsxFileName, lineNumber: 6 } },
+      props.children));
+
+
+};

@@ -1,0 +1,101 @@
+3d015e94a03057b91aff328d612a73b5
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/File.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var
+
+
+
+actions = babelHelpers.interopRequireWildcard(require('../actions'));var _Close2 = babelHelpers.interopRequireDefault(require('./assets/Close'));var _minutesSecondsMilliseconds2 = babelHelpers.interopRequireDefault(require('minutes-seconds-milliseconds'));var
+
+
+
+utilities = babelHelpers.interopRequireWildcard(require('../lib/Utilities'));var _reactNativeConfig2 = babelHelpers.interopRequireDefault(require('react-native-config'));var
+
+
+
+File = function (_Component) {babelHelpers.inherits(File, _Component);
+  function File(props) {babelHelpers.classCallCheck(this, File);var _this = babelHelpers.possibleConstructorReturn(this, (File.__proto__ || Object.getPrototypeOf(File)).call(this,
+    props));
+    _this.state = { modalVisible: false };return _this;
+  }babelHelpers.createClass(File, [{ key: 'confirmDelete', value: function confirmDelete(
+    fileId, eventId) {var _this2 = this;
+      require('react-native').Alert.alert(
+      'Delete File',
+      'Are you sure ?',
+      [
+      { text: 'Yes', onPress: function onPress() {return _this2.props.deleteActionFile(eventId, fileId);} },
+      { text: 'Cancel', onPress: function onPress() {return console.log('Cancel Pressed');}, style: 'cancel' }],
+
+      { cancelable: false });
+
+    } }, { key: 'setModalVisible', value: function setModalVisible(
+    visible) {
+      this.setState({ modalVisible: visible });
+    } }, { key: 'render', value: function render()
+    {var _this3 = this;var
+      textWrapperStyle = styles.textWrapperStyle,svgStyle = styles.svgStyle,containerStyle = styles.containerStyle,textStyle = styles.textStyle;
+      return (
+        _react2.default.createElement(require('react-native').View, { style: { flexDirection: 'row', alignItems: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 35 } },
+          _react2.default.createElement(require('react-native').Modal, {
+              animationType: 'slide',
+              transparent: false,
+              visible: this.state.modalVisible,
+              onRequestClose: function onRequestClose() {
+                alert('Modal has been closed.');
+              }, __source: { fileName: _jsxFileName, lineNumber: 36 } },
+            _react2.default.createElement(require('react-native').View, { style: { flex: 1, justifyContent: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 43 } },
+              _react2.default.createElement(require('react-native').View, { __source: { fileName: _jsxFileName, lineNumber: 44 } },
+                _react2.default.createElement(require('react-native').Image, {
+                  style: { width: 200, height: 200 },
+                  source: { uri: _reactNativeConfig2.default.S3_PREFIX + this.props.file.url.replace(/.*(?=paperclip_assets)/i, "") }, __source: { fileName: _jsxFileName, lineNumber: 45 } }),
+
+
+                _react2.default.createElement(require('react-native').TouchableOpacity, {
+                    onPress: function onPress() {
+                      _this3.setModalVisible(!_this3.state.modalVisible);
+                    }, __source: { fileName: _jsxFileName, lineNumber: 50 } },
+                  _react2.default.createElement(require('react-native').Text, { __source: { fileName: _jsxFileName, lineNumber: 54 } }, 'Hide Modal'))))),
+
+
+
+
+          _react2.default.createElement(require('react-native').TouchableOpacity, { style: [containerStyle, this.props.customStyle], onPress: function onPress() {_this3.setModalVisible(true);}, __source: { fileName: _jsxFileName, lineNumber: 59 } },
+            _react2.default.createElement(require('react-native').View, { style: textWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 60 } },
+              _react2.default.createElement(require('react-native').Text, { __source: { fileName: _jsxFileName, lineNumber: 61 } },
+                this.props.file.title))),
+
+
+
+          _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.confirmDelete(_this3.props.file.id, _this3.props.eventId);}, __source: { fileName: _jsxFileName, lineNumber: 66 } },
+            _react2.default.createElement(_Close2.default, { style: styles.svgStyle, fill: 'red', __source: { fileName: _jsxFileName, lineNumber: 67 } }))));
+
+
+
+    } }]);return File;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    width: '85%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: 10,
+    borderColor: '#8CCDF8',
+    borderWidth: 2 },
+
+  textWrapperStyle: {
+    height: '100%',
+    padding: 5 },
+
+  textStyle: {
+    fontSize: 8,
+    alignSelf: 'center' },
+
+  svgStyle: {
+    width: 30,
+    height: 30 } };exports.default =
+
+
+
+
+
+(0, require('react-redux').connect)(null, { deleteActionFile: require('../actions').deleteActionFile })(File);

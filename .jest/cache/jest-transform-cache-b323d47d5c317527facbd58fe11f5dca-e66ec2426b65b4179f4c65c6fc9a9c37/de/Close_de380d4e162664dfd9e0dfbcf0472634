@@ -1,0 +1,49 @@
+a1444d1b4c0a70b3480b494c5652a280
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/assets/Close.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _reactNativeSvg2 = babelHelpers.interopRequireDefault(require('react-native-svg'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Close = function (_Component) {babelHelpers.inherits(Close, _Component);function Close() {babelHelpers.classCallCheck(this, Close);return babelHelpers.possibleConstructorReturn(this, (Close.__proto__ || Object.getPrototypeOf(Close)).apply(this, arguments));}babelHelpers.createClass(Close, [{ key: 'render', value: function render()
+        {
+            return (
+
+                _react2.default.createElement(_reactNativeSvg2.default, {
+                        style: this.props.style,
+                        viewBox: '0 0 24 24', __source: { fileName: _jsxFileName, lineNumber: 26 } },
+                    _react2.default.createElement(require('react-native-svg').Path, { d: 'M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z', fill: this.props.fill, __source: { fileName: _jsxFileName, lineNumber: 29 } }),
+                    _react2.default.createElement(require('react-native-svg').Path, { d: 'M0 0h24v24H0z', fill: 'none', __source: { fileName: _jsxFileName, lineNumber: 30 } })));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        } }]);return Close;}(require('react').Component);exports.default =
+
+
+Close;

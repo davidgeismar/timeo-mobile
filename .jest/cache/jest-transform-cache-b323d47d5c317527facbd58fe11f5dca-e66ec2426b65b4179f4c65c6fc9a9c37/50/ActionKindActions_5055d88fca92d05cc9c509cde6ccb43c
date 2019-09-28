@@ -1,0 +1,29 @@
+cfc0d1449843c2f503116c09e811105f
+Object.defineProperty(exports, "__esModule", { value: true });exports.fetchActionKinds = undefined;var _Api2 = babelHelpers.interopRequireDefault(require('./Api'));
+
+
+
+
+
+
+
+
+var fetchActionKinds = exports.fetchActionKinds = function fetchActionKinds() {
+  return function (dispatch) {
+    (0, require('./LoaderActions').setLoaderState)(dispatch, true);
+    _Api2.default.get('/internal/timeo/api/v0/action_kinds').
+    then(function (response) {return fetchActionKindsSuccess(dispatch, response);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+
+var fetchActionKindsSuccess = function fetchActionKindsSuccess(dispatch, data) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').SET_ACTION_KINDS,
+    payload: data.data });
+
+  return require('react-native-router-flux').Actions.actionList();
+};

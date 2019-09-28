@@ -1,0 +1,34 @@
+7383dc0f7939f0cc105979c10cc0491f
+Object.defineProperty(exports, "__esModule", { value: true });exports.persistor = exports.store = undefined;var _reduxThunk2 = babelHelpers.interopRequireDefault(require('redux-thunk'));var _reducers2 = babelHelpers.interopRequireDefault(require('../reducers'));var _autoMergeLevel2 = babelHelpers.interopRequireDefault(require('redux-persist/lib/stateReconciler/autoMergeLevel2'));var _axios2 = babelHelpers.interopRequireDefault(require('axios'));var _Api2 = babelHelpers.interopRequireDefault(require('../actions/Api'));
+
+
+
+
+
+
+
+
+
+var _XHR = GLOBAL.originalXMLHttpRequest ?
+GLOBAL.originalXMLHttpRequest :
+GLOBAL.XMLHttpRequest;
+
+XMLHttpRequest = _XHR;
+
+var persistConfig = {
+    key: 'root',
+    storage: require('react-native').AsyncStorage,
+    stateReconciler: _autoMergeLevel2.default,
+    blacklist: ['error', 'loading', 'backgroundImage'] };
+
+var pReducer = (0, require('redux-persist').persistReducer)(persistConfig, _reducers2.default);
+var store = exports.store = (0, require('redux').createStore)(
+pReducer,
+{},
+(0, require('redux').compose)(
+(0, require('redux').applyMiddleware)(_reduxThunk2.default)));
+
+
+
+var persistor = exports.persistor = (0, require('redux-persist').persistStore)(store);
+persistor.purge();

@@ -1,0 +1,21 @@
+f1b1a77a6f869db9950bcc6e8548f859
+Object.defineProperty(exports, "__esModule", { value: true });exports.KanbanReducer = undefined;
+
+
+
+
+var INITIAL_STATE = { list: [], selectedKanban: null };
+var KanbanReducer = exports.KanbanReducer = function KanbanReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+    switch (action.type) {
+        case require('../actions/types').LOAD_PROJECT_KANBANS:
+            return babelHelpers.extends({}, state, { list: action.payload });
+        case require('../actions/types').SET_CURRENT_KANBAN:
+            return babelHelpers.extends({}, state, { selectedKanban: action.payload });
+        case require('../actions/types').DELETE_SELECTED_KANBAN:
+            return babelHelpers.extends({}, state, { selectedKanban: null });
+        case require('../actions/types').RESET_INFO:
+            return INITIAL_STATE;
+        default:
+            return state;}
+
+};

@@ -1,0 +1,39 @@
+f1ccec54f258c5ea98ddf2c23800610f
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/assets/Displeased.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _reactNativeSvg2 = babelHelpers.interopRequireDefault(require('react-native-svg'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Displeased = function (_Component) {babelHelpers.inherits(Displeased, _Component);function Displeased() {babelHelpers.classCallCheck(this, Displeased);return babelHelpers.possibleConstructorReturn(this, (Displeased.__proto__ || Object.getPrototypeOf(Displeased)).apply(this, arguments));}babelHelpers.createClass(Displeased, [{ key: 'render', value: function render()
+        {
+            return (
+                _react2.default.createElement(_reactNativeSvg2.default, { style: this.props.style, viewBox: '0 0 64 64', 'enable-background': 'new 0 0 64 64', __source: { fileName: _jsxFileName, lineNumber: 26 } },
+                    _react2.default.createElement(require('react-native-svg').Circle, { cx: '32', cy: '32', r: '30', fill: '#ffdd67', __source: { fileName: _jsxFileName, lineNumber: 27 } }),
+                    _react2.default.createElement(require('react-native-svg').G, { fill: '#664e27', __source: { fileName: _jsxFileName, lineNumber: 28 } },
+                        _react2.default.createElement(require('react-native-svg').Circle, { cx: '20.5', cy: '26.6', r: '5', __source: { fileName: _jsxFileName, lineNumber: 29 } }),
+                        _react2.default.createElement(require('react-native-svg').Circle, { cx: '43.5', cy: '26.6', r: '5', __source: { fileName: _jsxFileName, lineNumber: 30 } }),
+                        _react2.default.createElement(require('react-native-svg').Path, { d: 'm23 47.6c5.8-4.8 12.2-4.8 18 0 .7.6 1.3-.4.8-1.3-1.8-3.4-5.3-6.5-9.8-6.5s-8.1 3.1-9.8 6.5c-.5.9.1 1.9.8 1.3', __source: { fileName: _jsxFileName, lineNumber: 31 } }))));
+
+
+
+        } }]);return Displeased;}(require('react').Component);exports.default =
+
+
+Displeased;

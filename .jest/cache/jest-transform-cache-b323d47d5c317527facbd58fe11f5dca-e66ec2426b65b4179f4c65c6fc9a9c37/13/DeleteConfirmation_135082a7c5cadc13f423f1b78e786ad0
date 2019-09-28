@@ -1,0 +1,102 @@
+fb7715c3c12a200d7c2d8ed414ea6185
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/DeleteConfirmation.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Spinner2 = babelHelpers.interopRequireDefault(require('./common/Spinner'));var _Footer2 = babelHelpers.interopRequireDefault(require('./common/Footer'));var _Button2 = babelHelpers.interopRequireDefault(require('./common/Button'));var
+
+
+
+
+
+
+
+
+
+
+DeleteConfirmation = function (_Component) {babelHelpers.inherits(DeleteConfirmation, _Component);function DeleteConfirmation() {babelHelpers.classCallCheck(this, DeleteConfirmation);return babelHelpers.possibleConstructorReturn(this, (DeleteConfirmation.__proto__ || Object.getPrototypeOf(DeleteConfirmation)).apply(this, arguments));}babelHelpers.createClass(DeleteConfirmation, [{ key: 'formatDuration', value: function formatDuration(
+    ms) {
+      var time = new Date(ms);
+      var hours = time.getUTCHours() < 10 ? '0' + time.getUTCHours() : time.getUTCHours();
+      var minutes = time.getUTCMinutes() < 10 ? '0' + time.getUTCMinutes() : time.getUTCMinutes();
+      var seconds = time.getUTCSeconds() < 10 ? '0' + time.getUTCSeconds() : time.getUTCSeconds();
+
+      return hours + ":" + minutes + ":" + seconds;
+    } }, { key: 'renderClient', value: function renderClient()
+
+    {
+      if (this.props.eventToDelete.client__name) {
+        return (
+          _react2.default.createElement(require('react-native').Text, { style: { color: 'white' }, __source: { fileName: _jsxFileName, lineNumber: 25 } },
+            this.props.eventToDelete.client__name));
+
+
+      }
+    } }, { key: 'renderProject', value: function renderProject()
+    {
+      if (this.props.eventToDelete.project__name) {
+        return (
+          _react2.default.createElement(require('react-native').Text, { style: { color: 'white' }, __source: { fileName: _jsxFileName, lineNumber: 34 } },
+            this.props.eventToDelete.project__name));
+
+
+      }
+    } }, { key: 'renderDuration', value: function renderDuration()
+
+    {
+      if (this.props.eventToDelete.duration) {
+        return (
+          _react2.default.createElement(require('react-native').Text, { style: { color: 'white' }, __source: { fileName: _jsxFileName, lineNumber: 44 } },
+            this.formatDuration(this.props.eventToDelete.duration)));
+
+
+      }
+    } }, { key: 'render', value: function render()
+    {var _this2 = this;
+      if (this.props.loading) {
+        return _react2.default.createElement(_Spinner2.default, { size: 'large', __source: { fileName: _jsxFileName, lineNumber: 52 } });
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: styles.containerStyle, __source: { fileName: _jsxFileName, lineNumber: 56 } },
+            _react2.default.createElement(require('react-native').Text, { style: { color: 'white', fontSize: 25, marginBottom: 10, marginTop: '40%' }, __source: { fileName: _jsxFileName, lineNumber: 57 } }, 'Delete this? Really?'),
+
+
+            this.renderClient(),
+            this.renderProject(),
+            this.renderDuration(),
+            _react2.default.createElement(_Footer2.default, { customStyle: { backgroundColor: '#E62B5A' }, __source: { fileName: _jsxFileName, lineNumber: 63 } },
+              _react2.default.createElement(require('react-native').View, { style: styles.footerButtonsWrapper, __source: { fileName: _jsxFileName, lineNumber: 64 } },
+                _react2.default.createElement(_Button2.default, { customStyle: styles.footerButtonStyle, onPress: function onPress() {return require('react-native-router-flux').Actions.events();}, __source: { fileName: _jsxFileName, lineNumber: 65 } }, 'NO'),
+                _react2.default.createElement(_Button2.default, { customStyle: styles.footerButtonStyle, onPress: function onPress() {return _this2.props.deleteEvent(_this2.props.eventToDelete.id);}, __source: { fileName: _jsxFileName, lineNumber: 66 } }, 'YES')))));
+
+
+
+
+      }
+    } }]);return DeleteConfirmation;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#E62B5A',
+    alignContent: 'baseline',
+    alignItems: 'center' },
+
+  footerButtonsWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center' },
+
+  footerButtonStyle: {
+    width: 180 } };
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loading: state.loading,
+    eventToDelete: state.eventsData.eventToDelete };
+
+};exports.default =
+
+(0, require('react-redux').connect)(mapStateToProps, { deleteEvent: require('../actions').deleteEvent })(DeleteConfirmation);

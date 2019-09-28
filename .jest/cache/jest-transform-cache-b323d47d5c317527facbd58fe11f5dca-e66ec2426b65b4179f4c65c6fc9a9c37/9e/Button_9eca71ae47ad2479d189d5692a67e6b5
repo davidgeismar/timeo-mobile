@@ -1,0 +1,43 @@
+75d8ea4948aafa114e0ab1eb1d55dd99
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/common/Button.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var
+
+
+Button = function (_Component) {babelHelpers.inherits(Button, _Component);function Button() {babelHelpers.classCallCheck(this, Button);return babelHelpers.possibleConstructorReturn(this, (Button.__proto__ || Object.getPrototypeOf(Button)).apply(this, arguments));}babelHelpers.createClass(Button, [{ key: 'render', value: function render()
+    {var
+      buttonStyle = styles.buttonStyle,textStyle = styles.textStyle,disabledButtonStyle = styles.disabledButtonStyle;
+      return (
+        _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: this.props.onPress, style: [this.props.disabled ? disabledButtonStyle : buttonStyle, this.props.customStyle], disabled: this.props.disabled, __source: { fileName: _jsxFileName, lineNumber: 8 } },
+          _react2.default.createElement(require('react-native').Text, { style: [textStyle, this.props.disabled ? { color: "#00AFFA", opacity: 0.4, borderColor: '#FCFCFC' } : { color: '#8CCDF8' }], __source: { fileName: _jsxFileName, lineNumber: 9 } },
+            this.props.children)));
+
+
+
+    } }]);return Button;}(require('react').Component);
+;
+
+var styles = {
+  textStyle: {
+    alignSelf: 'center',
+    color: '#8CCDF8',
+    fontSize: 16,
+    fontWeight: '600' },
+
+  buttonStyle: {
+    padding: 20,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#00AFFA',
+    marginLeft: 5,
+    marginRight: 5 },
+
+  disabledButtonStyle: {
+    padding: 20,
+    backgroundColor: '#FCFCFC',
+    borderWidth: 1,
+    borderColor: '#8CCDF8',
+    marginLeft: 5,
+    marginRight: 5 } };exports.default =
+
+
+
+Button;

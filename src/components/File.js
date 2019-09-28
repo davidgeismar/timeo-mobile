@@ -31,7 +31,6 @@ class File extends Component {
   }
   render() {
     const { textWrapperStyle, svgStyle, containerStyle, textStyle } = styles
-    console.log("FILE URL", env.S3_PREFIX + this.props.file.url.replace(/.*(?=paperclip_assets)/i, ""))
     return (
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
       <Modal

@@ -1,0 +1,62 @@
+42d579eb1ab7c5a32771258f892596b7
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = "/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/node_modules/react-native-svg/elements/Text.js";var _react2 = babelHelpers.interopRequireDefault(require("react"));var _propTypes2 = babelHelpers.interopRequireDefault(require("prop-types"));var _extractText2 = babelHelpers.interopRequireDefault(require("../lib/extract/extractText"));var _extractProps2 = babelHelpers.interopRequireDefault(require("../lib/extract/extractProps"));var _Shape3 = babelHelpers.interopRequireDefault(require("./Shape"));var _class = function (_Shape) {babelHelpers.inherits(_class, _Shape);function _class() {var _ref;var _temp, _this, _ret;babelHelpers.classCallCheck(this, _class);for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {args[_key] = arguments[_key];}return _ret = (_temp = (_this = babelHelpers.possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _initialiseProps.call(_this), _temp), babelHelpers.possibleConstructorReturn(_this, _ret);}babelHelpers.createClass(_class, [{ key: "getChildContext", value: function getChildContext()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {
+            return {
+                isInAParentText: true };
+
+        } }, { key: "getContextTypes", value: function getContextTypes()
+
+
+        {
+            return {
+                isInAParentText: _propTypes2.default.bool };
+
+        } }, { key: "render", value: function render()
+
+
+
+
+
+        {var _this2 = this;
+            var props = this.props;
+
+            return (
+                _react2.default.createElement(RNSVGText, babelHelpers.extends({
+                    ref: function ref(ele) {
+                        _this2.root = ele;
+                    } },
+                (0, _extractProps2.default)(babelHelpers.extends({},
+
+                props, {
+                    x: null,
+                    y: null }),
+
+                this),
+
+                (0, _extractText2.default)(props, true), { __source: { fileName: _jsxFileName, lineNumber: 42 } })));
+
+
+        } }]);return _class;}(_Shape3.default);_class.displayName = "Text";_class.propTypes = require("../lib/props").textProps;_class.childContextTypes = { isInAParentText: _propTypes2.default.bool };var _initialiseProps = function _initialiseProps() {var _this3 = this;this.setNativeProps = function () {var _root;(_root = _this3.root).setNativeProps.apply(_root, arguments);};};exports.default = _class;
+
+
+var RNSVGText = (0, require("react-native").requireNativeComponent)("RNSVGText", null, {
+    nativeOnly: require("../lib/attributes").TextAttributes });

@@ -1,0 +1,26 @@
+d799c85ac6e3783ad46bd38fe9dacf0c
+Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+
+
+
+
+
+
+
+
+
+
+function (props, styleProperties) {
+    fillKeys.forEach(function (name) {
+        if (props.hasOwnProperty(name)) {
+            styleProperties.push(name);
+        }
+    });
+
+    return {
+
+        fill: (0, _extractBrush2.default)(props.fill || "#000"),
+        fillOpacity: (0, _extractOpacity2.default)(props.fillOpacity),
+        fillRule: fillRules[props.fillRule] === 0 ? 0 : 1 };
+
+};var _extractBrush2 = babelHelpers.interopRequireDefault(require("./extractBrush"));var _extractOpacity2 = babelHelpers.interopRequireDefault(require("./extractOpacity"));var fillRules = { evenodd: 0, nonzero: 1 };var fillKeys = Object.keys(require("../props").fillProps);

@@ -1,0 +1,34 @@
+588830b4cba4fa3f57548c98a0c19abf
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/assets/Absent.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _reactNativeSvg2 = babelHelpers.interopRequireDefault(require('react-native-svg'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Absent = function (_Component) {babelHelpers.inherits(Absent, _Component);function Absent() {babelHelpers.classCallCheck(this, Absent);return babelHelpers.possibleConstructorReturn(this, (Absent.__proto__ || Object.getPrototypeOf(Absent)).apply(this, arguments));}babelHelpers.createClass(Absent, [{ key: 'render', value: function render()
+    {
+      return (
+        _react2.default.createElement(_reactNativeSvg2.default, {
+            style: this.props.style,
+            viewBox: '0 0 64 64',
+            'enable-background': 'new 0 0 64 64', __source: { fileName: _jsxFileName, lineNumber: 22 } },
+          _react2.default.createElement(require('react-native-svg').Path, { d: 'm32 2c-16.6 0-30 13.4-30 30 0 16.6 13.4 30 30 30s30-13.4 30-30c0-16.6-13.4-30-30-30m22 30c0 4.6-1.4 8.9-3.9 12.5l-30.6-30.6c3.6-2.5 7.9-3.9 12.5-3.9 12.2 0 22 9.9 22 22m-44 0c0-4.6 1.4-8.9 3.9-12.5l30.6 30.6c-3.6 2.5-7.9 3.9-12.5 3.9-12.1 0-22-9.9-22-22',
+            fill: this.props.fill, __source: { fileName: _jsxFileName, lineNumber: 26 } })));
+
+
+    } }]);return Absent;}(require('react').Component);exports.default =
+
+
+Absent;

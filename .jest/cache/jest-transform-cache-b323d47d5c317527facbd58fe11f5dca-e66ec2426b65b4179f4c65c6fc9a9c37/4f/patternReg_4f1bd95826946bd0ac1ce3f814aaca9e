@@ -1,0 +1,2 @@
+495c827aaf002c640b06dc436b2d02ce
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = /^url\(#(.+?)\)$/;

@@ -1,0 +1,23 @@
+675b520a429df8af330cb5c1752dfe6a
+Object.defineProperty(exports, "__esModule", { value: true });exports.AuthenticationReducer = undefined;
+
+
+
+
+
+var INITIAL_STATE = { username: '', password: '', token: '' };
+
+var AuthenticationReducer = exports.AuthenticationReducer = function AuthenticationReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+  switch (action.type) {
+    case require('../actions/types').AUTH_UPDATE:
+      return babelHelpers.extends({}, state, babelHelpers.defineProperty({}, action.payload.prop, action.payload.value));
+    case require('../actions/types').SET_AUTH_TOKEN:
+      return babelHelpers.extends({}, state, { token: action.payload.token });
+    case require('../actions/types').LOGIN_FAILURE:
+      return state;
+    case require('../actions/types').RESET_AUTH_TOKEN:
+      return babelHelpers.extends({}, state, { token: action.payload });
+    default:
+      return state;}
+
+};

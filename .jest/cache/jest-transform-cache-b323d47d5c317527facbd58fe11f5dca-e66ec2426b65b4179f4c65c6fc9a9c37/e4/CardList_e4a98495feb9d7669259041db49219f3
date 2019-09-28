@@ -1,0 +1,189 @@
+a4bf99a47614efccdc805195111eeb6e
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/CardList.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Button2 = babelHelpers.interopRequireDefault(require('./common/Button'));var _Footer2 = babelHelpers.interopRequireDefault(require('./common/Footer'));var _Spinner2 = babelHelpers.interopRequireDefault(require('./common/Spinner'));var _Header2 = babelHelpers.interopRequireDefault(require('./common/Header'));var _LinkCard2 = babelHelpers.interopRequireDefault(require('./LinkCard'));var _CardBlock2 = babelHelpers.interopRequireDefault(require('./CardBlock'));var _Avatar2 = babelHelpers.interopRequireDefault(require('./Avatar'));var _SearchBar2 = babelHelpers.interopRequireDefault(require('./SearchBar'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CardList = function (_Component) {babelHelpers.inherits(CardList, _Component);function CardList() {babelHelpers.classCallCheck(this, CardList);return babelHelpers.possibleConstructorReturn(this, (CardList.__proto__ || Object.getPrototypeOf(CardList)).apply(this, arguments));}babelHelpers.createClass(CardList, [{ key: 'returnCardBlock', value: function returnCardBlock(
+
+    cardBucket) {
+      if (cardBucket.cards.length > 0) {
+        return _react2.default.createElement(_CardBlock2.default, { cards: cardBucket.cards, status: cardBucket.name, __source: { fileName: _jsxFileName, lineNumber: 25 } });
+      }
+    } }, { key: 'renderCards', value: function renderCards()
+    {var _this2 = this;
+      var cards = this.props.cards;
+      return cards.map(
+      function (cardBucket) {return _this2.returnCardBlock(cardBucket);});
+
+    } }, { key: 'renderSwitch', value: function renderSwitch()
+    {var _this3 = this;
+      if (!this.props.searchInit) {
+        var switchValue = this.props.limitToMine ? false : true;
+        return (
+          _react2.default.createElement(require('react-native').Switch, {
+            onValueChange: function onValueChange(switchValue) {return _this3.props.changeCardListScope(switchValue, _this3.props.searchPattern, _this3.props.selectedKanban.id);},
+            value: switchValue,
+            style: { transform: [{ scaleX: .6 }, { scaleY: .6 }], alignSelf: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 38 } }));
+
+      }
+    } }, { key: 'renderTitle', value: function renderTitle()
+
+    {
+      if (!this.props.searchInit) {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: { height: '100%', flexDirection: 'row', borderBottomWidth: 2, borderBottomColor: 'red' }, __source: { fileName: _jsxFileName, lineNumber: 49 } },
+            _react2.default.createElement(require('react-native').Text, { style: { color: '#00AFFA', alignSelf: 'center', fontSize: 12 }, __source: { fileName: _jsxFileName, lineNumber: 50 } }, 'Link to a Kameo Card')));
+
+
+
+
+      }
+    } }, { key: 'renderToggle', value: function renderToggle()
+
+    {
+      if (!this.props.searchInit) {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: { height: '100%', flexDirection: 'row' }, __source: { fileName: _jsxFileName, lineNumber: 61 } },
+            _react2.default.createElement(require('react-native').Text, { style: { color: '#00AFFA', fontSize: 12, alignSelf: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 62 } }, 'my cards'),
+
+
+            this.renderSwitch(),
+            _react2.default.createElement(require('react-native').Text, { style: { color: '#BFBFBF', fontSize: 12, alignSelf: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 66 } }, 'all')));
+
+
+
+
+      }
+
+    } }, { key: 'renderHeader', value: function renderHeader()
+
+    {var _this4 = this;var
+      cardHeaderStyle = styles.cardHeaderStyle;
+      return (
+        _react2.default.createElement(_Header2.default, { __source: { fileName: _jsxFileName, lineNumber: 78 } },
+          this.renderTitle(),
+          this.renderToggle(),
+          _react2.default.createElement(require('react-native').View, { style: { height: '100%', width: this.props.searchInit ? '90%' : 20, flexDirection: 'row', alignSelf: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 81 } },
+            _react2.default.createElement(_SearchBar2.default, {
+              onChangeText: function onChangeText(pattern) {return _this4.props.searchCards(_this4.props.selectedKanban.id, pattern, _this4.props.limitToMine);},
+              value: this.props.searchPattern, __source: { fileName: _jsxFileName, lineNumber: 82 } }))));
+
+
+
+
+    } }, { key: 'saveCard', value: function saveCard()
+
+    {
+      this.props.updateEvent('card_id', this.props.selectedCard.id, this.props.duration,
+      this.props.measureKind, this.props.eventId, true, false, this.props.selectedCard);
+
+    } }, { key: 'renderSelectedKanban', value: function renderSelectedKanban()
+    {
+      if (this.props.selectedKanban) {
+        return (
+          _react2.default.createElement(_LinkCard2.default, { customStyle: { alignSelf: 'center', width: 300, marginTop: 30, height: 80, marginBottom: 10 }, onPress: function onPress() {return require('react-native-router-flux').Actions.kanbanList();}, __source: { fileName: _jsxFileName, lineNumber: 99 } }, this.props.selectedKanban.name));
+
+      }
+    } }, { key: 'renderError', value: function renderError()
+
+    {var _this5 = this;
+      if (this.props.error) {
+        require('react-native').Alert.alert(
+        'An Error occured',
+        this.props.error,
+        [
+        { text: 'Dismiss', onPress: function onPress() {return _this5.props.setErrorState(null);}, style: 'cancel' }],
+
+        { cancelable: false });
+
+      }
+    } }, { key: 'render', value: function render()
+
+    {var _this6 = this;var
+      containerStyle = styles.containerStyle,footerButtonsWrapper = styles.footerButtonsWrapper,footerButtonStyle = styles.footerButtonStyle;
+      if (this.props.loading) {
+        return _react2.default.createElement(_Spinner2.default, { size: 'large', __source: { fileName: _jsxFileName, lineNumber: 120 } });
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 124 } },
+            this.renderHeader(),
+            this.renderSelectedKanban(),
+            _react2.default.createElement(require('react-native').ScrollView, { style: { marginBottom: 130 }, __source: { fileName: _jsxFileName, lineNumber: 127 } },
+              this.renderError(),
+              this.renderCards()),
+
+            _react2.default.createElement(_Footer2.default, { customStyle: { backgroundColor: '#E62B5A' }, __source: { fileName: _jsxFileName, lineNumber: 131 } },
+              _react2.default.createElement(require('react-native').View, { style: footerButtonsWrapper, __source: { fileName: _jsxFileName, lineNumber: 132 } },
+                _react2.default.createElement(_Button2.default, { customStyle: footerButtonStyle, onPress: function onPress() {return _this6.props.removeSelectedCard();}, __source: { fileName: _jsxFileName, lineNumber: 133 } }, 'CANCEL'),
+                _react2.default.createElement(_Button2.default, { disabled: this.props.disabled, customStyle: footerButtonStyle, onPress: function onPress() {return _this6.saveCard();}, __source: { fileName: _jsxFileName, lineNumber: 134 } }, 'SAVE')))));
+
+
+
+
+      }
+
+    } }]);return CardList;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center' },
+
+  footerButtonsWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center' },
+
+  footerButtonStyle: {
+    width: 170 },
+
+  cardHeaderStyle: {
+    width: '100%',
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingLeft: 10,
+    paddingRight: 10 } };
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var disabled = state.cards.selectedCard ? false : true;
+  var event = state.eventsData.currentEvent;
+  return { cards: state.cards.list,
+    selectedKanban: state.kanbans.selectedKanban,
+    selectedKanbanName: event ? event.kanban__name : null,
+    searchInit: state.cards.searchInit,
+    selectedCard: state.cards.selectedCard,
+    eventId: state.eventsData.currentEventId,
+    limitToMine: state.cards.limitToMine,
+    duration: event ? event.duration : null,
+    measureKind: event ? event.measure_kind : null,
+    disabled: disabled,
+    searchPattern: state.cards.searchPattern,
+    loading: state.loading,
+    error: state.error };
+
+};exports.default =
+(0, require('react-redux').connect)(mapStateToProps, { removeSelectedCard: require('../actions').removeSelectedCard, updateEvent: require('../actions').updateEvent, changeCardListScope: require('../actions').changeCardListScope, searchCards: require('../actions').searchCards, setErrorState: require('../actions').setErrorState })(CardList);

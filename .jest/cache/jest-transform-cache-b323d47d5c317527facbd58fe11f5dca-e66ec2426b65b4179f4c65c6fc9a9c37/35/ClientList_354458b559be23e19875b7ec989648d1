@@ -1,0 +1,83 @@
+912c2d4508c056eff79f5f87161acb6d
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/ClientList.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Spinner2 = babelHelpers.interopRequireDefault(require('./common/Spinner'));var _LinkCard2 = babelHelpers.interopRequireDefault(require('./LinkCard'));var _TabBar2 = babelHelpers.interopRequireDefault(require('./TabBar'));var
+
+
+
+
+
+
+
+
+ClientList = function (_Component) {babelHelpers.inherits(ClientList, _Component);function ClientList() {babelHelpers.classCallCheck(this, ClientList);return babelHelpers.possibleConstructorReturn(this, (ClientList.__proto__ || Object.getPrototypeOf(ClientList)).apply(this, arguments));}babelHelpers.createClass(ClientList, [{ key: 'selectClient', value: function selectClient(
+    client) {
+      this.props.updateEvent('client_id', client.id, this.props.duration, this.props.measureKind, this.props.currentEventId);
+    } }, { key: 'renderClients', value: function renderClients()
+    {var _this2 = this;
+      return this.props.clients.map(
+      function (client) {return _react2.default.createElement(_LinkCard2.default, { key: client.id, activationKey: client.id, canBeActivated: true,
+            client: client, customStyle: { width: '47%', height: 60, margin: 5 },
+            onPress: function onPress() {return _this2.selectClient(client);}, __source: { fileName: _jsxFileName, lineNumber: 16 } }, ' ', client.name);});
+
+    } }, { key: 'renderError', value: function renderError()
+    {var _this3 = this;
+      if (this.props.error) {
+        require('react-native').Alert.alert(
+        'An Error occured',
+        this.props.error,
+        [
+        { text: 'Dismiss', onPress: function onPress() {return _this3.props.setErrorState(null);}, style: 'cancel' }],
+
+        { cancelable: false });
+
+      }
+    } }, { key: 'render', value: function render()
+    {var
+      containerStyle = styles.containerStyle,eventsWrapperStyle = styles.eventsWrapperStyle;
+      if (this.props.loading) {
+        return _react2.default.createElement(_Spinner2.default, { size: 'large', __source: { fileName: _jsxFileName, lineNumber: 36 } });
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').View, { __source: { fileName: _jsxFileName, lineNumber: 40 } },
+            _react2.default.createElement(_TabBar2.default, { __source: { fileName: _jsxFileName, lineNumber: 41 } }),
+            _react2.default.createElement(require('react-native').View, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 42 } },
+              _react2.default.createElement(require('react-native').View, { style: eventsWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 43 } },
+                this.renderError(),
+                this.renderClients()))));
+
+
+
+
+      }
+
+    } }]);return ClientList;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center' },
+
+  eventsWrapperStyle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 10,
+    width: '100%' } };
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var event = state.eventsData.currentEvent;
+  return { events: state.eventsData.events,
+    currentEventId: state.eventsData.currentEventId,
+    clients: state.clients.clients,
+    duration: event ? event.duration : null,
+    measureKind: event ? event.measure_kind : null,
+    loading: state.loading };
+
+
+
+};exports.default =
+(0, require('react-redux').connect)(mapStateToProps, { updateEvent: require('../actions').updateEvent, setErrorState: require('../actions').setErrorState })(ClientList);

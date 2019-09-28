@@ -1,0 +1,83 @@
+a0302f3221518e9b75f732f7f5a261f2
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/Router.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Starter2 = babelHelpers.interopRequireDefault(require('./components/Starter'));var _Header2 = babelHelpers.interopRequireDefault(require('./components/Header'));var _Empty2 = babelHelpers.interopRequireDefault(require('./components/Empty'));var _TimeCardList2 = babelHelpers.interopRequireDefault(require('./components/TimeCardList'));var _ActionList2 = babelHelpers.interopRequireDefault(require('./components/ActionList'));var _Info2 = babelHelpers.interopRequireDefault(require('./components/Info'));var _EventList2 = babelHelpers.interopRequireDefault(require('./components/EventList'));var _ClientList2 = babelHelpers.interopRequireDefault(require('./components/ClientList'));var _Chrono2 = babelHelpers.interopRequireDefault(require('./components/assets/Chrono'));var _ProjectList2 = babelHelpers.interopRequireDefault(require('./components/ProjectList'));var _KanbanList2 = babelHelpers.interopRequireDefault(require('./components/KanbanList'));var _DeleteConfirmation2 = babelHelpers.interopRequireDefault(require('./components/DeleteConfirmation'));var _CardList2 = babelHelpers.interopRequireDefault(require('./components/CardList'));var _LoginForm2 = babelHelpers.interopRequireDefault(require('./components/LoginForm'));var _Api2 = babelHelpers.interopRequireDefault(require('./actions/Api'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var TabIcon = function TabIcon(_ref) {var selected = _ref.selected,title = _ref.title;
+  return (
+    _react2.default.createElement(require('react-native').Text, { style: { color: selected ? 'red' : 'black' }, __source: { fileName: _jsxFileName, lineNumber: 24 } }, ' ', title));
+
+};
+var ChronoIcon = function ChronoIcon() {
+  return (
+    _react2.default.createElement(require('react-native').Text, { style: { color: selected ? 'red' : 'black' }, __source: { fileName: _jsxFileName, lineNumber: 29 } }, 'Brutasse'));
+
+
+};var
+
+RouterComponent = function (_Component) {babelHelpers.inherits(RouterComponent, _Component);function RouterComponent() {babelHelpers.classCallCheck(this, RouterComponent);return babelHelpers.possibleConstructorReturn(this, (RouterComponent.__proto__ || Object.getPrototypeOf(RouterComponent)).apply(this, arguments));}babelHelpers.createClass(RouterComponent, [{ key: 'render', value: function render()
+    {
+      return (
+        _react2.default.createElement(require('react-native-router-flux').Router, { __source: { fileName: _jsxFileName, lineNumber: 37 } },
+          _react2.default.createElement(require('react-native-router-flux').Scene, { key: 'main', __source: { fileName: _jsxFileName, lineNumber: 38 } },
+            _react2.default.createElement(require('react-native-router-flux').Scene, {
+              key: 'login',
+              renderBackButton: function renderBackButton() {return null;},
+              component: _LoginForm2.default,
+              title: 'TIMEO',
+              initial: this.props.initialPage == 'login', __source: { fileName: _jsxFileName, lineNumber: 39 } }),
+
+            _react2.default.createElement(require('react-native-router-flux').Scene, {
+              key: 'actionList',
+              component: _ActionList2.default, __source: { fileName: _jsxFileName, lineNumber: 46 } }),
+
+            _react2.default.createElement(require('react-native-router-flux').Scene, {
+              key: 'cardList',
+              component: _CardList2.default,
+              hideNavBar: true, __source: { fileName: _jsxFileName, lineNumber: 50 } }),
+
+
+            _react2.default.createElement(require('react-native-router-flux').Scene, { key: 'chrono', hideNavBar: true, component: _Starter2.default, initial: this.props.initialPage == 'chrono', __source: { fileName: _jsxFileName, lineNumber: 56 } }),
+            _react2.default.createElement(require('react-native-router-flux').Scene, { key: 'time', hideNavBar: true, title: 'TIME', component: _TimeCardList2.default, icon: ChronoIcon, initial: this.props.initialPage == 'time', __source: { fileName: _jsxFileName, lineNumber: 57 } }),
+            _react2.default.createElement(require('react-native-router-flux').Scene, { key: 'client', hideNavBar: true, title: 'CLIENT', component: _ClientList2.default, icon: TabIcon, initial: this.props.initialPage == 'client', __source: { fileName: _jsxFileName, lineNumber: 58 } }),
+            _react2.default.createElement(require('react-native-router-flux').Scene, { key: 'projects', hideNavBar: true, title: 'PROJECT', component: _ProjectList2.default, icon: TabIcon, initial: this.props.initialPage == 'projects', __source: { fileName: _jsxFileName, lineNumber: 59 } }),
+            _react2.default.createElement(require('react-native-router-flux').Scene, { key: 'info', hideNavBar: true, title: 'INFO', component: _Info2.default, icon: TabIcon, initial: this.props.initialPage == 'info', __source: { fileName: _jsxFileName, lineNumber: 60 } }),
+
+            _react2.default.createElement(require('react-native-router-flux').Scene, {
+              key: 'kanbanList',
+              component: _KanbanList2.default, __source: { fileName: _jsxFileName, lineNumber: 62 } }),
+
+            _react2.default.createElement(require('react-native-router-flux').Scene, { key: 'events', hideNavBar: true, title: 'EVENTS', component: _EventList2.default, icon: TabIcon, initial: this.props.initialPage == 'events', __source: { fileName: _jsxFileName, lineNumber: 66 } }),
+            _react2.default.createElement(require('react-native-router-flux').Scene, { key: 'deleteEvent', hideNavBar: true, title: 'DELETE', component: _DeleteConfirmation2.default, __source: { fileName: _jsxFileName, lineNumber: 67 } }))));
+
+
+
+
+
+    } }]);return RouterComponent;}(require('react').Component);
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var initialPage = _Api2.default.defaults.headers.common['Authorization'] ? state.tabs.activeTab : 'login';
+  return {
+    initialPage: 'login' };
+
+};exports.default =
+(0, require('react-redux').connect)(mapStateToProps, null)(RouterComponent);

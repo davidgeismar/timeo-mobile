@@ -1,0 +1,27 @@
+eb8cd0e4074d1694c3fbe1b2e3f414c6
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = "/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/node_modules/react-native-svg/elements/Symbol.js";var _react2 = babelHelpers.interopRequireDefault(require("react"));var _propTypes2 = babelHelpers.interopRequireDefault(require("prop-types"));var _extractViewBox2 = babelHelpers.interopRequireDefault(require("../lib/extract/extractViewBox"));var _class = function (_Component) {babelHelpers.inherits(_class, _Component);function _class() {babelHelpers.classCallCheck(this, _class);return babelHelpers.possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));}babelHelpers.createClass(_class, [{ key: "render", value: function render()
+
+
+
+
+
+
+
+
+
+
+
+
+        {var
+            props = this.props;
+
+            return (
+                _react2.default.createElement(RNSVGSymbol, babelHelpers.extends({ name: props.id }, (0, _extractViewBox2.default)(props), { __source: { fileName: _jsxFileName, lineNumber: 18 } }),
+                    props.children));
+
+
+        } }]);return _class;}(require("react").Component);_class.displayName = "Symbol";_class.propTypes = { id: _propTypes2.default.string.isRequired, viewBox: _propTypes2.default.string, preserveAspectRatio: _propTypes2.default.string };exports.default = _class;
+
+
+var RNSVGSymbol = (0, require("react-native").requireNativeComponent)("RNSVGSymbol", null, {
+    nativeOnly: require("../lib/attributes").SymbolAttributes });

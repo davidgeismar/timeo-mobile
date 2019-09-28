@@ -1,0 +1,35 @@
+8a7df6e6da9583e9becebaba49d3d76e
+Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+
+
+
+
+
+
+function (props, ref) {
+    var styleProperties = [];
+
+    var extractedProps = {
+        opacity: (0, _extractOpacity2.default)(props.opacity),
+        propList: styleProperties };
+
+
+    if (props.id) {
+        extractedProps.name = props.id;
+    }
+
+    if (props.clipPath) {
+        babelHelpers.extends(extractedProps, (0, _extractClipPath2.default)(props));
+    }
+
+    babelHelpers.extends(extractedProps, (0, _extractStroke2.default)(props, styleProperties));
+    babelHelpers.extends(extractedProps, (0, _extractFill2.default)(props, styleProperties));
+
+    extractedProps.matrix = (0, _extractTransform2.default)(props);
+
+    babelHelpers.extends(extractedProps, (0, require("./extractTransform").props2transform)(props));
+
+    babelHelpers.extends(extractedProps, (0, _extractResponder2.default)(props, ref));
+
+    return extractedProps;
+};var _extractFill2 = babelHelpers.interopRequireDefault(require("./extractFill"));var _extractStroke2 = babelHelpers.interopRequireDefault(require("./extractStroke"));var _extractTransform2 = babelHelpers.interopRequireDefault(require("./extractTransform"));var _extractClipPath2 = babelHelpers.interopRequireDefault(require("./extractClipPath"));var _extractResponder2 = babelHelpers.interopRequireDefault(require("./extractResponder"));var _extractOpacity2 = babelHelpers.interopRequireDefault(require("./extractOpacity"));

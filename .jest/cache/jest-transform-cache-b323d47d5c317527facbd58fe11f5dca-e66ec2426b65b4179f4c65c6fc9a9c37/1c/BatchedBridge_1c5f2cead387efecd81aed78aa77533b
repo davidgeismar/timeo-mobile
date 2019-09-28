@@ -1,0 +1,41 @@
+aa11dc9e9068191037d3518977362067
+
+
+
+
+
+
+
+
+
+'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+var BatchedBridge = new (require('MessageQueue'))(
+
+typeof __fbUninstallRNGlobalErrorHandler !== 'undefined' &&
+__fbUninstallRNGlobalErrorHandler === true);
+
+
+
+
+
+
+
+
+Object.defineProperty(global, '__fbBatchedBridge', {
+  configurable: true,
+  value: BatchedBridge });
+
+
+module.exports = BatchedBridge;

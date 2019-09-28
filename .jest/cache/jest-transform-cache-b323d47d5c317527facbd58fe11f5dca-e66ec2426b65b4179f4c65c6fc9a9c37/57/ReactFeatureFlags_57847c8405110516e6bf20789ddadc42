@@ -1,0 +1,19 @@
+b902980e714621c592b9eb5fb33b7783
+
+
+
+
+
+
+
+
+
+'use strict';
+
+var ReactFeatureFlags = {
+  debugRenderPhaseSideEffects: false,
+  debugRenderPhaseSideEffectsForStrictMode: false,
+  warnAboutDeprecatedLifecycles: false };
+
+
+module.exports = ReactFeatureFlags;

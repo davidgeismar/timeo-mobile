@@ -1,0 +1,106 @@
+d88a5af6595de0a887dba86f04a3d206
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/App.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Starter2 = babelHelpers.interopRequireDefault(require('./src/components/Starter'));var _Avatar2 = babelHelpers.interopRequireDefault(require('./src/components/Avatar'));var _Button2 = babelHelpers.interopRequireDefault(require('./src/components/common/Button'));var _Chrono2 = babelHelpers.interopRequireDefault(require('./src/components/assets/Chrono'));var _Router2 = babelHelpers.interopRequireDefault(require('./src/Router'));var _Api2 = babelHelpers.interopRequireDefault(require('./src/actions/Api'));var _Spinner2 = babelHelpers.interopRequireDefault(require('./src/components/common/Spinner'));var _axios2 = babelHelpers.interopRequireDefault(require('axios'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+console.disableYellowBox = true;var
+
+App = function (_React$Component) {babelHelpers.inherits(App, _React$Component);
+  function App() {babelHelpers.classCallCheck(this, App);var _this = babelHelpers.possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+    _this.state = { ready: false, validToken: false };return _this;
+  }babelHelpers.createClass(App, [{ key: 'componentWillMount', value: function componentWillMount()
+
+    {var _this2 = this;
+      this.checkStoredTokenValidity().
+      then(function (resp) {return _this2.checkAuthTokenValidity(resp);}).
+      catch(function (error) {return _this2.authTokenCheckError(error);}).
+      then(function (resp) {return _this2.authTokenCheckSuccess(resp);}).
+      catch(function (err) {return _this2.authTokenCheckError(err);});
+    } }, { key: 'componentDidMount', value: function componentDidMount()
+
+    {
+      if (!this.state.validToken) {
+        require('./src/store').store.dispatch({
+          type: require('./src/actions/types').RESET_INFO,
+          payload: true });
+
+      }
+    } }, { key: 'checkStoredTokenValidity', value: function checkStoredTokenValidity() {var data;return regeneratorRuntime.async(function checkStoredTokenValidity$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return regeneratorRuntime.awrap(
+
+
+              require('react-native').AsyncStorage.getItem('persist:root'));case 2:data = _context.sent;return _context.abrupt('return',
+              JSON.parse(data));case 4:case 'end':return _context.stop();}}}, null, this);} }, { key: 'checkAuthTokenValidity', value: function checkAuthTokenValidity(
+
+
+    resp) {var token, config, data;return regeneratorRuntime.async(function checkAuthTokenValidity$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:
+              token = JSON.parse(resp.authentication).token;
+              config = {
+                method: 'GET',
+                url: 'http://staging.obeya.xair.cloud/internal/timeo/api/v0/auth/ping',
+                headers: {
+                  Accept: 'application/json',
+                  Authorization: 'Bearer ' + token } };_context2.next = 4;return regeneratorRuntime.awrap(
+
+
+              (0, _axios2.default)(config));case 4:data = _context2.sent;_context2.next = 7;return regeneratorRuntime.awrap(
+              { data: data, token: token });case 7:return _context2.abrupt('return', _context2.sent);case 8:case 'end':return _context2.stop();}}}, null, this);} }, { key: 'authTokenCheckSuccess', value: function authTokenCheckSuccess(
+
+
+
+    resp, token) {
+      if (resp.data.data.message === 'pong') {
+        _Api2.default.defaults.headers.common['Accept'] = 'application/json';
+        _Api2.default.defaults.headers.common['Authorization'] = 'Bearer ' + resp.token;
+        this.setState({
+          validToken: true });
+
+      } else
+      {
+        _Api2.default.defaults.headers.common['Accept'] = 'application/json';
+        _Api2.default.defaults.headers.common['Authorization'] = null;
+        this.setState({
+          validToken: false });
+
+
+      }
+      this.setState({
+        ready: true });
+
+
+    } }, { key: 'authTokenCheckError', value: function authTokenCheckError(
+
+    err) {
+      _Api2.default.defaults.headers.common['Accept'] = 'application/json';
+      _Api2.default.defaults.headers.common['Authorization'] = null;
+      this.setState({
+        ready: true,
+        validToken: false });
+
+    } }, { key: 'render', value: function render()
+    {
+      if (this.state.ready) {
+        return (
+          _react2.default.createElement(require('react-redux').Provider, { store: require('./src/store').store, __source: { fileName: _jsxFileName, lineNumber: 93 } },
+            _react2.default.createElement(require('redux-persist/lib/integration/react').PersistGate, {
+                loading: _react2.default.createElement(_Spinner2.default, { __source: { fileName: _jsxFileName, lineNumber: 95 } }),
+                persistor: require('./src/store').persistor, __source: { fileName: _jsxFileName, lineNumber: 94 } },
+              _react2.default.createElement(_Router2.default, { __source: { fileName: _jsxFileName, lineNumber: 97 } }))));
+
+
+
+      } else
+      {
+        return _react2.default.createElement(_Spinner2.default, { __source: { fileName: _jsxFileName, lineNumber: 103 } });
+      }
+    } }]);return App;}(_react2.default.Component);exports.default = App;

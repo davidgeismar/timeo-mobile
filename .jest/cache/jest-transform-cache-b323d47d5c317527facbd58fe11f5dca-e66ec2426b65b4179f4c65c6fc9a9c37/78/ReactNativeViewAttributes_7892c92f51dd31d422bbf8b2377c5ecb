@@ -1,0 +1,50 @@
+e2e8e21a83f5e63b2e3b02b8ee56ac13
+
+
+
+
+
+
+
+
+
+'use strict';
+
+
+
+var ReactNativeViewAttributes = {};
+
+ReactNativeViewAttributes.UIView = {
+  pointerEvents: true,
+  accessible: true,
+  accessibilityActions: true,
+  accessibilityLabel: true,
+  accessibilityComponentType: true,
+  accessibilityLiveRegion: true,
+  accessibilityTraits: true,
+  importantForAccessibility: true,
+  nativeID: true,
+  testID: true,
+  renderToHardwareTextureAndroid: true,
+  shouldRasterizeIOS: true,
+  onLayout: true,
+  onAccessibilityAction: true,
+  onAccessibilityTap: true,
+  onMagicTap: true,
+  collapsable: true,
+  needsOffscreenAlphaCompositing: true,
+  style: require('ReactNativeStyleAttributes') };
+
+
+ReactNativeViewAttributes.RCTView = babelHelpers.extends({},
+ReactNativeViewAttributes.UIView, {
+
+
+
+
+
+
+  removeClippedSubviews: true });
+
+
+module.exports = ReactNativeViewAttributes;

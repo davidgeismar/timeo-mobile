@@ -1,0 +1,54 @@
+31b0cb2dde591fbd0c1b037b7400322c
+Object.defineProperty(exports, "__esModule", { value: true });exports.setCurrentKanban = exports.loadSelectedKanban = exports.removeSelectedKanban = exports.loadProjectKanbans = undefined;var _Api2 = babelHelpers.interopRequireDefault(require('./Api'));
+
+
+
+
+
+
+
+
+
+
+var loadProjectKanbans = exports.loadProjectKanbans = function loadProjectKanbans(projectId, dispatch) {
+  return function (dispatch) {
+
+    _Api2.default.get('/internal/timeo/api/v0/kameo_kanbans/by-project-id/' + projectId).
+    then(function (response) {return loadProjectKanbansSuccess(dispatch, response);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+
+var loadProjectKanbansSuccess = function loadProjectKanbansSuccess(dispatch, data) {
+  var kanbans = data.data;
+
+  dispatch({
+    type: require('./types').LOAD_PROJECT_KANBANS,
+    payload: kanbans });
+
+};
+
+var removeSelectedKanban = exports.removeSelectedKanban = function removeSelectedKanban() {
+  return function (dispatch) {
+    dispatch({
+      type: require('./types').DELETE_SELECTED_KANBAN,
+      payload: true });
+
+    require('react-native-router-flux').Actions.info();
+  };
+};
+
+var loadSelectedKanban = exports.loadSelectedKanban = function loadSelectedKanban(kanbanId) {
+  return function (dispatch) {
+    _Api2.default.get('/internal/timeo/api/v0/kameo_kanbans/' + kanbanId).
+    then(function (response) {return dispatch(setCurrentKanban(response.data));}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+var setCurrentKanban = exports.setCurrentKanban = function setCurrentKanban(kanban) {
+  return {
+    type: require('./types').SET_CURRENT_KANBAN,
+    payload: kanban };
+
+};

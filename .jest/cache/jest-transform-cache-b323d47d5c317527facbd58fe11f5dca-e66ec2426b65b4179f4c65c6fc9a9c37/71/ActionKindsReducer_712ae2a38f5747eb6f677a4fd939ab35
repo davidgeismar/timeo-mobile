@@ -1,0 +1,12 @@
+c9b17b4564a8ecd83bdd094ca05c3d89
+Object.defineProperty(exports, "__esModule", { value: true });exports.ActionKindsReducer = undefined;
+
+var INITIAL_STATE = null;
+var ActionKindsReducer = exports.ActionKindsReducer = function ActionKindsReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+  switch (action.type) {
+    case require('../actions/types').SET_ACTION_KINDS:
+      return action.payload.action_kinds;
+    default:
+      return state;}
+
+};

@@ -1,0 +1,44 @@
+5202a3b45a3f93e1263db483218a0d88
+Object.defineProperty(exports, "__esModule", { value: true });exports.onRequestErrorCallback = exports.fetchImageOfTheDay = exports.setErrorState = exports.setLoaderState = undefined;var _axios2 = babelHelpers.interopRequireDefault(require('axios'));
+
+
+
+var setLoaderState = exports.setLoaderState = function setLoaderState(loaderState) {
+  return {
+    type: require('./types').SET_LOADER,
+    payload: loaderState };
+
+
+};
+
+var setErrorState = exports.setErrorState = function setErrorState(errorMessage) {
+  return {
+    type: require('./types').SET_ERROR,
+    payload: errorMessage };
+
+};
+
+var fetchImageOfTheDay = exports.fetchImageOfTheDay = function fetchImageOfTheDay() {
+  return function (dispatch) {
+    _axios2.default.get('http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1').
+    then(function (response) {return fetchImageOfTheDaySuccess(dispatch, response);}).
+    catch(function (error) {return console.log(error);});
+  };
+};
+
+var fetchImageOfTheDaySuccess = function fetchImageOfTheDaySuccess(dispatch, data) {
+  dispatch({
+    type: require('./types').SET_BACKGROUND_IMAGE,
+    payload: data.data.images[0].url });
+
+};
+
+var onRequestErrorCallback = exports.onRequestErrorCallback = function onRequestErrorCallback(dispatch, error) {
+  dispatch(setLoaderState(false));
+  if (error.response.status == 401) {
+    dispatch(setErrorState('Please Login to continue'));
+    return require('react-native-router-flux').Actions.login();
+  }
+
+
+};

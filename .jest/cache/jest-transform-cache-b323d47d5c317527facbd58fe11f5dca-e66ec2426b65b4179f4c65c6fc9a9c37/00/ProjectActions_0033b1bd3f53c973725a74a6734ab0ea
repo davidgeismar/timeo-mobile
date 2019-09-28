@@ -1,0 +1,26 @@
+819db5292321ab3b71cd460490adbc14
+Object.defineProperty(exports, "__esModule", { value: true });exports.loadClientProjects = undefined;var _Api2 = babelHelpers.interopRequireDefault(require('./Api'));
+
+
+
+
+
+
+var loadClientProjects = exports.loadClientProjects = function loadClientProjects(clientId) {
+  return function (dispatch) {
+
+    _Api2.default.get('/internal/timeo/api/v0/projects/by-client-id/' + clientId).
+    then(function (response) {return loadClientProjectsSuccess(dispatch, response);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+var loadClientProjectsSuccess = function loadClientProjectsSuccess(dispatch, data) {
+  var projects = data.data;
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').LOAD_CLIENT_PROJECTS,
+    payload: projects });
+
+};

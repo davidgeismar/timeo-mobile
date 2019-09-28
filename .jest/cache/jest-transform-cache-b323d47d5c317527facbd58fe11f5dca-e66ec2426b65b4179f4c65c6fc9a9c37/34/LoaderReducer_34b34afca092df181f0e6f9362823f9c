@@ -1,0 +1,12 @@
+2722a7f5197dce2d1dc7dff10bb77f2c
+Object.defineProperty(exports, "__esModule", { value: true });exports.LoaderReducer = undefined;
+var INITIAL_STATE = false;
+
+var LoaderReducer = exports.LoaderReducer = function LoaderReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+  switch (action.type) {
+    case require('../actions/types').SET_LOADER:
+      return action.payload;
+    default:
+      return state;}
+
+};

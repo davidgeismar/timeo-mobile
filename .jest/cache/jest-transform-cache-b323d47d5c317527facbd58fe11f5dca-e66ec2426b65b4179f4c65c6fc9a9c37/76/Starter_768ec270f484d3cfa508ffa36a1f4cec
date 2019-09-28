@@ -1,0 +1,271 @@
+6c813a7057a2d2bceef3a8b5dd84d4c2
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/Starter.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Button2 = babelHelpers.interopRequireDefault(require('./common/Button'));var _Footer2 = babelHelpers.interopRequireDefault(require('./common/Footer'));var _Spinner2 = babelHelpers.interopRequireDefault(require('./common/Spinner'));var _Chrono2 = babelHelpers.interopRequireDefault(require('./assets/Chrono'));var _Avatar2 = babelHelpers.interopRequireDefault(require('./Avatar'));var _TabBar2 = babelHelpers.interopRequireDefault(require('./TabBar'));var _ResumeChronoButton2 = babelHelpers.interopRequireDefault(require('./ResumeChronoButton'));var _SelectChronoButton2 = babelHelpers.interopRequireDefault(require('./SelectChronoButton'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+utilities = babelHelpers.interopRequireWildcard(require('../lib/Utilities'));var
+
+
+
+Starter = function (_Component) {babelHelpers.inherits(Starter, _Component);function Starter() {babelHelpers.classCallCheck(this, Starter);return babelHelpers.possibleConstructorReturn(this, (Starter.__proto__ || Object.getPrototypeOf(Starter)).apply(this, arguments));}babelHelpers.createClass(Starter, [{ key: 'componentDidMount', value: function componentDidMount()
+
+    {var _this2 = this;
+
+      this.interval = setInterval(function () {return _this2.forceUpdate();}, 1000);
+    } }, { key: 'componentWillUnmount', value: function componentWillUnmount()
+
+    {
+      clearInterval(this.interval);
+    } }, { key: 'renderTabBar', value: function renderTabBar()
+    {
+      if (this.props.hasRun) {
+        return (
+          _react2.default.createElement(_TabBar2.default, { __source: { fileName: _jsxFileName, lineNumber: 32 } }));
+
+      }
+    } }, { key: 'renderAvatar', value: function renderAvatar()
+    {
+      if (!this.props.isRunning && !this.props.hasRun) {
+        return (
+          _react2.default.createElement(_Avatar2.default, {
+            size: 'small',
+            rounded: true,
+            source: { uri: this.props.logo_thumb, initials: this.props.initials },
+            onPress: function onPress() {return require('react-native-router-flux').Actions.events();},
+            activeOpacity: 0.7, __source: { fileName: _jsxFileName, lineNumber: 39 } }));
+
+
+      }
+    } }, { key: 'getElapsedTime', value: function getElapsedTime(
+
+    baseTime) {var startedAt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Date().getTime();var stoppedAt = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : new Date().getTime();
+      if (this.props.eventId && !startedAt) {
+        return baseTime;
+      } else
+      if (!startedAt) {
+        return 0;
+      } else
+      {
+        return stoppedAt - startedAt + baseTime;
+      }
+
+    } }, { key: 'renderButtons', value: function renderButtons()
+
+
+    {var _this3 = this;var _props =
+      this.props,baseTime = _props.baseTime,startedAt = _props.startedAt,stoppedAt = _props.stoppedAt;
+      var elapsed = this.getElapsedTime(baseTime, startedAt, stoppedAt);
+      if (this.props.isRunning && !this.props.onHold) {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: styles.buttonWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 69 } },
+            _react2.default.createElement(_Button2.default, { customStyle: styles.basicButtonStyle, onPress: function onPress() {return _this3.props.stopTimer(elapsed);}, __source: { fileName: _jsxFileName, lineNumber: 70 } }, 'Stop')));
+
+
+      } else
+      if (this.props.isOnHold && !this.props.isRunning || this.props.isSaved) {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: styles.chronoButtonsWrapper, __source: { fileName: _jsxFileName, lineNumber: 76 } },
+            _react2.default.createElement(_ResumeChronoButton2.default, { onPress: function onPress() {return _this3.props.startTimer(elapsed);}, __source: { fileName: _jsxFileName, lineNumber: 77 } }),
+            _react2.default.createElement(_SelectChronoButton2.default, { onPress: function onPress() {return _this3.props.activateTab('time');}, __source: { fileName: _jsxFileName, lineNumber: 78 } }),
+            _react2.default.createElement(_Button2.default, { customStyle: styles.saveButtonStyle, onPress: function onPress() {return _this3.saveEvent();}, __source: { fileName: _jsxFileName, lineNumber: 79 } }, 'Save')));
+
+
+      } else
+      if (!this.props.isRunning && !this.props.isSaved && !this.props.isOnHold) {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: styles.buttonWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 85 } },
+            _react2.default.createElement(_Button2.default, { customStyle: styles.basicButtonStyle, onPress: function onPress() {return _this3.props.activateTab('time');}, __source: { fileName: _jsxFileName, lineNumber: 86 } }, 'ADD')));
+
+
+
+      }
+    } }, { key: 'saveEvent', value: function saveEvent()
+
+    {var _props2 =
+      this.props,baseTime = _props2.baseTime,startedAt = _props2.startedAt,stoppedAt = _props2.stoppedAt;
+      var elapsed = this.getElapsedTime(baseTime, startedAt, stoppedAt);
+      if (this.props.eventId) {
+        this.props.updateEvent('duration', elapsed, elapsed, 'automatic', this.props.eventId);
+      } else
+      {
+        this.props.createEvent('automatic', elapsed);
+      }
+    } }, { key: 'renderChrono', value: function renderChrono()
+
+    {var _this4 = this;var _props3 =
+      this.props,baseTime = _props3.baseTime,startedAt = _props3.startedAt,stoppedAt = _props3.stoppedAt;
+      var elapsed = this.getElapsedTime(baseTime, startedAt, stoppedAt);
+      if (this.props.isRunning || this.props.isOnHold || !this.props.isRunning && this.props.isSaved) {
+
+        return (
+          _react2.default.createElement(require('react-native').View, { style: styles.chronoContainer, __source: { fileName: _jsxFileName, lineNumber: 110 } },
+            _react2.default.createElement(require('react-native').Text, { style: [styles.hoursStyle, { color: this.props.isRunning ? 'orange' : '#00AFFA' }], __source: { fileName: _jsxFileName, lineNumber: 111 } },
+              utilities.spitHours(elapsed)),
+
+            _react2.default.createElement(require('react-native').View, { style: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 114 } },
+              _react2.default.createElement(require('react-native').Text, { style: [styles.minutesStyle, { color: this.props.isRunning ? 'orange' : '#00AFFA' }], __source: { fileName: _jsxFileName, lineNumber: 115 } },
+                utilities.spitMinutes(elapsed)),
+
+              _react2.default.createElement(require('react-native').Text, { style: [{ fontSize: 40 }, { color: this.props.isRunning ? 'orange' : '#00AFFA' }], __source: { fileName: _jsxFileName, lineNumber: 118 } }, 'MN')),
+
+
+
+            _react2.default.createElement(require('react-native').View, { style: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 122 } },
+              _react2.default.createElement(require('react-native').Text, { style: [styles.secondsStyle, { color: this.props.isRunning ? 'orange' : '#00AFFA' }], __source: { fileName: _jsxFileName, lineNumber: 123 } },
+                utilities.spitSeconds(elapsed)),
+
+              _react2.default.createElement(require('react-native').Text, { style: [{ fontSize: 20 }, { color: this.props.isRunning ? 'orange' : '#00AFFA' }], __source: { fileName: _jsxFileName, lineNumber: 126 } }, 'SEC'))));
+
+
+
+
+
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this4.props.startTimer(0);}, __source: { fileName: _jsxFileName, lineNumber: 135 } },
+            _react2.default.createElement(_Chrono2.default, { style: styles.svgStyle, fill: '#00AFFA', __source: { fileName: _jsxFileName, lineNumber: 136 } })));
+
+
+      }
+
+    } }, { key: 'render', value: function render()
+    {
+      if (this.props.loading) {
+        return _react2.default.createElement(_Spinner2.default, { size: 'large', __source: { fileName: _jsxFileName, lineNumber: 144 } });
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: styles.containerStyle, __source: { fileName: _jsxFileName, lineNumber: 148 } },
+            this.renderTabBar(),
+            _react2.default.createElement(require('react-native').View, { style: styles.avatarWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 150 } },
+              this.renderAvatar()),
+
+            _react2.default.createElement(require('react-native').View, { style: styles.chronoWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 153 } },
+              this.renderChrono()),
+
+            _react2.default.createElement(_Footer2.default, { __source: { fileName: _jsxFileName, lineNumber: 156 } },
+              this.renderButtons())));
+
+
+
+      }
+    } }]);return Starter;}(require('react').Component);
+
+
+var styles = {
+  chronoContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    flex: 1 },
+
+  hoursStyle: {
+    alignSelf: 'flex-start',
+    fontSize: 40,
+    color: 'orange' },
+
+  minutesStyle: {
+    fontSize: 130,
+    color: 'orange' },
+
+  secondsStyle: {
+    fontSize: 40,
+    color: 'orange',
+    alignSelf: 'flex-end' },
+
+  basicButtonStyle: {
+    width: 200 },
+
+  saveButtonStyle: {
+    width: 120 },
+
+  chronoButtonsWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around' },
+
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white' },
+
+  avatarWrapperStyle: {
+    alignSelf: 'flex-end',
+    marginTop: 30,
+    marginRight: 20 },
+
+  chronoWrapperStyle: {
+    flex: 1,
+    marginTop: 120 },
+
+  svgStyle: {
+    height: 180,
+    width: 180 },
+
+  buttonWrapperStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center' } };
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var event = state.eventsData.currentEvent;
+  if (event) {
+    if (event.measure_kind == 'automatic') {
+      return {
+        logo_thumb: state.user.user_info ? state.user.user_info.logo_thumb : null,
+        initials: state.user.user_info ? state.user.user_info.initials : null,
+        isChrono: true,
+        isSaved: true,
+        isOnHold: state.chrono.isOnHold,
+        isRunning: state.chrono.isRunning,
+        hasRun: state.chrono.hasRun,
+        baseTime: state.chrono.baseTime,
+        startedAt: state.chrono.startedAt,
+        stoppedAt: state.chrono.stoppedAt,
+        eventId: event.id,
+        loading: state.loading };
+
+    } else
+    {
+      return {
+        logo_thumb: state.user.user_info ? state.user.user_info.logo_thumb : null,
+        initials: state.user.user_info ? state.user.user_info.initials : null,
+        isChrono: false,
+        loading: state.loading };
+
+    }
+  } else
+  {
+    return {
+      logo_thumb: state.user.user_info ? state.user.user_info.logo_thumb : null,
+      initials: state.user.user_info ? state.user.user_info.initials : null,
+      hasRun: state.chrono.hasRun,
+      isRunning: state.chrono.isRunning,
+      isSaved: state.chrono.isSaved,
+      chronoValue: state.chrono.chronoValue,
+      isOnHold: state.chrono.isOnHold,
+      timerValue: state.chrono.timerValue,
+      loading: state.loading,
+      baseTime: state.chrono.baseTime,
+      startedAt: state.chrono.startedAt,
+      stoppedAt: state.chrono.stoppedAt };
+
+  }
+};exports.default =
+
+
+(0, require('react-redux').connect)(mapStateToProps, { createEvent: require('../actions').createEvent, activateTab: require('../actions').activateTab, stopChrono: require('../actions').stopChrono, setChronoRunning: require('../actions').setChronoRunning, updateEvent: require('../actions').updateEvent, startTimer: require('../actions').startTimer, stopTimer: require('../actions').stopTimer })(Starter);

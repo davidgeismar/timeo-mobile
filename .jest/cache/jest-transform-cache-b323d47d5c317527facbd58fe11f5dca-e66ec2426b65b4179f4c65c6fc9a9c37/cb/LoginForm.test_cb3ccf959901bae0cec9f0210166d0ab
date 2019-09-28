@@ -1,0 +1,14 @@
+af3716b7dff387ea9b9d9e7310fa56e1
+var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/__tests__/LoginForm.test.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _enzyme2 = babelHelpers.interopRequireDefault(require('enzyme'));var _LoginForm2 = babelHelpers.interopRequireDefault(require('../LoginForm.js'));var _enzymeAdapterReact2 = babelHelpers.interopRequireDefault(require('enzyme-adapter-react-16'));
+
+
+
+
+
+
+_enzyme2.default.configure({ adapter: new _enzymeAdapterReact2.default() });
+
+it('shows a login form', function () {
+  var wrapped = (0, require('enzyme').shallow)(_react2.default.createElement(_LoginForm2.default, { __source: { fileName: _jsxFileName, lineNumber: 11 } }));
+  expect(wrapped.find(require('react-native').TextInput).length).toEqual(2);
+});

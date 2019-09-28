@@ -1,0 +1,62 @@
+7e41d006f4525d6cc39cf289526ff3dd
+
+
+
+
+
+
+
+
+
+'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = {
+  AccessibilityTraits: [
+  'none',
+  'button',
+  'link',
+  'header',
+  'search',
+  'image',
+  'selected',
+  'plays',
+  'key',
+  'text',
+  'summary',
+  'disabled',
+  'frequentUpdates',
+  'startsMedia',
+  'adjustable',
+  'allowsDirectInteraction',
+  'pageTurn'],
+
+  AccessibilityComponentTypes: [
+  'none',
+  'button',
+  'radiobutton_checked',
+  'radiobutton_unchecked'] };

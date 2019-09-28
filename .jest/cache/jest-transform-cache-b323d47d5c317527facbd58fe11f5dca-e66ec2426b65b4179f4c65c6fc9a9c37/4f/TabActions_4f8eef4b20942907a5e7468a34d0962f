@@ -1,0 +1,31 @@
+c98d545116de8065cec18510fd74208a
+Object.defineProperty(exports, "__esModule", { value: true });exports.activateTab = undefined;
+
+
+
+var activateTab = exports.activateTab = function activateTab(tabLabel) {
+  return function (dispatch, getState) {
+    dispatch({
+      type: require('./types').ACTIVATE_TAB,
+      payload: tabLabel });
+
+    switch (tabLabel) {
+      case 'chrono':
+        return require('react-native-router-flux').Actions.chrono();
+      case 'time':
+        return require('react-native-router-flux').Actions.time();
+      case 'projects':
+        return require('react-native-router-flux').Actions.projects();
+      case 'client':
+        return require('react-native-router-flux').Actions.client();
+      case 'events':
+        return require('react-native-router-flux').Actions.events();
+      case 'info':
+        var currentEvent = getState().eventsData.currentEvent;
+        if (currentEvent.cardId) {
+          dispatch((0, require('./EventActions').fetchCard)(currentEvent.card_id));
+        }
+        return require('react-native-router-flux').Actions.info();}
+
+  };
+};

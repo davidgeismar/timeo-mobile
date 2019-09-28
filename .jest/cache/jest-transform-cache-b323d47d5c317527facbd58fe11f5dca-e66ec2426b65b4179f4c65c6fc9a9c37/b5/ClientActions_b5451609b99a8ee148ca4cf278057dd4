@@ -1,0 +1,26 @@
+0747f6a921bbf786a74f47e6b023c7df
+Object.defineProperty(exports, "__esModule", { value: true });exports.fetchClients = undefined;var _Api2 = babelHelpers.interopRequireDefault(require('./Api'));
+
+
+
+
+
+
+var fetchClients = exports.fetchClients = function fetchClients() {
+  return function (dispatch) {
+    dispatch((0, require('./LoaderActions').setLoaderState)(true));
+    _Api2.default.get('/internal/obeya/api/v0/clients').
+    then(function (response) {return fetchClientsSuccess(dispatch, response);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+
+var fetchClientsSuccess = function fetchClientsSuccess(dispatch, data) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').LOAD_CLIENTS,
+    payload: data.data });
+
+};

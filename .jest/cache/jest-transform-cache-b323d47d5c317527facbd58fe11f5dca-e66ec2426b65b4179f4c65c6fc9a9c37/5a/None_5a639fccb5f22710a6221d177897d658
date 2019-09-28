@@ -1,0 +1,35 @@
+fa0db8e9f069354ba2c6f305de567dec
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/assets/None.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _reactNativeSvg2 = babelHelpers.interopRequireDefault(require('react-native-svg'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+None = function (_Component) {babelHelpers.inherits(None, _Component);function None() {babelHelpers.classCallCheck(this, None);return babelHelpers.possibleConstructorReturn(this, (None.__proto__ || Object.getPrototypeOf(None)).apply(this, arguments));}babelHelpers.createClass(None, [{ key: 'render', value: function render()
+        {
+            return (
+                _react2.default.createElement(_reactNativeSvg2.default, { style: this.props.style, viewBox: '0 0 64 64', 'enable-background': 'new 0 0 64 64', __source: { fileName: _jsxFileName, lineNumber: 24 } },
+                    _react2.default.createElement(require('react-native-svg').Circle, { cx: '32', cy: '32', r: '30', fill: '#ffdd67', __source: { fileName: _jsxFileName, lineNumber: 25 } }),
+                    _react2.default.createElement(require('react-native-svg').G, { fill: '#664e27', __source: { fileName: _jsxFileName, lineNumber: 26 } }, _react2.default.createElement(require('react-native-svg').Circle, { cx: '20.5', cy: '27.6', r: '5', __source: { fileName: _jsxFileName, lineNumber: 26 } }),
+                        _react2.default.createElement(require('react-native-svg').Circle, { cx: '43.5', cy: '27.6', r: '5', __source: { fileName: _jsxFileName, lineNumber: 27 } }),
+                        _react2.default.createElement(require('react-native-svg').Path, { d: 'm38.9 48h-13.8c-1.5 0-1.5-4 0-4h13.7c1.6 0 1.6 4 .1 4', __source: { fileName: _jsxFileName, lineNumber: 28 } }))));
+
+
+        } }]);return None;}(require('react').Component);exports.default =
+
+
+None;

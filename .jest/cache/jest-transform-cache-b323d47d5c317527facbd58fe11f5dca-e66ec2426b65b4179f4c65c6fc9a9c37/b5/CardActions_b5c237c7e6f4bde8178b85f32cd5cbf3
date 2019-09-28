@@ -1,0 +1,155 @@
+49296723b33c7fc971020c058baa928a
+Object.defineProperty(exports, "__esModule", { value: true });exports.fetchCard = exports.updateSearchCardStatus = exports.setCurrentCard = exports.removeSelectedCard = exports.changeCardListScopeSuccess = exports.changeCardListScope = exports.searchCards = exports.loadKanbanCards = undefined;var _Api2 = babelHelpers.interopRequireDefault(require('./Api'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+var loadKanbanCards = exports.loadKanbanCards = function loadKanbanCards(kanbanId) {var loader = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  return function (dispatch) {
+    if (loader) {
+      dispatch((0, require('./LoaderActions').setLoaderState)(true));
+    }
+    dispatch(updateSearchPattern(''));
+    _Api2.default.get('/internal/timeo/api/v0/kameo_cards/by-kanban-id/' + kanbanId + '?limit_to_mine=false').
+    then(function (response) {return loadKanbanCardsSuccess(dispatch, response);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+var loadKanbanCardsSuccess = function loadKanbanCardsSuccess(dispatch, data) {
+  var cards = data.data;
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').LOAD_KANBAN_TASKS,
+    payload: cards });
+
+};
+
+var updateSearchPattern = function updateSearchPattern(pattern) {
+  return {
+    type: require('./types').UPDATE_SEARCH_PATTERN,
+    payload: pattern };
+
+};
+
+
+
+var searchCards = exports.searchCards = function searchCards(kanbanId, pattern, limitToMine) {
+  if (pattern == "") {
+    return function (dispatch) {
+      dispatch((0, require('./LoaderActions').setLoaderState)(true));
+      dispatch(loadKanbanCards(kanbanId));
+    };
+  } else
+  {
+    return function (dispatch) {
+      dispatch((0, require('./LoaderActions').setLoaderState)(true));
+      dispatch(updateSearchPattern(pattern));
+      _Api2.default.get('/internal/timeo/api/v0/kameo_cards/by-kanban-id/' + kanbanId + '/pattern?pattern=' + pattern + '&limit_to_mine=' + limitToMine).
+      then(function (response) {return searchCardsSuccess(dispatch, response);}).
+      catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+    };
+  }
+};
+
+var searchCardsSuccess = function searchCardsSuccess(dispatch, data) {
+  var cards = data.data;
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').SEARCH_TASK,
+    payload: cards });
+
+};
+
+var changeCardListScope = exports.changeCardListScope = function changeCardListScope(switchValue, searchPattern, kanbanId) {
+  var limitToMine = switchValue ? false : true;
+  return function (dispatch) {
+    dispatch((0, require('./LoaderActions').setLoaderState)(true));
+    var url = searchPattern == '' ? '/internal/timeo/api/v0/kameo_cards/by-kanban-id/' + kanbanId + '?limit_to_mine=' + limitToMine : '/internal/timeo/api/v0/kameo_cards/by-kanban-id/' + kanbanId + '/pattern?pattern=' + pattern + '&limit_to_mine=' + limitToMine;
+
+    _Api2.default.get(url).
+    then(function (response) {return changeCardListScopeSuccess(dispatch, response, limitToMine);}).
+    catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+  };
+};
+
+var changeCardListScopeSuccess = exports.changeCardListScopeSuccess = function changeCardListScopeSuccess(dispatch, data, limitToMine) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').CHANGE_TASKLIST_SCOPE,
+    payload: { limitToMine: limitToMine,
+      cards: data.data } });
+
+};
+
+
+var removeSelectedCard = exports.removeSelectedCard = function removeSelectedCard() {
+  return function (dispatch) {
+    dispatch({
+      type: require('./types').DELETE_SELECTED_TASK,
+      payload: true });
+
+    require('react-native-router-flux').Actions.info();
+  };
+};
+
+var setCurrentCard = exports.setCurrentCard = function setCurrentCard(card) {
+  return function (dispatch) {
+    dispatch({
+      type: require('./types').SET_CURRENT_TASK,
+      payload: card });
+
+  };
+};
+
+var updateSearchCardStatus = exports.updateSearchCardStatus = function updateSearchCardStatus(status) {
+  return {
+    type: require('./types').SEARCH_TASK_INIT,
+    payload: status };
+
+};
+
+
+
+
+
+var fetchCard = exports.fetchCard = function fetchCard(cardId) {var loader = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  return function (dispatch, getState) {
+    if (cardId) {
+      if (loader) {
+        dispatch((0, require('./LoaderActions').setLoaderState)(true));
+      }
+      _Api2.default.get('/internal/timeo/api/v0/kameo_cards/' + cardId).
+      then(function (response) {return fetchCardSuccess(dispatch, response);}).
+      catch(function (error) {return (0, require('./LoaderActions').onRequestErrorCallback)(dispatch, error);});
+    } else
+    {
+      dispatch({
+        type: require('./types').SET_CURRENT_EVENT_TASK,
+        payload: null });
+
+    }
+  };
+};
+
+
+var fetchCardSuccess = function fetchCardSuccess(dispatch, data) {
+  dispatch((0, require('./LoaderActions').setLoaderState)(false));
+  dispatch((0, require('./LoaderActions').setErrorState)(false));
+  dispatch({
+    type: require('./types').SET_CURRENT_EVENT_TASK,
+    payload: data.data });
+
+};

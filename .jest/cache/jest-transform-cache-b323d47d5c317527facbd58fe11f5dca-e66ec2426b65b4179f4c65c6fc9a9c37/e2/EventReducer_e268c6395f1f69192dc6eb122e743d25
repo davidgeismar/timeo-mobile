@@ -1,0 +1,63 @@
+0c9e0c9e883bbb80e6be0a9e55f86ddf
+Object.defineProperty(exports, "__esModule", { value: true });exports.EventReducer = undefined;
+
+
+
+
+
+
+
+
+
+
+
+
+
+var INITIAL_STATE = { events: [],
+  currentEventId: null,
+  currentEventComment: null,
+  currentEventCard: null,
+  currentEvent: null,
+  eventToDelete: null,
+  currentEventFiles: [] };
+
+
+
+
+var EventReducer = exports.EventReducer = function EventReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+
+  switch (action.type) {
+    case require('../actions/types').SET_CURRENT_EVENT_TASK:
+      return babelHelpers.extends({}, state, { currentEventCard: action.payload });
+    case require('../actions/types').UNSET_CURRENT_TASK:
+      return babelHelpers.extends({}, state, { currentEventCard: null });
+    case require('../actions/types').LOAD_EVENTS:
+      return babelHelpers.extends({}, state, { events: action.payload });
+    case require('../actions/types').CREATE_EVENT:
+
+      return babelHelpers.extends({}, state, { events: [].concat(babelHelpers.toConsumableArray(state.events), [action.payload]), currentEventId: action.payload.id, currentEvent: action.payload });
+    case require('../actions/types').SET_CURRENT_EVENT:
+      var currentEvent = state.events.find(function (event) {return event.id == action.payload;});
+      return babelHelpers.extends({}, state, { currentEventId: action.payload, currentEventComment: null, currentEvent: currentEvent });
+    case require('../actions/types').DELETE_EVENT:
+      events = [].concat(babelHelpers.toConsumableArray(state.events));
+      index = events.findIndex(function (event) {return event.id === action.payload;});
+      events.splice(index, 1);
+      return babelHelpers.extends({}, state, { events: events });
+    case require('../actions/types').SET_EVENT_TO_DELETE:
+      return babelHelpers.extends({}, state, { eventToDelete: action.payload });
+    case require('../actions/types').UPDATE_CURRENT_EVENT_COMMENT:
+      return babelHelpers.extends({}, state, { currentEventComment: action.payload });
+    case require('../actions/types').ADD_FILE_TO_CURRENT_EVENT:
+      return babelHelpers.extends({}, state, { currentEventFiles: [].concat(babelHelpers.toConsumableArray(state.currentEventFiles), [action.payload]) });
+    case require('../actions/types').UPDATE_EVENT:
+      events = [].concat(babelHelpers.toConsumableArray(state.events));
+      index = events.findIndex(function (event) {return event.id === action.payload.id;});
+      events[index] = action.payload;
+      return babelHelpers.extends({}, state, { events: events, currentEvent: action.payload });
+    case require('../actions/types').RESET_INFO:
+      return babelHelpers.extends({}, state, { currentEventId: null, currentEvent: null });
+    default:
+      return state;}
+
+};

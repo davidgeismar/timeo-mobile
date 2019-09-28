@@ -1,0 +1,17 @@
+c0cc7c288eda9df4feddb713b2a4822f
+Object.defineProperty(exports, "__esModule", { value: true });var _SvgTouchableMixin2 = babelHelpers.interopRequireDefault(require("../lib/SvgTouchableMixin"));var _lodash2 = babelHelpers.interopRequireDefault(require("lodash"));var
+
+
+
+Shape = function (_Component) {babelHelpers.inherits(Shape, _Component);
+    function Shape() {babelHelpers.classCallCheck(this, Shape);var _this = babelHelpers.possibleConstructorReturn(this, (Shape.__proto__ || Object.getPrototypeOf(Shape)).apply(this,
+        arguments));
+        _lodash2.default.forEach(_SvgTouchableMixin2.default, function (method, key) {
+            _this[key] = method.bind(_this);
+        });
+
+        _this.state = _this.touchableGetInitialState();return _this;
+    }return Shape;}(require("react").Component);exports.default =
+
+
+Shape;

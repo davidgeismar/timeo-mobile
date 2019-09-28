@@ -1,0 +1,18 @@
+84e517cd58606daf7d5ce57fc17eaf7e
+Object.defineProperty(exports, "__esModule", { value: true });exports.default =
+
+
+function (lengthList) {
+    if (typeof lengthList === "string") {
+        return lengthList.
+        trim().
+        replace(commaReg, " ").
+        split(spaceReg);
+    } else if (typeof lengthList === "number") {
+        return ["" + lengthList];
+    } else if (lengthList && typeof lengthList.map === "function") {
+        return lengthList.map(function (d) {return "" + d;});
+    } else {
+        return [];
+    }
+};var spaceReg = /\s+/;var commaReg = /,/g;

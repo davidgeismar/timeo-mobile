@@ -1,0 +1,7 @@
+9c8c385f126a258dac44d5e1f439d62d
+Object.defineProperty(exports, "__esModule", { value: true });require('babel-polyfill');var _axios2 = babelHelpers.interopRequireDefault(require('axios'));var _reactNativeConfig2 = babelHelpers.interopRequireDefault(require('react-native-config'));exports.default =
+
+
+
+_axios2.default.create({
+  baseURL: _reactNativeConfig2.default.API_HOST });

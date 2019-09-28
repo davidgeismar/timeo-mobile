@@ -1,0 +1,58 @@
+cc1f51e003373e38c97ec365e131ba69
+Object.defineProperty(exports, "__esModule", { value: true });exports.ChronoReducer = undefined;
+
+
+
+
+
+
+var INITIAL_STATE = {
+  isRunning: false,
+  hasRun: false,
+  timerValue: 0,
+  baseTime: 0,
+  startedAt: undefined,
+  stoppedAt: undefined,
+  isSaved: false,
+  isOnHold: false };
+
+
+var ChronoReducer = exports.ChronoReducer = function ChronoReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+  switch (action.type) {
+    case require('../actions/types').START_TIMER:
+      return babelHelpers.extends({},
+      state, {
+        baseTime: action.payload.baseTime,
+        startedAt: action.payload.now,
+        stoppedAt: undefined,
+        isRunning: true,
+        hasRun: true });
+
+    case require('../actions/types').STOP_TIMER:
+      return babelHelpers.extends({},
+      state, {
+        stoppedAt: undefined,
+        startedAt: undefined,
+        baseTime: action.payload.baseTime,
+        isRunning: false,
+        isOnHold: true });
+
+    case require('../actions/types').RESET_CHRONO:
+      return babelHelpers.extends({},
+      state, {
+        startedAt: undefined,
+        stoppedAt: undefined });
+
+    case require('../actions/types').SET_CURRENT_CHRONO_BASETIME:
+      return babelHelpers.extends({},
+      state, {
+        baseTime: action.payload,
+        startedAt: undefined,
+        stoppedAt: undefined });
+
+    case require('../actions/types').RESET_INFO:
+      return INITIAL_STATE;
+    default:
+      return state;}
+
+};

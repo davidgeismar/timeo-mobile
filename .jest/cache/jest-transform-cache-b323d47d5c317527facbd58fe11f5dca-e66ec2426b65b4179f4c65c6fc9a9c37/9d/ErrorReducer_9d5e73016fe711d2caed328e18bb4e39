@@ -1,0 +1,12 @@
+e8183ed2aeb1b15e6aefb3407265c77e
+Object.defineProperty(exports, "__esModule", { value: true });exports.ErrorReducer = undefined;
+var INITIAL_STATE = null;
+
+var ErrorReducer = exports.ErrorReducer = function ErrorReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+  switch (action.type) {
+    case require('../actions/types').SET_ERROR:
+      return action.payload;
+    default:
+      return state;}
+
+};

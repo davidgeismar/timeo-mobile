@@ -1,0 +1,36 @@
+acd71704c3520da738cceb910789ca34
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/common/Header.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var
+
+
+
+
+
+
+
+
+Header = function (_Component) {babelHelpers.inherits(Header, _Component);function Header() {babelHelpers.classCallCheck(this, Header);return babelHelpers.possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));}babelHelpers.createClass(Header, [{ key: 'render', value: function render()
+
+    {
+      return (
+        _react2.default.createElement(require('react-native').View, { style: styles.containerStyle, __source: { fileName: _jsxFileName, lineNumber: 14 } },
+          this.props.children));
+
+
+
+    } }]);return Header;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    width: '100%',
+    height: 70,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: '#FCFCFC' } };exports.default =
+
+
+
+
+
+Header;

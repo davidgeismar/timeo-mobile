@@ -1,0 +1,77 @@
+96fbdb1743fae4d5bbda8622d537c4a0
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = "/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/node_modules/react-native-svg/elements/TextPath.js";var _react2 = babelHelpers.interopRequireDefault(require("react"));var _extractText2 = babelHelpers.interopRequireDefault(require("../lib/extract/extractText"));var _Shape3 = babelHelpers.interopRequireDefault(require("./Shape"));var _extractProps2 = babelHelpers.interopRequireDefault(require("../lib/extract/extractProps"));var _TSpan2 = babelHelpers.interopRequireDefault(require("./TSpan"));
+
+
+
+
+
+
+
+
+
+var idExpReg = /^#(.+)$/;var _class = function (_Shape) {babelHelpers.inherits(_class, _Shape);function _class() {babelHelpers.classCallCheck(this, _class);return babelHelpers.possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));}babelHelpers.createClass(_class, [{ key: "render", value: function render()
+
+
+
+
+
+
+        {var _props =
+
+
+
+
+
+
+
+
+
+
+            this.props,children = _props.children,href = _props.href,startOffset = _props.startOffset,method = _props.method,spacing = _props.spacing,side = _props.side,alignmentBaseline = _props.alignmentBaseline,midLine = _props.midLine,props = babelHelpers.objectWithoutProperties(_props, ["children", "href", "startOffset", "method", "spacing", "side", "alignmentBaseline", "midLine"]);
+            if (href) {
+                var matched = href.match(idExpReg);
+
+                if (matched) {
+                    href = matched[1];
+                    startOffset = "" + (startOffset || 0);
+                    return (
+                        _react2.default.createElement(RNSVGTextPath, babelHelpers.extends(
+                        {
+                            href: href,
+                            startOffset: startOffset,
+                            method: method,
+                            spacing: spacing,
+                            side: side,
+                            alignmentBaseline: alignmentBaseline,
+                            midLine: midLine },
+
+                        (0, _extractProps2.default)(babelHelpers.extends({},
+
+                        props, {
+                            x: null,
+                            y: null }),
+
+                        this),
+
+                        (0, _extractText2.default)(
+                        {
+                            children: children },
+
+                        true), { __source: { fileName: _jsxFileName, lineNumber: 37 } })));
+
+
+
+                }
+            }
+
+            console.warn(
+            'Invalid `href` prop for `TextPath` element, expected a href like `"#id"`, but got: "' +
+            props.href +
+            '"');
+
+            return _react2.default.createElement(_TSpan2.default, { __source: { fileName: _jsxFileName, lineNumber: 71 } }, children);
+        } }]);return _class;}(_Shape3.default);_class.displayName = "TextPath";_class.propTypes = require("../lib/props").textPathProps;exports.default = _class;
+
+
+var RNSVGTextPath = (0, require("react-native").requireNativeComponent)("RNSVGTextPath", null, {
+    nativeOnly: require("../lib/attributes").TextPathAttributes });

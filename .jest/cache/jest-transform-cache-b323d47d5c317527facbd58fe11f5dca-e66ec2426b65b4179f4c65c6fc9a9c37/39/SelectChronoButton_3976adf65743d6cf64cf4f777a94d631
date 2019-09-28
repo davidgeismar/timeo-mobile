@@ -1,0 +1,26 @@
+2efb62b42be16d6fb3f8a2d5c29ffcd9
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/SelectChronoButton.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _UpdateTime2 = babelHelpers.interopRequireDefault(require('./assets/UpdateTime'));var
+
+
+
+SelectChronoButton = function (_Component) {babelHelpers.inherits(SelectChronoButton, _Component);function SelectChronoButton() {babelHelpers.classCallCheck(this, SelectChronoButton);return babelHelpers.possibleConstructorReturn(this, (SelectChronoButton.__proto__ || Object.getPrototypeOf(SelectChronoButton)).apply(this, arguments));}babelHelpers.createClass(SelectChronoButton, [{ key: 'render', value: function render()
+    {var
+      buttonStyle = styles.buttonStyle,textStyle = styles.textStyle;
+      return (
+        _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: this.props.onPress, __source: { fileName: _jsxFileName, lineNumber: 9 } },
+          _react2.default.createElement(_UpdateTime2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 10 } })));
+
+
+    } }]);return SelectChronoButton;}(require('react').Component);
+;
+
+var styles = {
+  textStyle: {
+    alignSelf: 'center',
+    color: '#8CCDF8',
+    fontSize: 16,
+    fontWeight: '600' } };exports.default =
+
+
+
+SelectChronoButton;

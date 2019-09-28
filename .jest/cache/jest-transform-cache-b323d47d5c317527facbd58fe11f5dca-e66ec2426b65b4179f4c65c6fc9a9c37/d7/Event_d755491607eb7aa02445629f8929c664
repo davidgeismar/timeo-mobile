@@ -1,0 +1,112 @@
+d3c607e7783d7d6bd3473ad85987f290
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/Event.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var
+
+
+
+actions = babelHelpers.interopRequireWildcard(require('../actions'));var _Timeo2 = babelHelpers.interopRequireDefault(require('./assets/Timeo'));var _Kameo2 = babelHelpers.interopRequireDefault(require('./assets/Kameo'));var _Close2 = babelHelpers.interopRequireDefault(require('./assets/Close'));var _minutesSecondsMilliseconds2 = babelHelpers.interopRequireDefault(require('minutes-seconds-milliseconds'));var
+
+
+
+
+
+
+utilities = babelHelpers.interopRequireWildcard(require('../lib/Utilities'));var
+
+
+Event = function (_Component) {babelHelpers.inherits(Event, _Component);function Event() {babelHelpers.classCallCheck(this, Event);return babelHelpers.possibleConstructorReturn(this, (Event.__proto__ || Object.getPrototypeOf(Event)).apply(this, arguments));}babelHelpers.createClass(Event, [{ key: 'spitDate', value: function spitDate(
+
+    date) {
+      var ts = new Date(date);
+      return ts.toLocaleDateString();
+    } }, { key: 'spitTime', value: function spitTime(
+    date) {
+      var ts = new Date(date);
+      return ts.toLocaleTimeString();
+    } }, { key: 'formatDuration', value: function formatDuration(
+    ms) {
+      var time = new Date(ms);
+      var hours = time.getUTCHours() < 10 ? '0' + time.getUTCHours() : time.getUTCHours();
+      var minutes = time.getUTCMinutes() < 10 ? '0' + time.getUTCMinutes() : time.getUTCMinutes();
+      var seconds = time.getUTCSeconds() < 10 ? '0' + time.getUTCSeconds() : time.getUTCSeconds();
+      return hours + ":" + minutes + ":" + seconds;
+    } }, { key: 'renderIcon', value: function renderIcon()
+    {
+      if (this.props.event.card_id) {
+        return _react2.default.createElement(_Kameo2.default, { style: styles.svgStyle, fill: 'red', __source: { fileName: _jsxFileName, lineNumber: 34 } });
+      } else
+      {
+        return _react2.default.createElement(_Timeo2.default, { style: styles.svgStyle, __source: { fileName: _jsxFileName, lineNumber: 37 } });
+      }
+    } }, { key: 'render', value: function render()
+    {var _this2 = this;
+
+      var event = this.props.event;var _props$event =
+      this.props.event,created_at = _props$event.created_at,creationTime = _props$event.creationTime,client__name = _props$event.client__name,action = _props$event.action,duration = _props$event.duration,kanban__name = _props$event.kanban__name,project__name = _props$event.project__name;var
+      textWrapperStyle = styles.textWrapperStyle,svgStyle = styles.svgStyle,containerStyle = styles.containerStyle,textStyle = styles.textStyle;
+      return (
+        _react2.default.createElement(require('react-native').View, { style: { flexDirection: 'row', alignItems: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 46 } },
+          _react2.default.createElement(require('react-native').TouchableWithoutFeedback, { onPress: this.props.onPress, __source: { fileName: _jsxFileName, lineNumber: 47 } },
+            _react2.default.createElement(require('react-native').View, { style: [containerStyle, this.props.customStyle], __source: { fileName: _jsxFileName, lineNumber: 48 } },
+              _react2.default.createElement(require('react-native').View, { style: textWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 49 } },
+                _react2.default.createElement(require('react-native').Text, { style: [textStyle, { color: '#8CCDF8' }], __source: { fileName: _jsxFileName, lineNumber: 50 } },
+                  this.spitDate(created_at), "\n",
+                  this.spitTime(created_at))),
+
+
+              _react2.default.createElement(require('react-native').View, { style: textWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 55 } },
+                _react2.default.createElement(require('react-native').Text, { style: textStyle, __source: { fileName: _jsxFileName, lineNumber: 56 } },
+                  client__name ? client__name : '')),
+
+
+              _react2.default.createElement(require('react-native').View, { style: textWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 60 } },
+                _react2.default.createElement(require('react-native').Text, { style: textStyle, __source: { fileName: _jsxFileName, lineNumber: 61 } },
+                  project__name ? project__name : '')),
+
+
+              _react2.default.createElement(require('react-native').View, { style: textWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 65 } },
+                _react2.default.createElement(require('react-native').Text, { style: textStyle, __source: { fileName: _jsxFileName, lineNumber: 66 } },
+                  this.formatDuration(duration))),
+
+
+              _react2.default.createElement(require('react-native').View, { style: textWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 70 } },
+                this.renderIcon()))),
+
+
+
+          _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this2.props.setEventToDelete(event);}, __source: { fileName: _jsxFileName, lineNumber: 75 } },
+            _react2.default.createElement(_Close2.default, { style: styles.svgStyle, fill: 'red', __source: { fileName: _jsxFileName, lineNumber: 76 } }))));
+
+
+
+    } }]);return Event;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    width: '85%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    margin: 10,
+    borderColor: '#8CCDF8',
+    borderWidth: 2 },
+
+  textWrapperStyle: {
+    height: '100%',
+    borderLeftColor: 'grey',
+    borderLeftWidth: 1,
+    padding: 5 },
+
+  textStyle: {
+    fontSize: 8,
+    alignSelf: 'center' },
+
+  svgStyle: {
+    width: 30,
+    height: 30 } };exports.default =
+
+
+
+
+
+(0, require('react-redux').connect)(null, { setEventToDelete: require('../actions').setEventToDelete })(Event);

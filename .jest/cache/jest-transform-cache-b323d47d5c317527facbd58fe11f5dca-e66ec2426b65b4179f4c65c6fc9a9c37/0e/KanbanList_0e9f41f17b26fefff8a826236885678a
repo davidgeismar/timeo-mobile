@@ -1,0 +1,107 @@
+a65b2b06176f4985ed5ce9284255deae
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/KanbanList.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Button2 = babelHelpers.interopRequireDefault(require('./common/Button'));var _Footer2 = babelHelpers.interopRequireDefault(require('./common/Footer'));var _Spinner2 = babelHelpers.interopRequireDefault(require('./common/Spinner'));var _LinkCard2 = babelHelpers.interopRequireDefault(require('./LinkCard'));var _Header2 = babelHelpers.interopRequireDefault(require('./Header'));var
+
+
+
+
+
+
+
+
+
+
+
+KanbanList = function (_Component) {babelHelpers.inherits(KanbanList, _Component);function KanbanList() {babelHelpers.classCallCheck(this, KanbanList);return babelHelpers.possibleConstructorReturn(this, (KanbanList.__proto__ || Object.getPrototypeOf(KanbanList)).apply(this, arguments));}babelHelpers.createClass(KanbanList, [{ key: 'renderKanbans', value: function renderKanbans()
+
+    {var _this2 = this;
+      return this.props.kanbans.map(
+      function (kanban) {return _react2.default.createElement(_LinkCard2.default, {
+            customStyle: { width: '47%', height: 60, margin: 5 },
+            onPress: function onPress() {return _this2.props.setCurrentKanban(kanban);},
+            canBeActivated: true,
+            activationKey: kanban.id, __source: { fileName: _jsxFileName, lineNumber: 17 } },
+
+          kanban.name);});
+
+
+    } }, { key: 'saveKanban', value: function saveKanban()
+
+    {
+      this.props.updateEvent('kanban_id', this.props.selectedKanban.id, this.props.duration, this.props.measureKind, this.props.eventId);
+    } }, { key: 'render', value: function render()
+    {var _this3 = this;var
+      kanbanHeaderStyle = styles.kanbanHeaderStyle,containerStyle = styles.containerStyle,kanbansWrapperStyle = styles.kanbansWrapperStyle,footerStyle = styles.footerStyle;
+      if (this.props.loading) {
+        return _react2.default.createElement(_Spinner2.default, { size: 'large', __source: { fileName: _jsxFileName, lineNumber: 34 } });
+      } else
+      {
+        return (
+
+          _react2.default.createElement(require('react-native').View, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 39 } },
+            _react2.default.createElement(require('react-native').View, { style: kanbanHeaderStyle, __source: { fileName: _jsxFileName, lineNumber: 40 } },
+              _react2.default.createElement(require('react-native').Text, { style: { color: '#8CCDF8', alignSelf: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 41 } }, 'SELECT A KANBAN')),
+
+
+
+            _react2.default.createElement(require('react-native').View, { style: kanbansWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 45 } },
+              this.renderKanbans()),
+
+            _react2.default.createElement(_Footer2.default, { customStyle: { backgroundColor: '#E62B5A' }, __source: { fileName: _jsxFileName, lineNumber: 48 } },
+              _react2.default.createElement(require('react-native').View, { style: styles.footerButtonsWrapper, __source: { fileName: _jsxFileName, lineNumber: 49 } },
+                _react2.default.createElement(_Button2.default, { customStyle: styles.footerButtonStyle, onPress: function onPress() {return _this3.props.removeSelectedKanban();}, __source: { fileName: _jsxFileName, lineNumber: 50 } }, 'CANCEL'),
+                _react2.default.createElement(_Button2.default, { disabled: this.props.disabled, customStyle: styles.footerButtonStyle, onPress: function onPress() {return _this3.saveKanban();}, __source: { fileName: _jsxFileName, lineNumber: 51 } }, 'SAVE')))));
+
+
+
+
+      }
+    } }]);return KanbanList;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white' },
+
+  kanbanHeaderStyle: {
+    alignSelf: 'flex-start',
+    borderBottomColor: '#E62B5A',
+    borderBottomWidth: 1,
+    padding: 5,
+    marginLeft: 30,
+    height: 40 },
+
+  kanbansWrapperStyle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 10,
+    width: '100%' },
+
+  footerButtonsWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center' },
+
+  footerButtonStyle: {
+    width: 180 } };
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var event = state.eventsData.currentEvent;
+  var disabled = state.kanbans.selectedKanban ? false : true;
+
+  return { kanbans: state.kanbans.list,
+    selectedKanban: state.kanbans.selectedKanban,
+    eventId: state.eventsData.currentEventId,
+    disabled: disabled,
+    duration: event ? event.duration : null,
+    measureKind: event ? event.measure_kind : null,
+    loading: state.loading };
+
+};exports.default =
+(0, require('react-redux').connect)(mapStateToProps, { setCurrentKanban: require('../actions').setCurrentKanban, updateEvent: require('../actions').updateEvent, removeSelectedKanban: require('../actions').removeSelectedKanban })(KanbanList);

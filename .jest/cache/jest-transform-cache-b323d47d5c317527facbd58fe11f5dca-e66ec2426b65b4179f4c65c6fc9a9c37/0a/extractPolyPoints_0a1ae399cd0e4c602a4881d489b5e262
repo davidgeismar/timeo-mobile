@@ -1,0 +1,7 @@
+d86ab63c66ccd9dc240d3e40fb730e3c
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = function (polyPoints) {
+    return polyPoints.
+    replace(/[^e]-/, " -").
+    split(/(?:\s+|\s*,\s*)/g).
+    join(" ");
+};

@@ -1,0 +1,84 @@
+3c19e3a1342ae9f4fa0bcf6a80c865df
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/ProjectList.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Button2 = babelHelpers.interopRequireDefault(require('./common/Button'));var _Spinner2 = babelHelpers.interopRequireDefault(require('./common/Spinner'));var _LinkCard2 = babelHelpers.interopRequireDefault(require('./LinkCard'));var _Event2 = babelHelpers.interopRequireDefault(require('./Event'));var _TabBar2 = babelHelpers.interopRequireDefault(require('./TabBar'));var
+
+
+
+
+
+
+
+
+
+
+ProjectList = function (_Component) {babelHelpers.inherits(ProjectList, _Component);function ProjectList() {babelHelpers.classCallCheck(this, ProjectList);return babelHelpers.possibleConstructorReturn(this, (ProjectList.__proto__ || Object.getPrototypeOf(ProjectList)).apply(this, arguments));}babelHelpers.createClass(ProjectList, [{ key: 'renderProjects', value: function renderProjects()
+    {var _this2 = this;
+      return this.props.projects.map(
+      function (project) {return _react2.default.createElement(_LinkCard2.default, { key: project.id,
+            canBeActivated: true,
+            activationKey: project.id,
+            project: project,
+            customStyle: { width: '47%', height: 60, margin: 5 },
+            onPress: function onPress() {return _this2.props.updateEvent('project_id', project.id, _this2.props.duration, _this2.props.measureKind, _this2.props.currentEventId);}, __source: { fileName: _jsxFileName, lineNumber: 15 } }, ' ',
+          project.name);});
+
+    } }, { key: 'renderError', value: function renderError()
+    {var _this3 = this;
+      if (this.props.error) {
+        Alert.alert(
+        'An Error occured',
+        this.props.error,
+        [
+        { text: 'Dismiss', onPress: function onPress() {return _this3.props.setErrorState(null);}, style: 'cancel' }],
+
+        { cancelable: false });
+
+      }
+    } }, { key: 'render', value: function render()
+    {var
+      containerStyle = styles.containerStyle,projectsWrapperStyle = styles.projectsWrapperStyle;
+      if (this.props.loading) {
+        return _react2.default.createElement(_Spinner2.default, { size: 'large', __source: { fileName: _jsxFileName, lineNumber: 39 } });
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').View, { __source: { fileName: _jsxFileName, lineNumber: 43 } },
+            _react2.default.createElement(_TabBar2.default, { __source: { fileName: _jsxFileName, lineNumber: 44 } }),
+            _react2.default.createElement(require('react-native').View, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 45 } },
+              _react2.default.createElement(require('react-native').View, { style: projectsWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 46 } },
+                this.renderError(),
+                this.renderProjects()))));
+
+
+
+
+      }
+
+    } }]);return ProjectList;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center' },
+
+  projectsWrapperStyle: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 10,
+    width: '100%' } };
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var event = state.eventsData.currentEvent;
+  return { events: state.eventsData.events,
+    currentEventId: state.eventsData.currentEventId,
+    projects: state.projects,
+    duration: event ? event.duration : null,
+    measureKind: event ? event.measure_kind : null,
+    loading: state.loading };
+
+};exports.default =
+(0, require('react-redux').connect)(mapStateToProps, { updateEvent: require('../actions').updateEvent, setErrorState: require('../actions').setErrorState })(ProjectList);

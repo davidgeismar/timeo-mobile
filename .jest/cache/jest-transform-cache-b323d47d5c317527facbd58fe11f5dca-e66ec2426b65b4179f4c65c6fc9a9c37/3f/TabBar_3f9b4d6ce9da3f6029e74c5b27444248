@@ -1,0 +1,125 @@
+7bdbebfcedc8dc6dac49ada1fb47a1fe
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/TabBar.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Avatar2 = babelHelpers.interopRequireDefault(require('./Avatar'));var _Chrono2 = babelHelpers.interopRequireDefault(require('./assets/Chrono'));var _Absent2 = babelHelpers.interopRequireDefault(require('./assets/Absent'));var _Tab2 = babelHelpers.interopRequireDefault(require('./Tab'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TabBar = function (_Component) {babelHelpers.inherits(TabBar, _Component);function TabBar() {babelHelpers.classCallCheck(this, TabBar);return babelHelpers.possibleConstructorReturn(this, (TabBar.__proto__ || Object.getPrototypeOf(TabBar)).apply(this, arguments));}babelHelpers.createClass(TabBar, [{ key: 'renderIcon', value: function renderIcon()
+    {
+      if (this.props.enableChronoNav && this.props.activeChrono) {
+        return _react2.default.createElement(_Chrono2.default, { style: styles.svgStyle, fill: '#8CCDF8', __source: { fileName: _jsxFileName, lineNumber: 27 } });
+      } else
+      if (this.props.enableChronoNav) {
+        return (
+          _react2.default.createElement(_Chrono2.default, { style: styles.svgStyle, fill: '#BFBFBF', __source: { fileName: _jsxFileName, lineNumber: 31 } }));
+
+      } else
+      {
+        return _react2.default.createElement(_Absent2.default, { style: styles.svgStyle, fill: '#BFBFBF', __source: { fileName: _jsxFileName, lineNumber: 35 } });
+      }
+    } }, { key: 'render', value: function render()
+
+    {var _this2 = this;var
+      textStyle = styles.textStyle,containerStyle = styles.containerStyle,svgStyle = styles.svgStyle;var
+      clientId = this.props.clientId;
+      return (
+        _react2.default.createElement(require('react-native').View, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 43 } },
+          _react2.default.createElement(_Tab2.default, { forceActivation: this.props.enableChronoNav, onPress: function onPress() {return _this2.props.enableChronoNav ? _this2.props.activateTab('chrono') : null;}, activationKey: 'chrono', __source: { fileName: _jsxFileName, lineNumber: 44 } },
+            this.renderIcon()),
+
+          _react2.default.createElement(_Tab2.default, { onPress: function onPress() {return _this2.props.activateTab('time');}, activationKey: 'time', __source: { fileName: _jsxFileName, lineNumber: 47 } },
+            _react2.default.createElement(require('react-native').Text, { style: [textStyle, { color: this.props.activeTime ? '#00AFFA' : '#BFBFBF' }], __source: { fileName: _jsxFileName, lineNumber: 48 } }, 'TIME')),
+
+          _react2.default.createElement(_Tab2.default, { onPress: function onPress() {return _this2.props.activateTab('client');}, activationKey: 'client', __source: { fileName: _jsxFileName, lineNumber: 50 } },
+            _react2.default.createElement(require('react-native').Text, { style: [textStyle, { color: this.props.activeClient ? '#00AFFA' : '#BFBFBF' }], __source: { fileName: _jsxFileName, lineNumber: 51 } }, 'CLIENT')),
+
+          _react2.default.createElement(_Tab2.default, { onPress: function onPress() {return clientId ? _this2.props.activateTab('projects') : null;}, activationKey: 'projects', __source: { fileName: _jsxFileName, lineNumber: 53 } },
+            _react2.default.createElement(require('react-native').Text, { style: [textStyle, { color: this.props.activeProject ? '#00AFFA' : '#BFBFBF' }], __source: { fileName: _jsxFileName, lineNumber: 54 } }, 'PROJECT')),
+
+          _react2.default.createElement(_Tab2.default, { onPress: function onPress() {return _this2.props.activateTab('info');}, activationKey: 'info', __source: { fileName: _jsxFileName, lineNumber: 56 } },
+            _react2.default.createElement(require('react-native').Text, { style: [textStyle, { color: this.props.activeInfo ? '#00AFFA' : '#BFBFBF' }], __source: { fileName: _jsxFileName, lineNumber: 57 } }, 'INFO')),
+
+          _react2.default.createElement(_Avatar2.default, {
+            size: 'small',
+            rounded: true,
+            source: { uri: this.props.logo_thumb },
+            onPress: function onPress() {return require('react-native-router-flux').Actions.events();},
+            activeOpacity: 0.7, __source: { fileName: _jsxFileName, lineNumber: 59 } })));
+
+
+
+
+
+    } }]);return TabBar;}(require('react').Component);
+
+
+var styles = {
+  textStyle: {
+    alignSelf: 'center' },
+
+  containerStyle: {
+    width: '100%',
+    height: 60,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: '#FCFCFC' },
+
+  svgStyle: {
+    alignSelf: 'center',
+    height: 30,
+    width: 30 } };
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var event = state.eventsData.currentEvent;
+  var enableChronoNav = true;
+  var clientId = void 0;
+
+  if (event) {
+    clientId = event.client_id;
+    if (event.measure_kind == 'manual') {
+      enableChronoNav = false;
+    }
+  }
+
+  var activeChrono = state.tabs.activeTab == 'chrono';
+  var activeTime = state.tabs.activeTab == 'time';
+  var activeClient = state.tabs.activeTab == 'client';
+  var activeProject = state.tabs.activeTab == 'projects';
+  var activeInfo = state.tabs.activeTab == 'info';
+  var logo_thumb = state.user.user_info.logo_thumb;
+  var kanbans = state.kanbans.list;
+  return {
+    enableChronoNav: enableChronoNav,
+    activeChrono: activeChrono,
+    activeTime: activeTime,
+    activeClient: activeClient,
+    activeProject: activeProject,
+    activeInfo: activeInfo,
+    logo_thumb: logo_thumb,
+    kanbans: kanbans,
+    clientId: clientId };
+
+};exports.default =
+
+(0, require('react-redux').connect)(mapStateToProps, { activateTab: require('../actions').activateTab, fetchClients: require('../actions').fetchClients })(TabBar);

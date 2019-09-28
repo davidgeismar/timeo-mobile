@@ -1,0 +1,19 @@
+634dc86b12ab6687ea569696850cfbc1
+Object.defineProperty(exports, "__esModule", { value: true });exports.ProjectReducer = undefined;
+
+
+
+
+var INITIAL_STATE = [];
+var ProjectReducer = exports.ProjectReducer = function ProjectReducer() {var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;var action = arguments[1];
+  switch (action.type) {
+    case require('../actions/types').LOAD_CLIENT_PROJECTS:
+      return action.payload;
+    case require('../actions/types').RESET_PROJECTS:
+      return [];
+    case require('../actions/types').RESET_INFO:
+      return INITIAL_STATE;
+    default:
+      return state;}
+
+};

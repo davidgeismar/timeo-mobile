@@ -1,0 +1,153 @@
+dde7bf5b85b3d64535ed1a2e5e8ce645
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/TimeCardList.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _TimeCard2 = babelHelpers.interopRequireDefault(require('./TimeCard'));var _Spinner2 = babelHelpers.interopRequireDefault(require('./common/Spinner'));var _Button2 = babelHelpers.interopRequireDefault(require('./common/Button'));var _Footer2 = babelHelpers.interopRequireDefault(require('./common/Footer'));var _TabBar2 = babelHelpers.interopRequireDefault(require('./TabBar'));var _minutesSecondsMilliseconds2 = babelHelpers.interopRequireDefault(require('minutes-seconds-milliseconds'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+TimeCardList = function (_Component) {babelHelpers.inherits(TimeCardList, _Component);function TimeCardList() {babelHelpers.classCallCheck(this, TimeCardList);return babelHelpers.possibleConstructorReturn(this, (TimeCardList.__proto__ || Object.getPrototypeOf(TimeCardList)).apply(this, arguments));}babelHelpers.createClass(TimeCardList, [{ key: 'renderHours', value: function renderHours()
+    {
+      var hours = [];
+      for (var index = 0; index < 25; index++) {
+        var hour = index < 10 ? '0' + index : index;
+        hours.push(
+        _react2.default.createElement(_TimeCard2.default, { type: 'large', key: index + 'hours', kind: 'hour', value: index, __source: { fileName: _jsxFileName, lineNumber: 21 } }, hour));
+
+      }
+      return (
+        hours);
+
+    } }, { key: 'renderTimeCard', value: function renderTimeCard(
+
+    index) {
+      var prefix = index < 10 ? '0' : '';
+      if (index % 5 == 0) {
+        return (
+          _react2.default.createElement(_TimeCard2.default, { key: index + 'minutes', type: 'large', kind: 'minute', value: index, __source: { fileName: _jsxFileName, lineNumber: 33 } }, prefix + index));
+
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: styles.smallContainer, __source: { fileName: _jsxFileName, lineNumber: 38 } },
+            _react2.default.createElement(_TimeCard2.default, { key: index + 'minutes', type: 'small', kind: 'minute', value: index, __source: { fileName: _jsxFileName, lineNumber: 39 } }, prefix + index),
+            _react2.default.createElement(_TimeCard2.default, { key: index + 1 + 'minutes', type: 'small', kind: 'minute', value: index + 1, __source: { fileName: _jsxFileName, lineNumber: 40 } }, prefix + (index + 1)),
+            _react2.default.createElement(_TimeCard2.default, { key: index + 2 + 'minutes', type: 'small', kind: 'minute', value: index + 2, __source: { fileName: _jsxFileName, lineNumber: 41 } }, prefix + (index + 2)),
+            _react2.default.createElement(_TimeCard2.default, { key: index + 3 + 'minutes', type: 'small', kind: 'minute', value: index + 3, __source: { fileName: _jsxFileName, lineNumber: 42 } }, prefix + (index + 3))));
+
+
+      }
+    } }, { key: 'renderMinutes', value: function renderMinutes()
+    {
+      var minutes = [];
+      for (var index = 0; index < 60;) {
+        minutes.push(
+        this.renderTimeCard(index));
+
+        index % 5 != 0 ? index = index + 4 : index++;
+      }
+      return (
+        minutes);
+
+    } }, { key: 'generateEventId', value: function generateEventId()
+
+    {
+      return '_' + Math.random().toString(36).substr(2, 9);
+    } }, { key: 'getMillisFromTimeSelection', value: function getMillisFromTimeSelection(
+    timeSelection) {
+      var hoursMillis = timeSelection.selectedHour * 3600 * 1000;
+      var minutesMillis = timeSelection.selectedMinute * 60 * 1000;
+      return hoursMillis + minutesMillis;
+    } }, { key: 'saveEvent', value: function saveEvent()
+    {
+      var duration = this.getMillisFromTimeSelection(this.props.timeSelection);
+      if (!this.props.eventId) {
+        this.props.createEvent('manual', duration);
+      } else
+      {
+        this.props.updateEvent('duration', duration, duration, 'manual', this.props.eventId);
+      }
+    } }, { key: 'renderError', value: function renderError()
+    {var _this2 = this;
+      if (this.props.error) {
+        require('react-native').Alert.alert(
+        'An Error occured',
+        this.props.error,
+        [
+        { text: 'Dismiss', onPress: function onPress() {return _this2.props.setErrorState(null);}, style: 'cancel' }],
+
+        { cancelable: false });
+
+      }
+    } }, { key: 'render', value: function render()
+    {var _this3 = this;var
+      containerStyle = styles.containerStyle,buttonWrapperStyle = styles.buttonWrapperStyle;
+      if (this.props.loading) {
+        return _react2.default.createElement(_Spinner2.default, { size: 'large', __source: { fileName: _jsxFileName, lineNumber: 92 } });
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: { flex: 1 }, __source: { fileName: _jsxFileName, lineNumber: 96 } },
+            _react2.default.createElement(_TabBar2.default, { __source: { fileName: _jsxFileName, lineNumber: 97 } }),
+            _react2.default.createElement(require('react-native').View, { style: { flexDirection: 'column', flex: 1 }, __source: { fileName: _jsxFileName, lineNumber: 98 } },
+              _react2.default.createElement(require('react-native').View, { style: { flexDirection: 'row', flex: 1 }, __source: { fileName: _jsxFileName, lineNumber: 99 } },
+                _react2.default.createElement(require('react-native').ScrollView, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 100 } },
+                  this.renderError(),
+                  this.renderHours()),
+
+                _react2.default.createElement(require('react-native').ScrollView, { style: containerStyle, __source: { fileName: _jsxFileName, lineNumber: 104 } },
+                  this.renderMinutes())),
+
+
+              _react2.default.createElement(_Footer2.default, { __source: { fileName: _jsxFileName, lineNumber: 108 } },
+                _react2.default.createElement(require('react-native').View, { style: buttonWrapperStyle, __source: { fileName: _jsxFileName, lineNumber: 109 } },
+                  _react2.default.createElement(_Button2.default, { customStyle: { width: '50%' }, onPress: function onPress() {return _this3.saveEvent();}, __source: { fileName: _jsxFileName, lineNumber: 110 } }, 'Save'))))));
+
+
+
+
+
+
+
+      }
+    } }]);return TimeCardList;}(require('react').Component);
+
+var styles = {
+  containerStyle: {
+    width: '50%',
+    flexDirection: 'column' },
+
+  smallContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginLeft: 10,
+    marginRight: 10 },
+
+  buttonWrapperStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center' } };
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  var hour = state.selectedDuration.selectedHour;
+  var minute = state.selectedDuration.selectedMinute;
+  var timeSelection = { selectedHour: hour, selectedMinute: minute };
+  return {
+    eventId: state.eventsData.currentEventId,
+    loading: state.loading,
+    timeSelection: timeSelection,
+    error: state.error };
+
+};exports.default =
+
+(0, require('react-redux').connect)(mapStateToProps, { activateTab: require('../actions').activateTab, updateEventDuration: require('../actions').updateEventDuration, createEvent: require('../actions').createEvent, updateEvent: require('../actions').updateEvent, setErrorState: require('../actions').setErrorState })(TimeCardList);

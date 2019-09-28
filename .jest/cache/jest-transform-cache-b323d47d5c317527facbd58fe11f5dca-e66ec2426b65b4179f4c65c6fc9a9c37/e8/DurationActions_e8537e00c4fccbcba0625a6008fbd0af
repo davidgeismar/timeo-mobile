@@ -1,0 +1,21 @@
+26b23f1fb132c3484fef49ab184d1808
+Object.defineProperty(exports, "__esModule", { value: true });exports.selectEventDuration = undefined;
+
+
+
+
+
+var selectEventDuration = exports.selectEventDuration = function selectEventDuration(timeCard) {
+  if (timeCard.kind == 'hour') {
+    return {
+      type: require('./types').SELECT_HOUR,
+      payload: timeCard.value };
+
+  } else
+  {
+    return {
+      type: require('./types').SELECT_MINUTE,
+      payload: timeCard.value };
+
+  }
+};

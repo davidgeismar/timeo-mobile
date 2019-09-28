@@ -1,0 +1,70 @@
+8d44e9716216b46c29daaa46c92643e7
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/LinkCard.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var
+
+
+
+
+
+
+
+LinkCard = function (_Component) {babelHelpers.inherits(LinkCard, _Component);function LinkCard() {babelHelpers.classCallCheck(this, LinkCard);return babelHelpers.possibleConstructorReturn(this, (LinkCard.__proto__ || Object.getPrototypeOf(LinkCard)).apply(this, arguments));}babelHelpers.createClass(LinkCard, [{ key: 'render', value: function render()
+
+    {
+      return (
+        _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: this.props.onPress, canBeActivated: this.props.canBeActivated, activationKey: this.props.activationKey, style: [styles.containerStyle, this.props.customStyle, { backgroundColor: this.props.active ? '#8CCDF8' : 'white' }], __source: { fileName: _jsxFileName, lineNumber: 13 } },
+          _react2.default.createElement(require('react-native').Text, { style: [styles.textStyle, this.props.customTextStyle, { color: this.props.active ? 'white' : 'black' }], __source: { fileName: _jsxFileName, lineNumber: 14 } },
+            this.props.children)));
+
+
+
+    } }]);return LinkCard;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    borderColor: '#8CCDF8',
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center' },
+
+  textStyle: {
+    fontSize: 15,
+    color: 'black',
+    alignSelf: 'center' } };
+
+
+
+var isActiveClient = function isActiveClient(ownProps, event) {
+  return ownProps.canBeActivated && event.client_id == ownProps.activationKey;
+};
+var isActiveProject = function isActiveProject(ownProps, event) {
+  return ownProps.canBeActivated && event.project_id == ownProps.activationKey;
+};
+
+var isActiveKanban = function isActiveKanban(ownProps, selectedKanban) {
+  if (selectedKanban) {
+    return ownProps.canBeActivated && selectedKanban.id == ownProps.activationKey;
+  } else
+  {
+    return false;
+  }
+};
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  var event = state.eventsData.currentEvent;
+  var active = void 0;
+  if (event) {
+    if (isActiveClient(ownProps, event) || isActiveProject(ownProps, event) || isActiveKanban(ownProps, state.kanbans.selectedKanban)) {
+      active = true;
+    } else
+    {
+      active = false;
+    }
+  } else
+  {
+    active = false;
+  }
+  return { active: active };
+};exports.default =
+
+(0, require('react-redux').connect)(mapStateToProps, null)(LinkCard);

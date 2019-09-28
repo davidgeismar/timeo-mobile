@@ -1,0 +1,236 @@
+6047ce7ffd3478be9a901c7421185395
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/Avatar.js';var _propTypes2 = babelHelpers.interopRequireDefault(require('prop-types'));var _react2 = babelHelpers.interopRequireDefault(require('react'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+var DEFAULT_COLORS = ['#000', '#333', '#555', '#888', '#aaa', '#ddd'];
+var DEFAULT_SIZES = {
+  small: 34,
+  medium: 50,
+  large: 75,
+  xlarge: 150 };
+
+
+var Avatar = function Avatar(props) {var
+
+  component =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  props.component,onPress = props.onPress,onLongPress = props.onLongPress,containerStyle = props.containerStyle,icon = props.icon,iconStyle = props.iconStyle,source = props.source,avatarStyle = props.avatarStyle,rounded = props.rounded,title = props.title,titleStyle = props.titleStyle,overlayContainerStyle = props.overlayContainerStyle,activeOpacity = props.activeOpacity,showEditButton = props.showEditButton,editButton = props.editButton,onEditPress = props.onEditPress,imageProps = props.imageProps,attributes = babelHelpers.objectWithoutProperties(props, ['component', 'onPress', 'onLongPress', 'containerStyle', 'icon', 'iconStyle', 'source', 'avatarStyle', 'rounded', 'title', 'titleStyle', 'overlayContainerStyle', 'activeOpacity', 'showEditButton', 'editButton', 'onEditPress', 'imageProps']);var
+  size = props.size;
+
+  var iconDimension =
+  typeof size === 'number' ?
+  size :
+  DEFAULT_SIZES[size] || DEFAULT_SIZES.small;
+
+  var height = void 0;
+  var width = height = iconDimension;
+
+  var titleSize = width / 2;
+  var iconSize = width / 2;
+
+  var Component = onPress || onLongPress ? require('react-native').TouchableOpacity : require('react-native').View;
+  if (component) {
+    Component = component;
+  }
+
+  var renderUtils = function renderUtils() {
+    if (showEditButton) {
+      var editButtonProps = babelHelpers.extends({}, editButton);
+
+      var defaultEditButtonSize = (width + height) / 2 / 3;
+      var editButtonSize = editButton.size || defaultEditButtonSize;
+      var editButtonSizeStyle = {
+        width: editButtonSize,
+        height: editButtonSize,
+        borderRadius: editButtonSize / 2 };
+
+      var editButtonIconSize = editButtonSize * 0.8;
+
+      return (
+        _react2.default.createElement(require('react-native').TouchableHighlight, {
+          style: [
+          styles.editButton,
+          editButtonSizeStyle,
+          editButtonProps.style],
+
+          underlayColor: editButtonProps.underlayColor,
+          onPress: onEditPress, __source: { fileName: _jsxFileName, lineNumber: 76 } }));
+
+
+
+    }
+  };
+
+  var renderContent = function renderContent() {
+    if (source.uri) {
+      return (
+        _react2.default.createElement(require('react-native').Image, babelHelpers.extends({
+          style: [
+          styles.avatar,
+          rounded && { borderRadius: width / 2 },
+          avatarStyle && avatarStyle],
+
+          source: source },
+        imageProps, { __source: { fileName: _jsxFileName, lineNumber: 93 } })));
+
+
+    } else if (source.initials) {
+      return (
+        _react2.default.createElement(require('react-native').Text, { style: [styles.title, titleStyle && titleStyle], __source: { fileName: _jsxFileName, lineNumber: 105 } }, source.initials));
+
+    }
+  };
+
+  var styles = require('react-native').StyleSheet.create({
+    container: {
+      backgroundColor: 'transparent',
+      width: width,
+      height: height },
+
+    avatar: {
+      width: width,
+      height: height },
+
+    overlayContainer: {
+      flex: 1,
+      alignItems: 'center',
+      backgroundColor: 'rgba(0,0,0,0.2)',
+      alignSelf: 'stretch',
+      justifyContent: 'center',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0 },
+
+    title: {
+      color: '#ffffff',
+      fontSize: titleSize,
+      backgroundColor: 'rgba(0,0,0,0)',
+      textAlign: 'center' },
+
+    editButton: babelHelpers.extends({
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: DEFAULT_COLORS[4] },
+    require('react-native').Platform.select({
+      ios: {
+        shadowColor: DEFAULT_COLORS[0],
+        shadowOffset: { width: 1, height: 1 },
+        shadowRadius: 2,
+        shadowOpacity: 0.5 },
+
+      android: {
+        elevation: 1 } })) });
+
+
+
+
+
+  return (
+    _react2.default.createElement(Component, babelHelpers.extends({
+        onPress: onPress,
+        onLongPress: onLongPress,
+        activeOpacity: activeOpacity,
+        style: [
+        styles.container,
+        rounded && { borderRadius: width / 2 },
+        containerStyle && containerStyle] },
+
+      attributes, { __source: { fileName: _jsxFileName, lineNumber: 160 } }),
+
+      _react2.default.createElement(require('react-native').View, {
+          style: [
+          styles.overlayContainer,
+          rounded && { borderRadius: width / 2 },
+          overlayContainerStyle && overlayContainerStyle], __source: { fileName: _jsxFileName, lineNumber: 171 } },
+
+
+        renderContent()),
+
+      renderUtils()));
+
+
+};
+
+Avatar.propTypes = {
+  component: _propTypes2.default.oneOf([
+  require('react-native').View,
+  require('react-native').TouchableOpacity,
+  require('react-native').TouchableHighlight,
+  require('react-native').TouchableNativeFeedback,
+  require('react-native').TouchableWithoutFeedback]),
+
+  onPress: _propTypes2.default.func,
+  onLongPress: _propTypes2.default.func,
+  containerStyle: _propTypes2.default.any,
+  source: require('react-native').Image.propTypes.source,
+  avatarStyle: _propTypes2.default.any,
+  rounded: _propTypes2.default.bool,
+  title: _propTypes2.default.string,
+  titleStyle: require('react-native').Text.propTypes.style,
+  overlayContainerStyle: _propTypes2.default.any,
+  activeOpacity: _propTypes2.default.number,
+  icon: _propTypes2.default.object,
+  iconStyle: require('react-native').Text.propTypes.style,
+  size: _propTypes2.default.oneOfType([
+  _propTypes2.default.oneOf(['small', 'medium', 'large', 'xlarge']),
+  _propTypes2.default.number]),
+
+  showEditButton: _propTypes2.default.bool,
+  onEditPress: _propTypes2.default.func,
+  editButton: _propTypes2.default.shape({
+    size: _propTypes2.default.number,
+    iconName: _propTypes2.default.string,
+    iconType: _propTypes2.default.string,
+    iconColor: _propTypes2.default.string,
+    underlayColor: _propTypes2.default.string }),
+
+  imageProps: _propTypes2.default.object };
+
+
+Avatar.defaultProps = {
+  showEditButton: false,
+  onEditPress: null,
+  size: 'small',
+  editButton: {
+    size: null,
+    iconName: 'mode-edit',
+    iconType: 'material',
+    iconColor: '#fff',
+    underlayColor: DEFAULT_COLORS[0],
+    style: null } };exports.default =
+
+
+
+Avatar;

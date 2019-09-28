@@ -1,0 +1,60 @@
+4ce4acdd3dad9be3af9f52971e044f0d
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/Card.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var
+
+
+
+
+
+
+
+Card = function (_Component) {babelHelpers.inherits(Card, _Component);function Card() {babelHelpers.classCallCheck(this, Card);return babelHelpers.possibleConstructorReturn(this, (Card.__proto__ || Object.getPrototypeOf(Card)).apply(this, arguments));}babelHelpers.createClass(Card, [{ key: 'setBackgroundColor', value: function setBackgroundColor(
+
+
+    card_type) {
+      switch (card_type) {
+        case 'task':
+          return '#51B8F3';
+        case 'support':
+          return '#E66C72';
+        case 'issue':
+          return '#F8C67A';
+        case 'improvement':
+          return '#9AD5E2';
+        case 'ticket_support':
+          return '#E66C72';}
+
+    } }, { key: 'render', value: function render()
+
+    {
+      return (
+        _react2.default.createElement(require('react-native').TouchableWithoutFeedback, {
+            onPress: this.props.onPress,
+            canBeActivated: this.props.canBeActivated,
+            activationKey: this.props.activationKey, __source: { fileName: _jsxFileName, lineNumber: 29 } },
+          _react2.default.createElement(require('react-native').View, { style: [styles.containerStyle, this.props.customStyle], backgroundColor: this.setBackgroundColor(this.props.card_type), opacity: this.props.active ? 1 : 0.6, __source: { fileName: _jsxFileName, lineNumber: 33 } },
+            this.props.children)));
+
+
+
+    } }]);return Card;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {} };
+
+
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  var active = void 0;
+  if (state.cards.selectedCard) {
+    if (ownProps.canBeActivated && state.cards.selectedCard.id == ownProps.activationKey) {
+      active = true;
+    }
+  } else
+  {
+    active = false;
+  }
+  return { active: active };
+};exports.default =
+
+(0, require('react-redux').connect)(mapStateToProps, null)(Card);

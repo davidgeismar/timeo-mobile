@@ -1,0 +1,131 @@
+a873449ea6579b7177d477ad2b913057
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/CardBlock.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _Avatar2 = babelHelpers.interopRequireDefault(require('./Avatar'));var _Card2 = babelHelpers.interopRequireDefault(require('./Card'));var
+
+
+
+
+
+
+
+
+
+
+CardBlock = function (_Component) {babelHelpers.inherits(CardBlock, _Component);function CardBlock() {babelHelpers.classCallCheck(this, CardBlock);return babelHelpers.possibleConstructorReturn(this, (CardBlock.__proto__ || Object.getPrototypeOf(CardBlock)).apply(this, arguments));}babelHelpers.createClass(CardBlock, [{ key: 'componentWillMount', value: function componentWillMount()
+
+    {
+      this.setState({
+        visible: true });
+
+    } }, { key: 'hideCardBlock', value: function hideCardBlock()
+
+    {
+      this.setState({
+        visible: false });
+
+    } }, { key: 'showCardBlock', value: function showCardBlock()
+    {
+      this.setState({
+        visible: true });
+
+    } }, { key: 'renderAvatar', value: function renderAvatar(
+
+    affected_to_id) {
+      if (this.props.resources) {
+        if (this.props.resources.resources.length > 0) {
+          var affectedTo = this.props.resources.resources.find(function (resource) {return resource.id == affected_to_id;});
+          if (affectedTo && affectedTo.user_info.logo_thumb.length > 0) {
+            return _react2.default.createElement(_Avatar2.default, {
+              size: 'small',
+              rounded: true,
+              source: { uri: affectedTo.user_info.logo_thumb, initials: affectedTo.user_info.initials },
+              onPress: function onPress() {return require('react-native-router-flux').Actions.events();},
+              activeOpacity: 0.7, __source: { fileName: _jsxFileName, lineNumber: 36 } });
+
+          } else
+          if (affectedTo) {
+            return _react2.default.createElement(require('react-native').View, { style: { borderRadius: 20, backgroundColor: 'grey', height: 40, width: 40 }, __source: { fileName: _jsxFileName, lineNumber: 45 } },
+              _react2.default.createElement(require('react-native').Text, { style: { justifyContent: 'center', alignSelf: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 46 } },
+                affectedTo.first_name[0], ' ', affectedTo.last_name[0]));
+
+
+          } else
+          {
+            return _react2.default.createElement(require('react-native').View, { style: { borderRadius: 20, backgroundColor: 'grey', height: 40, width: 40 }, __source: { fileName: _jsxFileName, lineNumber: 52 } });
+
+          }
+        } else
+        {
+          return "";
+        }
+      } else
+      {
+        return "";
+      }
+    } }, { key: 'renderCards', value: function renderCards(
+    cards) {var _this2 = this;
+      return cards.map(
+      function (card) {return _react2.default.createElement(_Card2.default, {
+            customStyle: { width: 300, height: 80, margin: 5 },
+            onPress: function onPress() {return _this2.props.setCurrentCard(card);},
+            canBeActivated: true,
+            activationKey: card.id,
+            card_type: card.card_type, __source: { fileName: _jsxFileName, lineNumber: 66 } },
+
+          _react2.default.createElement(require('react-native').View, { style: { flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start', padding: 4 }, __source: { fileName: _jsxFileName, lineNumber: 73 } },
+            _react2.default.createElement(require('react-native').Text, { style: { fontSize: 10, color: 'white' }, __source: { fileName: _jsxFileName, lineNumber: 74 } },
+              card.client__name, ' ', card.project__name, ' > ', card.card_type, ' > ', card.reference),
+
+            _react2.default.createElement(require('react-native').Text, { style: { fontSize: 10 }, __source: { fileName: _jsxFileName, lineNumber: 77 } },
+              card.subject),
+
+            _react2.default.createElement(require('react-native').View, { __source: { fileName: _jsxFileName, lineNumber: 80 } },
+              _this2.renderAvatar(card.affected_to_id))),
+
+
+          _react2.default.createElement(require('react-native').Text, { style: { fontSize: 12, position: 'absolute', top: 3, right: 3, color: 'white' }, __source: { fileName: _jsxFileName, lineNumber: 84 } },
+            card.creationDate));});
+
+
+
+    } }, { key: 'render', value: function render()
+
+    {var _this3 = this;
+      if (this.state.visible) {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: { width: '100%', flexDirection: 'row', justifyContent: 'center' }, __source: { fileName: _jsxFileName, lineNumber: 94 } },
+            _react2.default.createElement(require('react-native').TouchableOpacity, { style: { position: 'absolute', left: 0, top: 13 }, onPress: function onPress() {return _this3.hideCardBlock();}, __source: { fileName: _jsxFileName, lineNumber: 95 } },
+              _react2.default.createElement(require('react-native').Text, { style: { transform: [{ rotate: '-90deg' }], fontSize: 14, color: '#BFBFBF' }, __source: { fileName: _jsxFileName, lineNumber: 96 } },
+                this.props.status)),
+
+
+            _react2.default.createElement(require('react-native').View, { style: { borderLeftColor: '#8CCDF8', borderLeftWidth: 2, marginBottom: 10 }, __source: { fileName: _jsxFileName, lineNumber: 100 } },
+              this.renderCards(this.props.cards))));
+
+
+
+      } else
+      {
+        var marginLeft = (require('react-native').Dimensions.get("window").width - 300) / 2 - 10;
+        return (
+          _react2.default.createElement(require('react-native').View, { style: { alignSelf: 'flex-start', marginLeft: marginLeft, marginBottom: 10 }, __source: { fileName: _jsxFileName, lineNumber: 109 } },
+            _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.showCardBlock();}, __source: { fileName: _jsxFileName, lineNumber: 110 } },
+              _react2.default.createElement(require('react-native').Text, { style: { fontSize: 14, color: '#BFBFBF' }, __source: { fileName: _jsxFileName, lineNumber: 111 } },
+                this.props.status))));
+
+
+
+
+      }
+    } }]);return CardBlock;}(require('react').Component);
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    logo_thumb: state.user.user_info.logo_thumb,
+    resources: state.resources };
+
+
+};exports.default =
+
+(0, require('react-redux').connect)(mapStateToProps, { setCurrentCard: require('../actions').setCurrentCard, changeCardListScope: require('../actions').changeCardListScope, getResources: require('../actions').getResources })(CardBlock);

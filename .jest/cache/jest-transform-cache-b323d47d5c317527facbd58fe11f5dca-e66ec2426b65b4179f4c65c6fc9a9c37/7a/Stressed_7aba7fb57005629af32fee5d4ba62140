@@ -1,0 +1,37 @@
+6e008a57d8ece3cf2f6af1040310dc2c
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/assets/Stressed.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _reactNativeSvg2 = babelHelpers.interopRequireDefault(require('react-native-svg'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Stressed = function (_Component) {babelHelpers.inherits(Stressed, _Component);function Stressed() {babelHelpers.classCallCheck(this, Stressed);return babelHelpers.possibleConstructorReturn(this, (Stressed.__proto__ || Object.getPrototypeOf(Stressed)).apply(this, arguments));}babelHelpers.createClass(Stressed, [{ key: 'render', value: function render()
+        {
+            return (
+                _react2.default.createElement(_reactNativeSvg2.default, { style: this.props.style, viewBox: '0 0 64 64', 'enable-background': 'new 0 0 64 64', __source: { fileName: _jsxFileName, lineNumber: 24 } }, _react2.default.createElement(require('react-native-svg').Circle, { cx: '32', cy: '32', r: '30', fill: '#ffdd67', __source: { fileName: _jsxFileName, lineNumber: 24 } }),
+                    _react2.default.createElement(require('react-native-svg').Path, { d: 'm40.3 48.1c0 4.6-3.7 8.3-8.3 8.3-4.6 0-8.3-3.7-8.3-8.3 0-4.6 3.7-8.3 8.3-8.3 4.6 0 8.3 3.7 8.3 8.3', fill: '#664e27', __source: { fileName: _jsxFileName, lineNumber: 25 } }),
+                    _react2.default.createElement(require('react-native-svg').Path, { d: 'm26.2 44.8c1.2-2 3.3-3.4 5.8-3.4 2.5 0 4.7 1.3 5.8 3.4h-11.6', fill: '#fff', __source: { fileName: _jsxFileName, lineNumber: 26 } }),
+                    _react2.default.createElement(require('react-native-svg').G, { fill: '#664e27', __source: { fileName: _jsxFileName, lineNumber: 27 } }, _react2.default.createElement(require('react-native-svg').Circle, { cx: '43.5', cy: '33', r: '4.5', __source: { fileName: _jsxFileName, lineNumber: 27 } }), _react2.default.createElement(require('react-native-svg').Circle, { cx: '20.5', cy: '33', r: '4.5', __source: { fileName: _jsxFileName, lineNumber: 27 } })),
+                    _react2.default.createElement(require('react-native-svg').G, { fill: '#917524', __source: { fileName: _jsxFileName, lineNumber: 28 } }, _react2.default.createElement(require('react-native-svg').Path, { d: 'm25.6 17.9c-3.2 2.7-7.5 3.9-11.7 3.1-.6-.1-1.1 2-.4 2.2 4.8.9 9.8-.5 13.5-3.6.5-.5-1-2.1-1.4-1.7', __source: { fileName: _jsxFileName, lineNumber: 28 } }),
+                        _react2.default.createElement(require('react-native-svg').Path, { d: 'm50.1 20.9c-4.2.7-8.5-.4-11.7-3.1-.4-.4-2 1.2-1.4 1.7 3.7 3.2 8.7 4.5 13.5 3.6.7-.2.2-2.3-.4-2.2', __source: { fileName: _jsxFileName, lineNumber: 29 } })),
+                    _react2.default.createElement(require('react-native-svg').Path, { d: 'm62 18.5c0 9.4-12.7 9.4-12.7 0 0-6.9 6.4-13.5 6.4-13.5s6.3 6.7 6.3 13.5', fill: '#65b1ef', __source: { fileName: _jsxFileName, lineNumber: 30 } })));
+
+
+        } }]);return Stressed;}(require('react').Component);exports.default =
+
+
+Stressed;

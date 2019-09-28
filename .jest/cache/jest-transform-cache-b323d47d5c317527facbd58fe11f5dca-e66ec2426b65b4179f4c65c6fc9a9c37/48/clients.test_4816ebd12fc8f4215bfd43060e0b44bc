@@ -1,0 +1,14 @@
+430d4678bcf71fd2af5c67d100851d12
+var _ClientReducer2 = babelHelpers.interopRequireDefault(require('../ClientReducer'));
+
+
+it("handles actions of type LOAD_CLIENTS", function () {
+  var action = {
+    type: require('../../actions/types').LOAD_CLIENTS,
+    payload: [{
+      name: "SERENIS" }] };
+
+
+  var newState = (0, _ClientReducer2.default)([], action);
+  expect(newState.length).toEqual(1);
+});

@@ -1,0 +1,147 @@
+75cf702ef1828ec3b5689273f297fd5c
+Object.defineProperty(exports, "__esModule", { value: true });var _jsxFileName = '/Users/davidgeismar/code/davidgeismar/serenis/timeo__mobile/src/components/LoginForm.js';var _react2 = babelHelpers.interopRequireDefault(require('react'));var _StylishInput2 = babelHelpers.interopRequireDefault(require('./common/StylishInput'));var _Spinner2 = babelHelpers.interopRequireDefault(require('./common/Spinner'));var _Great2 = babelHelpers.interopRequireDefault(require('./assets/Great'));var _Happy2 = babelHelpers.interopRequireDefault(require('./assets/Happy'));var _None2 = babelHelpers.interopRequireDefault(require('./assets/None'));var _Sad2 = babelHelpers.interopRequireDefault(require('./assets/Sad'));var _Stressed2 = babelHelpers.interopRequireDefault(require('./assets/Stressed'));var _Tired2 = babelHelpers.interopRequireDefault(require('./assets/Tired'));var _Sick2 = babelHelpers.interopRequireDefault(require('./assets/Sick'));var _Displeased2 = babelHelpers.interopRequireDefault(require('./assets/Displeased'));var _Angry2 = babelHelpers.interopRequireDefault(require('./assets/Angry'));var _Absent2 = babelHelpers.interopRequireDefault(require('./assets/Absent'));var
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+LoginForm = function (_Component) {babelHelpers.inherits(LoginForm, _Component);function LoginForm() {babelHelpers.classCallCheck(this, LoginForm);return babelHelpers.possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).apply(this, arguments));}babelHelpers.createClass(LoginForm, [{ key: 'componentWillMount', value: function componentWillMount()
+    {
+      this.props.fetchImageOfTheDay();
+    } }, { key: 'loginUser', value: function loginUser(
+    mood) {
+      this.setState({
+        loading: true });
+
+      this.props.loginUser({ username: this.props.username, password: this.props.password, mood: mood });
+    } }, { key: 'renderError', value: function renderError()
+
+    {
+      if (this.props.error) {
+        return _react2.default.createElement(require('react-native').Text, { style: styles.errorStyle, __source: { fileName: _jsxFileName, lineNumber: 33 } }, this.props.error);
+      }
+    } }, { key: 'renderForm', value: function renderForm()
+    {var _this2 = this;
+      if (require('react-native').Platform.OS === 'ios') {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: { width: '100%' }, __source: { fileName: _jsxFileName, lineNumber: 39 } },
+            _react2.default.createElement(_StylishInput2.default, {
+              style: { height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', fontWeight: 'bold', alignSelf: 'center' },
+              value: this.props.username,
+              placeholder: 'Login',
+              onChangeText: function onChangeText(text) {return _this2.props.authUpdate({ prop: 'username', value: text });}, __source: { fileName: _jsxFileName, lineNumber: 40 } }),
+
+            _react2.default.createElement(_StylishInput2.default, {
+              style: { height: 40, width: '60%', borderBottomColor: 'grey', borderBottomWidth: 1, color: 'white', alignSelf: 'center', fontWeight: 'bold' },
+              secureTextEntry: true,
+              placeholder: 'Password',
+              value: this.props.password,
+              onChangeText: function onChangeText(text) {return _this2.props.authUpdate({ prop: 'password', value: text });}, __source: { fileName: _jsxFileName, lineNumber: 46 } })));
+
+
+
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').View, { style: { width: '100%' }, __source: { fileName: _jsxFileName, lineNumber: 58 } },
+            _react2.default.createElement(require('react-native').TextInput, {
+              style: { height: 50, width: '60%', alignSelf: 'center', color: 'white', fontWeight: 'bold' },
+              value: this.props.username,
+              placeholder: 'Login',
+              placeholderTextColor: 'white',
+              onChangeText: function onChangeText(text) {return _this2.props.authUpdate({ prop: 'username', value: text });}, __source: { fileName: _jsxFileName, lineNumber: 59 } }),
+
+            _react2.default.createElement(require('react-native').TextInput, {
+              style: { height: 50, width: '60%', color: 'white', alignSelf: 'center', fontWeight: 'bold' },
+              secureTextEntry: true,
+              placeholder: 'Password',
+              placeholderTextColor: 'white',
+              value: this.props.password,
+              onChangeText: function onChangeText(text) {return _this2.props.authUpdate({ prop: 'password', value: text });}, __source: { fileName: _jsxFileName, lineNumber: 66 } })));
+
+
+
+      }
+    } }, { key: 'render', value: function render()
+    {var _this3 = this;
+      if (this.props.loading) {
+        return _react2.default.createElement(_Spinner2.default, { size: 'large', __source: { fileName: _jsxFileName, lineNumber: 80 } });
+      } else
+      {
+        return (
+          _react2.default.createElement(require('react-native').ImageBackground, { style: styles.containerStyle, source: { uri: this.props.backgroundImage ? this.props.backgroundImage : "" }, __source: { fileName: _jsxFileName, lineNumber: 84 } },
+            this.renderForm(),
+            _react2.default.createElement(require('react-native').View, { style: { flexDirection: 'row', width: '100%', justifyContent: 'space-around', alignItems: 'center', marginTop: 20 }, __source: { fileName: _jsxFileName, lineNumber: 86 } },
+              _react2.default.createElement(require('react-native').ScrollView, { horizontal: true, __source: { fileName: _jsxFileName, lineNumber: 87 } },
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.loginUser('great');}, __source: { fileName: _jsxFileName, lineNumber: 88 } },
+                  _react2.default.createElement(_Great2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 89 } })),
+
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.loginUser('happy');}, __source: { fileName: _jsxFileName, lineNumber: 91 } },
+                  _react2.default.createElement(_Happy2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 92 } })),
+
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.loginUser('none');}, __source: { fileName: _jsxFileName, lineNumber: 94 } },
+                  _react2.default.createElement(_None2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 95 } })),
+
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.loginUser('sad');}, __source: { fileName: _jsxFileName, lineNumber: 97 } },
+                  _react2.default.createElement(_Sad2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 98 } })),
+
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.loginUser('stressed');}, __source: { fileName: _jsxFileName, lineNumber: 100 } },
+                  _react2.default.createElement(_Stressed2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 101 } })),
+
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.loginUser('tired');}, __source: { fileName: _jsxFileName, lineNumber: 103 } },
+                  _react2.default.createElement(_Tired2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 104 } })),
+
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.loginUser('tired');}, __source: { fileName: _jsxFileName, lineNumber: 106 } },
+                  _react2.default.createElement(_Sick2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 107 } })),
+
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.loginUser('tired');}, __source: { fileName: _jsxFileName, lineNumber: 109 } },
+                  _react2.default.createElement(_Displeased2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 110 } })),
+
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.loginUser('tired');}, __source: { fileName: _jsxFileName, lineNumber: 112 } },
+                  _react2.default.createElement(_Angry2.default, { style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 113 } })),
+
+                _react2.default.createElement(require('react-native').TouchableOpacity, { onPress: function onPress() {return _this3.loginUser('tired');}, __source: { fileName: _jsxFileName, lineNumber: 115 } },
+                  _react2.default.createElement(_Absent2.default, { fill: '#ef5350', style: { height: 50, width: 50 }, __source: { fileName: _jsxFileName, lineNumber: 116 } })))),
+
+
+
+            this.renderError()));
+
+
+      }
+    } }]);return LoginForm;}(require('react').Component);
+
+
+var styles = {
+  containerStyle: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center' },
+
+  errorStyle: {
+    color: 'red',
+    marginTop: 25 } };
+
+
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {var _state$authentication =
+  state.authentication,username = _state$authentication.username,password = _state$authentication.password;var
+  error = state.error,loading = state.loading,backgroundImage = state.backgroundImage;
+  return { username: username, password: password, error: error, loading: loading, backgroundImage: backgroundImage };
+};exports.default =
+
+(0, require('react-redux').connect)(mapStateToProps, { loginUser: require('../actions').loginUser, authUpdate: require('../actions').authUpdate, fetchImageOfTheDay: require('../actions').fetchImageOfTheDay })(LoginForm);

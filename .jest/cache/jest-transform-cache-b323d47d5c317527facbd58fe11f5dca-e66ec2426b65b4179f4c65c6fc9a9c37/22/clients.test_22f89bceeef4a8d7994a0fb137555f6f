@@ -1,0 +1,14 @@
+6bb14812d4844a441d9c32c2979d786e
+
+
+
+it("handles actions of type LOAD_CLIENTS", function () {
+  var action = {
+    type: require('../../actions/types').LOAD_CLIENTS,
+    payload: [{
+      name: "SERENIS" }] };
+
+
+  var newState = (0, require('../ClientReducer').ClientReducer)([], action);
+  expect(newState.length).toEqual(1);
+});
