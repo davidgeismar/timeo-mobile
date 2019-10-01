@@ -1,4 +1,4 @@
-// ok
+// ok TODO NO START CHRONO
 import { RESET_INFO,
          SELECT_HOUR,
          SELECT_MINUTE,

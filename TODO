@@ -1,0 +1,23 @@
+DURATIONREDUCER
+return {state, selectedHour: action.payload.selectedHour, selectedMinute: action.payload.selectedMinute}
+state without ...
+REMOVE START CHRONO
+
+EventReducer
+UPDATE_EVENT_DURATION ?
+UPDATE_EVENT_ACTION ?
+REVOIR TEST annoter dans le fichier
+
+KANBANREDUCER : check the correct statemodel for a card
+
+PROJECTREUDCER
+# need for SELECT_ACTION ?
+difference between reset_info and reset_projects ?
+
+
+Set absolute imports
+
+RESOURCEREDUCER
+RESET_INFO necessary ?
+
+USERREDUCER difference between the 3 is unclear

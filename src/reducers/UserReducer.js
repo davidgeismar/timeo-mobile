@@ -1,3 +1,4 @@
+// diff between INIT LOGIN and LOGOUT
 import {LOGIN_USER, LOGOUT_USER, INITIALIZE_USER} from '../actions/types';
 
 
