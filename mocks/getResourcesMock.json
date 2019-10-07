@@ -1,0 +1,84 @@
+{
+  "resources": [
+    {
+      "id": "5c7653a69f2c83e8b4516cd0",
+      "name": "Admin Admin",
+      "first_name": "Admin",
+      "last_name": "Admin",
+      "user_info": {
+        "email": "admin@serenis-groupe.fr",
+        "logo_thumb": "",
+        "initials": "AA",
+        "role": "admin"
+      },
+      "client_id": null,
+      "project_ids": [],
+      "team_ids": [
+        "5c7677359f2c83fcdfe911f6"
+      ],
+      "modules": [
+        {
+          "module_name": "kameo",
+          "last_used_kanban_id": "5c7655929f2c83e8dfd527be",
+          "kanban_configs": null
+        },
+        {
+          "module_name": "humeo"
+        },
+        {
+          "module_name": "sumeo"
+        },
+        {
+          "module_name": "agileo"
+        },
+        {
+          "module_name": "timeo"
+        }
+      ]
+    },
+    {
+      "id": "5c7679ee9f2c83fcdfe911fe",
+      "name": "Charlotte Plet",
+      "first_name": "Charlotte",
+      "last_name": "Plet",
+      "user_info": {
+        "email": "charlotte@serenis-groupe.fr",
+        "logo_thumb": "",
+        "initials": "CP",
+        "role": "user"
+      },
+      "client_id": null,
+      "project_ids": [],
+      "team_ids": [
+        "5c767a1e9f2c83fcdfe91200"
+      ],
+      "modules": [
+        {
+          "module_name": "sumeo"
+        }
+      ]
+    },
+    {
+      "id": "5c7679169f2c83fcdfe911f9",
+      "name": "Yves Test",
+      "first_name": "Yves",
+      "last_name": "Test",
+      "user_info": {
+        "email": "yves@serenis-groupe.fr",
+        "logo_thumb": "",
+        "initials": "YT",
+        "role": "user"
+      },
+      "client_id": null,
+      "project_ids": [],
+      "team_ids": [
+        "5c7679959f2c83fcdfe911fb"
+      ],
+      "modules": [
+        {
+          "module_name": "sumeo"
+        }
+      ]
+    }
+  ]
+}

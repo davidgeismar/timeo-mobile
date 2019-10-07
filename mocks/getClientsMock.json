@@ -1,0 +1,12 @@
+{
+  "clients": [
+    {
+      "id": "5c7654b69f2c83e8dfd527bc",
+      "organization_id": "5c7653a69f2c83e8b4516cce",
+      "name": "RIVP",
+      "type": "project",
+      "tags": [],
+      "logo": null
+    }
+  ]
+}

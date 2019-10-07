@@ -21,3 +21,6 @@ RESOURCEREDUCER
 RESET_INFO necessary ?
 
 USERREDUCER difference between the 3 is unclear
+
+
+have a look at https://jestjs.io/docs/en/mock-functions

@@ -32,10 +32,10 @@ export const loginUser = (creds) => {
      password: 'password'
     }
     const fullConf = {...creds, ...conf}
-    API.post('/oauth/token', fullConf)
-      .then(response => loginUserSuccess(dispatch, response))
-      .catch(error => onRequestErrorCallbackLogin(dispatch, error));
-  };
+    return API.post('/oauth/token', fullConf)
+            .then(response => loginUserSuccess(dispatch, response))
+            .catch(error => onRequestErrorCallbackLogin(dispatch, error));
+        };
 };
 
 // on successfull login first I fetch the user info with API call
