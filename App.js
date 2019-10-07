@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, AsyncStorage} from 'react-native';
-import Root  from './src/Root';
+import { Provider} from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import Starter from './src/components/Starter';
 import Avatar from './src/components/Avatar';
@@ -90,17 +90,17 @@ export default class App extends React.Component {
   render() {
     if (this.state.ready){
       return (
-        <Root>
+        <Provider store={store}>
           <PersistGate
             loading={<Spinner />}
             persistor={persistor}>
             <Router />
           </PersistGate>
-        </Root>
+        </Provider>
       );
     }
     else {
       return <Spinner />
     }
   }
-}
+} 

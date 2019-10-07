@@ -57,22 +57,23 @@ it('loads Cards', () => {
 
 });
 
-it('searchCards', () => {
-    moxios.stubRequest('/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}/pattern?pattern=${pattern}&limit_to_mine=${limitToMine}', {
+it('search Cards', () => {
+    moxios.stubRequest('/internal/timeo/api/v0/kameo_cards/by-kanban-id/5c7655929f2c83e8dfd527be/pattern?pattern=abc&limit_to_mine=false', {
       status: 200,
       response: getCardsMock
     });
   const expectedActions = [
-    { type: UPDATE_SEARCH_PATTERN, payload: '' },
+    { type: SET_LOADER, payload: true },
+    { type: UPDATE_SEARCH_PATTERN, payload: 'abc' },
     { type: SET_LOADER, payload: false },
     { type: SET_ERROR, payload: false },
-    { type: LOAD_KANBAN_TASKS, payload: getCardsMock}
+    { type: SEARCH_TASK, payload: getCardsMock}
   ]
   const store = makeMockStore({});
 
   // await store.dispatch(loginUser(creds));
 
-  return store.dispatch(loadKanbanCards('5c7655929f2c83e8dfd527be')).then(() => {
+  return store.dispatch(searchCards('5c7655929f2c83e8dfd527be', 'abc', false)).then(() => {
      console.log(store.getActions())
      expect(store.getActions()).toEqual(expectedActions)
    })

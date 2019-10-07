@@ -18,9 +18,9 @@ import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderA
        dispatch(setLoaderState(true))
      }
      dispatch(updateSearchPattern(''))
-     API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}?limit_to_mine=false`)
-       .then(response => loadKanbanCardsSuccess(dispatch, response))
-       .catch(error => onRequestErrorCallback(dispatch, error));
+     return API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}?limit_to_mine=false`)
+             .then(response => loadKanbanCardsSuccess(dispatch, response))
+             .catch(error => onRequestErrorCallback(dispatch, error));
    };
  }
 
@@ -54,9 +54,9 @@ export const searchCards= (kanbanId, pattern, limitToMine)=> {
     return (dispatch) => {
       dispatch(setLoaderState(true))
       dispatch(updateSearchPattern(pattern))
-      API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}/pattern?pattern=${pattern}&limit_to_mine=${limitToMine}`)
-        .then(response => searchCardsSuccess(dispatch, response))
-        .catch(error => onRequestErrorCallback(dispatch, error));
+      return API.get(`/internal/timeo/api/v0/kameo_cards/by-kanban-id/${kanbanId}/pattern?pattern=${pattern}&limit_to_mine=${limitToMine}`)
+              .then(response => searchCardsSuccess(dispatch, response))
+              .catch(error => onRequestErrorCallback(dispatch, error));
     };
   }
 }

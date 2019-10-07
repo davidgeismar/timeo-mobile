@@ -1,6 +1,6 @@
 module.exports = {
     preset: "react-native",
-    setupTestFrameworkScriptFile: '<rootDir>setupTests.js',
+    // setupTestFrameworkScriptFile: '<rootDir>setupTests.js',
     moduleFileExtensions: [
         "ts",
         "tsx",
