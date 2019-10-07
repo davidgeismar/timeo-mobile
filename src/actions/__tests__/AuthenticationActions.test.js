@@ -1,7 +1,7 @@
 import moxios from 'moxios'
 import { Actions } from 'react-native-router-flux';
-import './fluxActionsMock'
-import { makeMockStore } from './mockStore'
+import '../../../mocks/fluxActionsMock'
+import { makeMockStore } from '../../../mocks/mockStore'
 import { SET_AUTH_TOKEN,
          INITIALIZE_USER,
          LOAD_EVENTS,
