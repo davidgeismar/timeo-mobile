@@ -1,6 +1,6 @@
 module.exports = {
     preset: "react-native",
-    // setupTestFrameworkScriptFile: '<rootDir>setupTests.js',
+    setupTestFrameworkScriptFile: '<rootDir>setupTests.js',
     moduleFileExtensions: [
         "ts",
         "tsx",
@@ -19,5 +19,8 @@ module.exports = {
     cacheDirectory: ".jest/cache",
     transformIgnorePatterns: [
         "node_modules/(?!(react-native|react-navigation|react-navigation-tabs|react-navigation-redux-helpers|react-native-safari-view|react-native-linear-gradient|react-native-blur|react-native-animatable|react-native-svg|react-native-config|react-native-fs|react-native-wkwebview-reborn|react-native-safe-area-view|react-native-popup-menu|redux-persist|react-native-router-flux)/)"
-    ]
+    ],
+    globals: {
+      window: {}
+    }
 };
