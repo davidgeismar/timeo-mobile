@@ -1,10 +1,12 @@
 // cleanup ok
+
 import { LOAD_CLIENTS, ACTIVATE_TAB } from './types'
 import API from './Api';
 import { setLoaderState, setErrorState, onRequestErrorCallback } from './LoaderActions'
 
 
 // fetches clients from API
+// NOT USED
 export const fetchClients = () => {
   return (dispatch) => {
     dispatch(setLoaderState(true))

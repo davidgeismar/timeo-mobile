@@ -14,12 +14,12 @@ export const startTimer = (baseTime = 0) => {
       });
       // basetime is the time with which the chrono is starting (for instance if the chrono has never run before it starts at 0)
       // now is the timestamp when the chrono starts
-      dispatch({
-        type: START_TIMER,
-        payload: {  baseTime: baseTime,
-                    now: new Date().getTime()
-                  }
-      })
+      return dispatch({
+                type: START_TIMER,
+                payload: {  baseTime: baseTime,
+                            now: new Date().getTime()
+                          }
+              })
   };
 }
 // stops timer

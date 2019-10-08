@@ -27,55 +27,50 @@ import {
 } from '../CardActions'
 
 
-beforeEach(()=>{
-  moxios.install(API)
-})
 
-afterEach(() => {
-  moxios.uninstall(API);
-})
+describe('CardActions', () => {
+  let store;
+  beforeEach(()=>{
+    moxios.install(API)
+    store = makeMockStore({});
+  })
 
-it('loads Cards', () => {
-    moxios.stubRequest('/internal/timeo/api/v0/kameo_cards/by-kanban-id/5c7655929f2c83e8dfd527be?limit_to_mine=false', {
-      status: 200,
-      response: getCardsMock
-    });
-  const expectedActions = [
-    { type: UPDATE_SEARCH_PATTERN, payload: '' },
-    { type: SET_LOADER, payload: false },
-    { type: SET_ERROR, payload: false },
-    { type: LOAD_KANBAN_TASKS, payload: getCardsMock}
-  ]
-  const store = makeMockStore({});
+  afterEach(() => {
+    moxios.uninstall(API);
+  })
 
-  // await store.dispatch(loginUser(creds));
+  it('loads Cards', () => {
+      moxios.stubRequest('/internal/timeo/api/v0/kameo_cards/by-kanban-id/5c7655929f2c83e8dfd527be?limit_to_mine=false', {
+        status: 200,
+        response: getCardsMock
+      });
+    const expectedActions = [
+      { type: UPDATE_SEARCH_PATTERN, payload: '' },
+      { type: SET_LOADER, payload: false },
+      { type: SET_ERROR, payload: false },
+      { type: LOAD_KANBAN_TASKS, payload: getCardsMock}
+    ]
 
-  return store.dispatch(loadKanbanCards('5c7655929f2c83e8dfd527be')).then(() => {
-     console.log(store.getActions())
-     expect(store.getActions()).toEqual(expectedActions)
-   })
+    return store.dispatch(loadKanbanCards('5c7655929f2c83e8dfd527be')).then(() => {
+       expect(store.getActions()).toEqual(expectedActions)
+     })
 
-});
+  });
 
-it('search Cards', () => {
-    moxios.stubRequest('/internal/timeo/api/v0/kameo_cards/by-kanban-id/5c7655929f2c83e8dfd527be/pattern?pattern=abc&limit_to_mine=false', {
-      status: 200,
-      response: getCardsMock
-    });
-  const expectedActions = [
-    { type: SET_LOADER, payload: true },
-    { type: UPDATE_SEARCH_PATTERN, payload: 'abc' },
-    { type: SET_LOADER, payload: false },
-    { type: SET_ERROR, payload: false },
-    { type: SEARCH_TASK, payload: getCardsMock}
-  ]
-  const store = makeMockStore({});
-
-  // await store.dispatch(loginUser(creds));
-
-  return store.dispatch(searchCards('5c7655929f2c83e8dfd527be', 'abc', false)).then(() => {
-     console.log(store.getActions())
-     expect(store.getActions()).toEqual(expectedActions)
-   })
-
+  it('search Cards', () => {
+      moxios.stubRequest('/internal/timeo/api/v0/kameo_cards/by-kanban-id/5c7655929f2c83e8dfd527be/pattern?pattern=abc&limit_to_mine=false', {
+        status: 200,
+        response: getCardsMock
+      });
+    const expectedActions = [
+      { type: SET_LOADER, payload: true },
+      { type: UPDATE_SEARCH_PATTERN, payload: 'abc' },
+      { type: SET_LOADER, payload: false },
+      { type: SET_ERROR, payload: false },
+      { type: SEARCH_TASK, payload: getCardsMock}
+    ]
+    return store.dispatch(searchCards('5c7655929f2c83e8dfd527be', 'abc', false)).then(() => {
+       expect(store.getActions()).toEqual(expectedActions)
+     })
+ })
 });

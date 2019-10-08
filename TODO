@@ -22,5 +22,7 @@ RESET_INFO necessary ?
 
 USERREDUCER difference between the 3 is unclear
 
+IN CLIENTACTIONS
+FETCHCLIENTS IS NOT USED IN CODE
 
 have a look at https://jestjs.io/docs/en/mock-functions
