@@ -50,9 +50,9 @@ const loginUserSuccess = (dispatch, data) => {
     type: SET_AUTH_TOKEN,
     payload: {token: data.data.access_token}
   })
-  API.get('/internal/obeya/api/v0/me')
-    .then(response => getUserInfoSuccess(dispatch, response))
-    .catch(error => onRequestErrorCallback(dispatch, error));
+  return API.get('/internal/obeya/api/v0/me')
+          .then(response => getUserInfoSuccess(dispatch, response))
+          .catch(error => onRequestErrorCallback(dispatch, error));
 };
 
 // callback for error during login
@@ -69,25 +69,23 @@ const getUserInfoSuccess = (dispatch, data) => {
   })
   dispatch(loadResources())
   dispatch(setLoaderState(false))
-  Actions.chrono()
+  return Actions.chrono()
 }
 
 // we load events, clients and resources we load them concurrently (we dont use dispatch)
-const loadResources = () => {
+export const loadResources = () => {
   return (dispatch) => {
     dispatch(setLoaderState(true))
-    // events
-    API.get('/internal/timeo/api/v0/actions')
-      .then(response => initialFetchEventsSuccess(dispatch, response))
-      .catch(error => onRequestErrorCallback(dispatch, error));
-    // clients
-    API.get('/internal/obeya/api/v0/clients')
-      .then(response => initialFetchClientsSuccess(dispatch, response))
-      .catch(error => onRequestErrorCallback(dispatch, error));
-    // resources
-    API.get('/internal/obeya/api/v0/resources')
-        .then(response => getRessourcesSuccess(dispatch, response))
-        .catch(error => onRequestErrorCallback(dispatch, error));
+
+    return Promise.all([
+      API.get('/internal/obeya/api/v0/clients'),
+      API.get('/internal/obeya/api/v0/resources'),
+      API.get('/internal/timeo/api/v0/actions')
+    ]).then(([clients, resources, events]) => {
+      initialFetchClientsSuccess(dispatch, clients)
+      getRessourcesSuccess(dispatch, resources)
+      initialFetchEventsSuccess(dispatch, events)
+    }).catch(error => onRequestErrorCallback(dispatch, error))
   }
 }
 
@@ -104,7 +102,7 @@ const fetchSuccess = (dispatch, data, actionType) => {
 const initialFetchEventsSuccess = (dispatch, data) => {
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
-  dispatch({
+   return dispatch({
     type: LOAD_EVENTS,
     payload: data.data
   });
@@ -114,18 +112,18 @@ const initialFetchEventsSuccess = (dispatch, data) => {
 const initialFetchClientsSuccess = (dispatch, data) => {
   dispatch(setLoaderState(false))
   dispatch(setErrorState(false))
-  dispatch({
-    type: LOAD_CLIENTS,
-    payload: data.data
-  })
+  return dispatch({
+            type: LOAD_CLIENTS,
+            payload: data.data
+          })
 }
 
 // on successfull fetch we dispatch data to the store
 const getRessourcesSuccess = (dispatch, data) => {
-  dispatch({
-    type: SET_RESOURCES,
-    payload: data.data
-  })
+  return dispatch({
+          type: SET_RESOURCES,
+          payload: data.data
+        })
 }
 
 // user logout

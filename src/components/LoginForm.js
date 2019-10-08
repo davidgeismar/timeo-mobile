@@ -56,21 +56,21 @@ class LoginForm extends Component {
     else {
       return (
         <View style={{width: '100%'}}>
-        <TextInput
-          style={{height: 50, width: '60%', alignSelf: 'center', color: 'white', fontWeight: 'bold' }}
-          value={this.props.username}
-          placeholder="Login"
-          placeholderTextColor= 'white'
-          onChangeText={text => this.props.authUpdate({prop: 'username', value: text})}
-        />
-        <TextInput
-          style={{height: 50, width: '60%', color: 'white', alignSelf: 'center', fontWeight: 'bold'}}
-          secureTextEntry={true}
-          placeholder="Password"
-          placeholderTextColor= 'white'
-          value={this.props.password}
-          onChangeText={text => this.props.authUpdate({prop: 'password', value: text})}
-        />
+          <TextInput
+            style={{height: 50, width: '60%', alignSelf: 'center', color: 'white', fontWeight: 'bold' }}
+            value={this.props.username}
+            placeholder="Login"
+            placeholderTextColor= 'white'
+            onChangeText={text => this.props.authUpdate({prop: 'username', value: text})}
+          />
+          <TextInput
+            style={{height: 50, width: '60%', color: 'white', alignSelf: 'center', fontWeight: 'bold'}}
+            secureTextEntry={true}
+            placeholder="Password"
+            placeholderTextColor= 'white'
+            value={this.props.password}
+            onChangeText={text => this.props.authUpdate({prop: 'password', value: text})}
+          />
         </View>
       )
     }

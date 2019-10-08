@@ -2,16 +2,14 @@
 import React from 'react';
 import { View, Text, TouchableWithoutFeedback, TouchableOpacity, ImageBackground, Image, TextInput, Platform, ScrollView} from 'react-native'
 import { shallow, mount } from 'enzyme';
-import LoginForm from '../LoginForm.js';
+import Spinner from '../LoginForm.js';
 import Root from '../../Root.js'
-import StylishInput from '../common/StylishInput';
+
 
 
 it('shows a login form', () => {
-  const wrapped = shallow(<Root><LoginForm /></Root>);
+  const wrapped = shallow(<Root><Spinner size="large" /></Root>);
   console.log(wrapped)
   const componentInstance = wrapped.instance();
-  componentInstance.componentWillMount();
-  expect(wrapped.find(StylishInput).length).toEqual(2);
-  expect(wrapped.find(TextInput).length).toEqual(2);
+  console.log(componentInstance);
 })
