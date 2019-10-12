@@ -1,7 +1,7 @@
 module.exports = {
     preset: "react-native",
     setupTestFrameworkScriptFile: "./node_modules/jest-enzyme/lib/index.js",
-    setupFiles: ["enzyme-react-16-adapter-setup"],
+    setupFiles: ["<rootDir>src/setupTests.js"],
     moduleFileExtensions: [
         "ts",
         "tsx",

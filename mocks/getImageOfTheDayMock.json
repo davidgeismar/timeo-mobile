@@ -1,0 +1,28 @@
+{
+  "images":[
+    {
+      "startdate": "20191010",
+      "fullstartdate": "201910102300",
+      "enddate": "20191011",
+      "url": "/th?id=OHR.RedRocksArches_EN-GB2044389872_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp",
+      "urlbase": "/th?id=OHR.RedRocksArches_EN-GB2044389872",
+      "copyright": "Arches National Park, Moab, Utah, USA (© Whit Richardson/Alamy Stock Photo)",
+      "copyrightlink": "https://www.bing.com/search?q=Arches+National+Park&form=hpcapt&filters=HpDate%3a%2220191010_2300%22",
+      "title": "Art in the high desert",
+      "quiz": "/search?q=Bing+homepage+quiz&filters=WQOskey:%22HPQuiz_20191010_RedRocksArches%22&FORM=HPQUIZ",
+      "wp": true,
+      "hsh": "4c0c5dbd6dd9b8281a11928cc078db3e",
+      "drk": 1,
+      "top": 1,
+      "bot": 1,
+      "hs":[]
+      }
+    ],
+    "tooltips": {
+      "loading": "Loading...",
+      "previous": "Previous image",
+      "next": "Next image",
+      "walle": "This image is not available to download as wallpaper.",
+      "walls": "Download this image. Use of this image is restricted to wallpaper only."
+    }
+}

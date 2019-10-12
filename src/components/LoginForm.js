@@ -17,9 +17,9 @@ import Displeased from './assets/Displeased'
 import Angry from './assets/Angry'
 import Absent from './assets/Absent'
 
-class LoginForm extends Component {
-  componentWillMount(){
-    this.props.fetchImageOfTheDay()
+export class UnconnectedLoginForm extends Component {
+  componentDidMount (){
+     this.props.fetchImageOfTheDay()
   }
   loginUser(mood){
     this.setState({
@@ -143,4 +143,4 @@ const mapStateToProps = (state, ownProps) => {
   return { username, password, error, loading, backgroundImage };
 };
 
-export default connect(mapStateToProps, { loginUser, authUpdate, fetchImageOfTheDay })(LoginForm);
+export default connect(mapStateToProps, { loginUser, authUpdate, fetchImageOfTheDay })(UnconnectedLoginForm);
