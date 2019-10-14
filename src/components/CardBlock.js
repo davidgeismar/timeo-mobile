@@ -2,14 +2,14 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, TouchableOpacity, Dimensions} from 'react-native'
 import { connect } from 'react-redux';
-import { setCurrentCard, changeCardListScope, getResources } from '../actions';
+import { setCurrentCard } from '../actions';
 import { Actions } from 'react-native-router-flux'
 import Avatar from './Avatar';
 import Card from './Card';
 
 // import * as actions from '../actions';
 
-class CardBlock extends Component {
+export class UnconnectedCardBlock extends Component {
 
   componentWillMount(){
     this.setState({
@@ -127,4 +127,4 @@ const mapStateToProps = (state) => {
 
 }
 
-export default connect(mapStateToProps, { setCurrentCard, changeCardListScope, getResources })(CardBlock);
+export default connect(mapStateToProps, { setCurrentCard })(UnconnectedCardBlock);
