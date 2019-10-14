@@ -10,7 +10,7 @@ import LinkCard from './LinkCard'
 
 // import * as actions from '../actions';
 
-class ActionList extends Component {
+export class UnconnectedActionList extends Component {
 //  will need to make dynamic
   renderActionKinds(){
     const {cardStyle} = styles
@@ -57,4 +57,4 @@ const mapStateToProps = state => {
 
 };
 
-export default connect(mapStateToProps, {updateEvent})(ActionList);
+export default connect(mapStateToProps, {updateEvent})(UnconnectedActionList);
