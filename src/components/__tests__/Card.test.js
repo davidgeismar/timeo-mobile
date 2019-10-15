@@ -1,7 +1,7 @@
 import React from 'react'
+import { TouchableWithoutFeedback } from 'react-native'
 import { shallow } from 'enzyme'
 import Card, { UnconnectedCard } from '../Card'
-import { TouchableWithoutFeedback } from 'react-native'
 import { makeMockStore } from '../../../mocks/mockStore'
 
 

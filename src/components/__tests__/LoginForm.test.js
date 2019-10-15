@@ -1,8 +1,8 @@
 import React from 'react'
-import getImageOftheDayMock from '../../../mocks/getImageOftheDayMock'
-import { shallow } from 'enzyme'
-import LoginForm, { UnconnectedLoginForm } from '../LoginForm'
 import { TextInput, Platform } from 'react-native'
+import { shallow } from 'enzyme'
+import getImageOftheDayMock from '../../../mocks/getImageOftheDayMock'
+import LoginForm, { UnconnectedLoginForm } from '../LoginForm'
 import StylishInput from '../common/StylishInput';
 import { makeMockStore } from '../../../mocks/mockStore'
 import Stressed from '../assets/Stressed'

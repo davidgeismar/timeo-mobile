@@ -1,6 +1,6 @@
 import React from 'react'
-import LinkCard from '../LinkCard'
 import { shallow } from 'enzyme'
+import LinkCard from '../LinkCard'
 import ClientList, { UnconnectedClientList } from '../ClientList'
 import { makeMockStore } from '../../../mocks/mockStore'
 
