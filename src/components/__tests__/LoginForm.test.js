@@ -1,14 +1,10 @@
-import React from 'react'
-import moxios  from 'moxios'
 import getImageOftheDayMock from '../../../mocks/getImageOftheDayMock'
 import { shallow } from 'enzyme'
 import LoginForm, { UnconnectedLoginForm } from '../LoginForm'
-import { View, Text, TouchableWithoutFeedback, TouchableOpacity, ImageBackground, Image, TextInput, Platform, ScrollView} from 'react-native'
+import { TextInput, Platform } from 'react-native'
 import StylishInput from '../common/StylishInput';
-import { storeFactory } from '../../../test/testUtils'
 import { makeMockStore } from '../../../mocks/mockStore'
 import Stressed from '../assets/Stressed'
-import { Provider } from 'react-redux';
 
 
 let store

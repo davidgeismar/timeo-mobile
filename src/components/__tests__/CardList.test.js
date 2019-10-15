@@ -1,10 +1,6 @@
-import React from 'react'
-import moxios  from 'moxios'
 import { shallow } from 'enzyme'
 import CardList, { UnconnectedCardList } from '../CardList'
 import CardBlock from '../CardBlock'
-// import Card from '../Card'
-import { View, Text, TouchableWithoutFeedback, TouchableOpacity, ImageBackground, Image, TextInput, Platform, ScrollView} from 'react-native'
 import { makeMockStore } from '../../../mocks/mockStore'
 
 

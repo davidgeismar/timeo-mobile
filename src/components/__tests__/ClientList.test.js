@@ -1,6 +1,8 @@
+import React from 'react'
+import moxios  from 'moxios'
 import { shallow } from 'enzyme'
 import LinkCard from '../LinkCard'
-import ActionList, { UnconnectedActionList } from '../ActionList'
+import ClientList, { UnconnectedClientList } from '../ClientList'
 import { makeMockStore } from '../../../mocks/mockStore'
 
 
@@ -8,7 +10,7 @@ let store
 let wrapper
 const setup = (initialState = {}) => {
   store = makeMockStore(initialState);
-  const wrapper = shallow(<ActionList store={store}/>).dive()
+  const wrapper = shallow(<ClientList store={store}/>).dive()
   console.log(wrapper.debug())
   return wrapper
 }
@@ -26,7 +28,7 @@ const setup = (initialState = {}) => {
             measureKind: 'automatic',
           }
         },
-        selectedAction: 'phone_call',
+        selectedClient: 'phone_call',
         actionKinds: [
         {
           id: "xyz",
@@ -55,7 +57,7 @@ const setup = (initialState = {}) => {
             measureKind: 'automatic',
           }
         },
-        selectedAction: 'phone_call',
+        selectedClient: 'phone_call',
         actionKinds: [
         {
           id: "xyz",
@@ -70,8 +72,8 @@ const setup = (initialState = {}) => {
       props = wrapper.instance().props
     })
 
-    test('has selectedAction, actionKinds, currentEventId, duration, measureKind as props', ()=>{
-      expect(Object.keys(props)).toEqual(expect.arrayContaining(['selectedAction', 'actionKinds', 'currentEventId', 'duration', 'measureKind']))
+    test('has selectedClient, actionKinds, currentEventId, duration, measureKind as props', ()=>{
+      expect(Object.keys(props)).toEqual(expect.arrayContaining(['selectedClient', 'actionKinds', 'currentEventId', 'duration', 'measureKind']))
     })
     test('has updateEvent', ()=>{
       expect(props.updateEvent).toBeInstanceOf(Function);
