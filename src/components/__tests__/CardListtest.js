@@ -11,7 +11,7 @@ const setup = (initialState = {}) => {
   const wrapper = shallow(<CardList store={store}/>).dive()
   return wrapper
 }
-const initialState =   initialState = {
+const initialState = {
     cards: {
       loading: false,
       error: false,
