@@ -9,6 +9,9 @@ project.ext.envConfigFiles = [
 * apply plugin: "com.android.library"
 */
 apply plugin: "com.android.application"
+/**
+* plugin for  .env file
+*/
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile

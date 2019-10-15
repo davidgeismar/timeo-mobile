@@ -18,7 +18,7 @@ import SearchBar from './SearchBar';
 // in this parent component
 // how is it possible to transmit from child to parent without redux that seems
 
-class CardList extends Component {
+export class UnconnectedCardList extends Component {
 
   returnCardBlock(cardBucket){
     if (cardBucket.cards.length > 0){
@@ -185,4 +185,4 @@ const mapStateToProps = (state) => {
            error: state.error
          }
 }
-export default connect(mapStateToProps, { removeSelectedCard, updateEvent, changeCardListScope, searchCards, setErrorState })(CardList);
+export default connect(mapStateToProps, { removeSelectedCard, updateEvent, changeCardListScope, searchCards, setErrorState })(UnconnectedCardList);
