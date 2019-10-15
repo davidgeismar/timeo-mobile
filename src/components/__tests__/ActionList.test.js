@@ -1,3 +1,4 @@
+import React from 'react'
 import { shallow } from 'enzyme'
 import LinkCard from '../LinkCard'
 import ActionList, { UnconnectedActionList } from '../ActionList'

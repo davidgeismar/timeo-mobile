@@ -7,7 +7,7 @@ import LinkCard from './LinkCard';
 import TabBar from './TabBar';
 
 
-class ClientList extends Component {
+export class UnconnectedClientList extends Component {
   selectClient(client){
     this.props.updateEvent('client_id', client.id, this.props.duration, this.props.measureKind, this.props.currentEventId)
   }
@@ -79,4 +79,4 @@ const mapStateToProps = (state) => {
 
 
 }
-export default connect(mapStateToProps, {updateEvent, setErrorState} )(ClientList);
+export default connect(mapStateToProps, {updateEvent, setErrorState} )(UnconnectedClientList);

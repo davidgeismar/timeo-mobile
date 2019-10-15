@@ -1,3 +1,4 @@
+import React from 'react'
 import getImageOftheDayMock from '../../../mocks/getImageOftheDayMock'
 import { shallow } from 'enzyme'
 import LoginForm, { UnconnectedLoginForm } from '../LoginForm'

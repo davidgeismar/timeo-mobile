@@ -1,45 +1,39 @@
 import React from 'react'
-import moxios  from 'moxios'
-import { shallow } from 'enzyme'
 import LinkCard from '../LinkCard'
+import { shallow } from 'enzyme'
 import ClientList, { UnconnectedClientList } from '../ClientList'
 import { makeMockStore } from '../../../mocks/mockStore'
 
-
-let store
-let wrapper
-const setup = (initialState = {}) => {
-  store = makeMockStore(initialState);
-  const wrapper = shallow(<ClientList store={store}/>).dive()
-  console.log(wrapper.debug())
-  return wrapper
-}
-
-//
-// describe('render', () => {
-  describe('it renders with no errors', () => {
-    let initialState
-    beforeEach(() => {
-      initialState = {
-        eventsData: {
-          currentEventId: 'w9320',
-          currentEvent: {
-            duration: 234567,
-            measureKind: 'automatic',
-          }
-        },
-        selectedClient: 'phone_call',
-        actionKinds: [
+  const setup = (initialState = {}) => {
+    const store = makeMockStore(initialState);
+    const wrapper = shallow(<ClientList store={store}/>).dive()
+    return wrapper
+  }
+  const initialState = {
+    loading: false,
+    eventsData: {
+      currentEventId: 'xyz',
+      currentEvent: {
+        id: 'xyz',
+        duration: 12345,
+        measure_kind: 'automatic'
+      }
+    },
+    clients: {
+      clients: [
         {
-          id: "xyz",
-          name: 'phone_call'
+          id: 'serenis',
+          name: 'Serenis'
         },
         {
-          id: 'wzi',
-          name: 'meeting'
+          id: 'obeya',
+          name: 'obeya'
         }
-      ]}
-    })
+      ]
+    }
+  }
+
+  describe('it renders with no errors', () => {
     test('renders two LinkCard', () => {
       wrapper = setup(initialState)
       expect(wrapper.find(LinkCard).length).toEqual(2);
@@ -49,33 +43,29 @@ const setup = (initialState = {}) => {
   describe('redux props', () => {
     let props
     beforeEach(() => {
-      const initialState = {
-        eventsData: {
-          currentEventId: 'w9320',
-          currentEvent: {
-            duration: 234567,
-            measureKind: 'automatic',
-          }
-        },
-        selectedClient: 'phone_call',
-        actionKinds: [
-        {
-          id: "xyz",
-          name: 'phone_call'
-        },
-        {
-          id: 'wzi',
-          name: 'meeting'
-        }
-      ]}
       wrapper = setup(initialState)
       props = wrapper.instance().props
     })
 
-    test('has selectedClient, actionKinds, currentEventId, duration, measureKind as props', ()=>{
-      expect(Object.keys(props)).toEqual(expect.arrayContaining(['selectedClient', 'actionKinds', 'currentEventId', 'duration', 'measureKind']))
+    test('has events, currentEventId, clients, duration, measureKind, loadingas props', ()=>{
+      expect(Object.keys(props)).toEqual(expect.arrayContaining(['events', 'currentEventId', 'clients', 'duration', 'measureKind', 'loading']))
     })
-    test('has updateEvent', ()=>{
+    test('has setErrorState, updateEvent', ()=>{
       expect(props.updateEvent).toBeInstanceOf(Function);
+      expect(props.setErrorState).toBeInstanceOf(Function);
+    })
+  })
+
+  describe('selects a client', () => {
+    test('it selects a client for an event on press on card', () => {
+      const updateEventMock = jest.fn();
+      const wrapper = shallow(
+        <UnconnectedClientList
+          updateEvent={updateEventMock}
+          clients={initialState.clients.clients}
+        />)
+      wrapper.find(LinkCard).first().simulate('press')
+      const getupdateEventCount = updateEventMock.mock.calls.length;
+      expect(getupdateEventCount).toBe(1);
     })
   })

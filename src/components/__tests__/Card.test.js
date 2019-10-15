@@ -1,3 +1,4 @@
+import React from 'react'
 import { shallow } from 'enzyme'
 import Card, { UnconnectedCard } from '../Card'
 import { TouchableWithoutFeedback } from 'react-native'

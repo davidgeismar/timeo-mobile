@@ -1,3 +1,4 @@
+import React from 'react'
 import { shallow } from 'enzyme'
 import CardBlock, { UnconnectedCardBlock } from '../CardBlock'
 import Card from '../Card'
