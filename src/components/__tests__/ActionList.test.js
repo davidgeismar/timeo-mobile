@@ -5,40 +5,33 @@ import ActionList, { UnconnectedActionList } from '../ActionList'
 import { makeMockStore } from '../../../mocks/mockStore'
 
 
-let store
-let wrapper
+
 const setup = (initialState = {}) => {
-  store = makeMockStore(initialState);
+  const store = makeMockStore(initialState);
   const wrapper = shallow(<ActionList store={store}/>).dive()
-  console.log(wrapper.debug())
   return wrapper
 }
 
-//
-// describe('render', () => {
+const initialState = {
+  eventsData: {
+    currentEventId: 'w9320',
+    currentEvent: {
+      duration: 234567,
+      measureKind: 'automatic',
+    }
+  },
+  selectedAction: 'phone_call',
+  actionKinds: [
+  {
+    id: "xyz",
+    name: 'phone_call'
+  },
+  {
+    id: 'wzi',
+    name: 'meeting'
+  }
+]}
   describe('it renders with no errors', () => {
-    let initialState
-    beforeEach(() => {
-      initialState = {
-        eventsData: {
-          currentEventId: 'w9320',
-          currentEvent: {
-            duration: 234567,
-            measureKind: 'automatic',
-          }
-        },
-        selectedAction: 'phone_call',
-        actionKinds: [
-        {
-          id: "xyz",
-          name: 'phone_call'
-        },
-        {
-          id: 'wzi',
-          name: 'meeting'
-        }
-      ]}
-    })
     test('renders two LinkCard', () => {
       wrapper = setup(initialState)
       expect(wrapper.find(LinkCard).length).toEqual(2);
@@ -48,25 +41,6 @@ const setup = (initialState = {}) => {
   describe('redux props', () => {
     let props
     beforeEach(() => {
-      const initialState = {
-        eventsData: {
-          currentEventId: 'w9320',
-          currentEvent: {
-            duration: 234567,
-            measureKind: 'automatic',
-          }
-        },
-        selectedAction: 'phone_call',
-        actionKinds: [
-        {
-          id: "xyz",
-          name: 'phone_call'
-        },
-        {
-          id: 'wzi',
-          name: 'meeting'
-        }
-      ]}
       wrapper = setup(initialState)
       props = wrapper.instance().props
     })
@@ -76,5 +50,19 @@ const setup = (initialState = {}) => {
     })
     test('has updateEvent', ()=>{
       expect(props.updateEvent).toBeInstanceOf(Function);
+    })
+  })
+
+  describe('selects an action', () => {
+    test('it selects an action for an event on press on card', () => {
+      const updateEventMock = jest.fn();
+      const wrapper = shallow(
+        <UnconnectedActionList
+          updateEvent={updateEventMock}
+          actionKinds={initialState.actionKinds}
+        />)
+      wrapper.find(LinkCard).first().simulate('press')
+      const getupdateEventCount = updateEventMock.mock.calls.length;
+      expect(getupdateEventCount).toBe(1);
     })
   })
